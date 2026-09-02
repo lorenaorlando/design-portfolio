@@ -1,0 +1,567 @@
+import React, { useState, useEffect } from 'react';
+import { audioEngine } from '../utils/audio';
+import { WORKS_DATA } from '../data/worksData';
+import { WorksScreen } from './WorksScreen';
+import { AboutScreen } from './AboutScreen';
+import { CvScreen } from './CvScreen';
+
+interface ChiQuachCanvasProps {
+  currentScreen?: 1 | 3 | 4 | 5;
+  onScreenChange?: (screen: 1 | 3 | 4 | 5) => void;
+}
+
+export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
+  currentScreen: controlledScreen,
+  onScreenChange,
+}) => {
+  // Navigation: 1 = START (Complete 3-Panel Dashboard), 3 = WORKS, 4 = ABOUT, 5 = CV
+  const [internalScreen, setInternalScreen] = useState<1 | 3 | 4 | 5>(1);
+  const currentScreen = controlledScreen !== undefined ? controlledScreen : internalScreen;
+
+  const setCurrentScreen = (screen: 1 | 3 | 4 | 5) => {
+    if (onScreenChange) {
+      onScreenChange(screen);
+    } else {
+      setInternalScreen(screen);
+    }
+  };
+
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
+  const [aboutPressed, setAboutPressed] = useState(false);
+  const [worksPressed, setWorksPressed] = useState(false);
+  const [startPressed, setStartPressed] = useState(false);
+
+  // Equalizer visualizer animation state
+  const [eqLevels, setEqLevels] = useState<number[]>([2, 4, 7, 5, 8, 6, 9, 11, 8, 5]);
+
+  // Telemetry radar pulse
+  const [radarTick, setRadarTick] = useState(0);
+
+  useEffect(() => {
+    if (currentScreen === 1) {
+      const interval = setInterval(() => {
+        setEqLevels((prev) =>
+          prev.map((val) => {
+            const delta = (Math.random() > 0.5 ? 1 : -1) * (Math.random() > 0.7 ? 1 : 0);
+            return Math.max(1, Math.min(12, val + delta));
+          })
+        );
+        setRadarTick((t) => (t + 1) % 4);
+      }, 350);
+      return () => clearInterval(interval);
+    }
+  }, [currentScreen]);
+
+  const handleStartClick = () => {
+    setStartPressed(true);
+    audioEngine.playClick(1.0);
+    setTimeout(() => {
+      setStartPressed(false);
+      setCurrentScreen(1);
+    }, 150);
+  };
+
+  const handleAboutClick = () => {
+    setAboutPressed(true);
+    audioEngine.playClick(1.2);
+    setTimeout(() => {
+      setAboutPressed(false);
+      setCurrentScreen(4);
+    }, 150);
+  };
+
+  const handleWorksClick = () => {
+    setWorksPressed(true);
+    audioEngine.playClick(1.5);
+    setTimeout(() => {
+      setWorksPressed(false);
+      setCurrentScreen(3);
+    }, 150);
+  };
+
+  const handleNavPrevWork = () => {
+    audioEngine.playClick(0.9);
+    setActiveWorkIndex((prev) => (prev > 0 ? prev - 1 : WORKS_DATA.length - 1));
+    if (currentScreen !== 3) {
+      setCurrentScreen(3);
+    }
+  };
+
+  const handleNavNextWork = () => {
+    audioEngine.playClick(1.3);
+    setActiveWorkIndex((prev) => (prev < WORKS_DATA.length - 1 ? prev + 1 : 0));
+    if (currentScreen !== 3) {
+      setCurrentScreen(3);
+    }
+  };
+
+  return (
+    <div
+      id="crt-screen-content"
+      className="relative w-full h-full min-h-[320px] flex flex-col items-center justify-between p-1.5 sm:p-3 md:p-3.5 select-none overflow-hidden bg-black text-[#E5FBB8]"
+    >
+      {/* 1. Pure Pitch Black Background */}
+      <div className="absolute inset-0 pointer-events-none bg-black" />
+
+      {/* 2. Micro CRT Scanlines Mask */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0px, rgba(0, 0, 0, 0.6) 1px, transparent 1px, transparent 2px)',
+          backgroundSize: '100% 2px',
+        }}
+      />
+
+      {/* 3. Outer Double-Line Terminal Perimeter Frame (#E5FBB8) */}
+      <div 
+        className="absolute inset-1.5 sm:inset-2 pointer-events-none border-[3px] border-double rounded-[3px]"
+        style={{
+          borderColor: '#E5FBB8',
+        }}
+      />
+
+      {/* ========================================================
+          ADAPTIVE PROJECT SWITCHER NAVEGACIÓN BAR (ONLY ON WORKS SCREEN 3)
+         ======================================================== */}
+      {currentScreen === 3 && (
+        <div className="relative z-30 w-full max-w-[700px] px-1 sm:px-2 pt-0.5 animate-fadeIn">
+          <div className="w-full flex items-center justify-between pb-1 text-[#E5FBB8] select-none min-h-[28px] border-b border-[#E5FBB8]/30 mb-1">
+            <span className="font-silkscreen text-[8.5px] sm:text-[9.5px] tracking-widest text-[#E5FBB8]/80 uppercase">
+              SELECTED WORKS
+            </span>
+
+            {/* Navigation Arrows for Project Switching */}
+            <div className="flex items-center gap-1.5 font-silkscreen text-[8.5px] sm:text-[9.5px]">
+              <button
+                id="nav-works-prev-btn"
+                onClick={handleNavPrevWork}
+                className="px-2.5 py-0.5 border border-[#E5FBB8]/70 hover:border-[#B980F0] hover:bg-[#B980F0] hover:text-black text-[#E5FBB8] flex items-center justify-center text-[7.5px] sm:text-[8.5px] rounded-[1px] transition-all cursor-pointer outline-none active:scale-95 shadow-[1px_1px_0px_rgba(229,251,184,0.3)]"
+                title="PREV PROJECT"
+              >
+                ◀ PREV
+              </button>
+
+              <button
+                id="nav-works-next-btn"
+                onClick={handleNavNextWork}
+                className="px-2.5 py-0.5 border border-[#E5FBB8]/70 hover:border-[#B980F0] hover:bg-[#B980F0] hover:text-black text-[#E5FBB8] flex items-center justify-center text-[7.5px] sm:text-[8.5px] rounded-[1px] transition-all cursor-pointer outline-none active:scale-95 shadow-[1px_1px_0px_rgba(229,251,184,0.3)]"
+                title="NEXT PROJECT"
+              >
+                NEXT ▶
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================
+          SCREEN 1: UNIFIED 3-COLUMN START DASHBOARD (WITHOUT RIGHT ARROW)
+         ======================================================== */}
+      {currentScreen === 1 && (
+        <div className="relative z-10 w-full h-full flex-1 max-w-[1180px] px-2 sm:px-3 md:px-4 lg:px-4 overflow-y-auto lg:overflow-hidden custom-scrollbar flex flex-col items-stretch justify-start lg:justify-center animate-fadeIn py-2 lg:py-1.5 touch-pan-y overscroll-contain">
+          
+          {/* Main 3-Column Layout: Fits in 1 single screen on desktop, scrolls on mobile */}
+          <div className="w-full flex flex-col lg:flex-row gap-2.5 sm:gap-3.5 lg:gap-3 xl:gap-4 items-stretch justify-start lg:justify-between lg:h-full lg:max-h-full py-0.5 min-h-0">
+            
+            {/* ----------------------------------------------------
+                COLUMN 1: PORTRAIT PHOTO CARD + LORENA ORLANDO (ABOUT BUTTON)
+               ---------------------------------------------------- */}
+            <div className="w-full lg:w-[27%] xl:w-[26%] lg:max-w-[270px] flex flex-col justify-between gap-2 lg:gap-2.5 shrink-0 min-h-0">
+              
+              {/* 1.1 Top Card: Photo Card [FIG. 01] LORENA.JPG */}
+              <div 
+                className="border border-black/50 bg-[#E5FBB8] flex flex-col items-center justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.8)] p-1.5 lg:p-1.5 flex-1 min-h-0"
+              >
+                <div className="relative w-full max-w-[220px] lg:max-w-[170px] xl:max-w-[190px] aspect-square bg-black p-1 border-2 border-black flex items-center justify-center overflow-hidden my-auto shadow-[1.5px_1.5px_0px_rgba(0,0,0,0.8)] group">
+                  {/* Viewfinder corner guides */}
+                  <span className="absolute top-0.5 left-0.5 font-silkscreen text-[7px] text-[#E5FBB8] leading-none select-none z-20">┌</span>
+                  <span className="absolute top-0.5 right-0.5 font-silkscreen text-[7px] text-[#E5FBB8] leading-none select-none z-20">┐</span>
+                  <span className="absolute bottom-0.5 left-0.5 font-silkscreen text-[7px] text-[#E5FBB8] leading-none select-none z-20">└</span>
+                  <span className="absolute bottom-0.5 right-0.5 font-silkscreen text-[7px] text-[#E5FBB8] leading-none select-none z-20">┘</span>
+
+                  {/* Photo with Raster Reveal */}
+                  <img
+                    src="https://sandboxlandia.online/wp-content/uploads/2026/09/LORENA_ORLANDO_PROFILE.jpg"
+                    alt="Lorena Orlando"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover block filter contrast-125 animate-render-decode"
+                    loading="eager"
+                  />
+                </div>
+
+                {/* Photo Sub-labels */}
+                <div className="flex items-center justify-between w-full px-1 pt-1">
+                  <span className="font-silkscreen text-[7.5px] sm:text-[8.5px] lg:text-[8px] text-black/80 uppercase">
+                    [FIG. 01]
+                  </span>
+                  <span className="font-sometype-mono text-[8px] sm:text-[9px] lg:text-[8.5px] font-normal text-black/90">
+                    LORENA.JPG
+                  </span>
+                </div>
+              </div>
+
+              {/* 1.2 Bottom Card: Name, Craft, and ABOUT Button */}
+              <div 
+                className="p-2 sm:p-2.5 lg:p-2 xl:p-2.5 bg-[#E5FBB8] border border-black/50 text-black flex flex-col justify-between shadow-[2px_2px_0px_rgba(0,0,0,0.8)] shrink-0 min-h-0"
+              >
+                <div>
+                  <h1 
+                    className="text-black font-silkscreen font-normal leading-tight tracking-tight uppercase text-[17px] sm:text-[19px] lg:text-[16px] xl:text-[18px]"
+                  >
+                    LORENA ORLANDO
+                  </h1>
+                  <div className="flex items-center gap-1 text-black font-share-tech-mono font-normal text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px] leading-tight tracking-[0.05em] mt-1 opacity-90">
+                    <span className="text-black/60 text-[7.5px]">■</span>
+                    <span>CRAFT, DESIGN</span>
+                    <span className="text-black/50">&amp;</span>
+                    <span>INTERFACES</span>
+                  </div>
+                </div>
+
+                {/* Button that says ABOUT and navigates to ABOUT page */}
+                <div className="pt-2">
+                  <button
+                    id="card-about-btn"
+                    onClick={handleAboutClick}
+                    className="w-fit px-3 py-1 bg-black text-[#E5FBB8] font-silkscreen font-normal text-[8.5px] sm:text-[9.5px] lg:text-[8.5px] xl:text-[9.5px] leading-none uppercase tracking-wider transition-all duration-75 cursor-pointer outline-none border border-black hover:bg-[#B980F0] hover:text-black flex items-center gap-1 active:scale-95 shadow-[1px_1px_0px_rgba(0,0,0,0.5)]"
+                    title="Navigate to About Page"
+                  >
+                    <span>ABOUT</span>
+                    <span className="text-[9px]">→</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* ----------------------------------------------------
+                COLUMN 2: DESIGN DISCIPLINES & SPECTRUM EQUALIZER
+               ---------------------------------------------------- */}
+            <div 
+              className="flex-1 min-w-0 lg:min-w-[240px] relative p-2.5 sm:p-3.5 lg:p-2.5 xl:p-3 border-[2px] border-double bg-black flex flex-col justify-between overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.6)] min-h-0"
+              style={{
+                borderColor: '#E5FBB8',
+              }}
+            >
+              {/* Header: DESIGN */}
+              <div>
+                <div className="font-silkscreen font-normal text-[12px] sm:text-[14px] lg:text-[13px] xl:text-[14.5px] uppercase tracking-widest text-[#E5FBB8]">
+                  DESIGN
+                </div>
+                <div className="w-full border-b-[2px] border-double border-[#E5FBB8] mt-1 mb-1.5 lg:mb-2" />
+              </div>
+
+              {/* Disciplines Content */}
+              <div className="flex-1 flex flex-col justify-around gap-2 lg:gap-2.5 py-1 text-left relative min-h-0">
+                
+                {/* Discipline 1 */}
+                <div className="flex flex-col gap-0.5">
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
+                  >
+                    NO-CODE &amp; FRONTEND
+                  </div>
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] font-bold text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
+                  >
+                    (FRAMER, FIGMA, WEBFLOW, WORDPRESS, VIBE CODING, HTML/CSS, WEBMASTERING)
+                  </div>
+                </div>
+
+                {/* Discipline 2 */}
+                <div className="flex flex-col gap-0.5">
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
+                  >
+                    PRODUCT &amp; INTERFACE
+                  </div>
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] font-bold text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
+                  >
+                    (UX/UI DESIGN, WEB DESIGN, APP DEVELOPMENT, MOTION &amp; ANIMATION)
+                  </div>
+                </div>
+
+                {/* Discipline 3 */}
+                <div className="flex flex-col gap-0.5">
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
+                  >
+                    ART DIRECTION &amp; VISUALS
+                  </div>
+                  <div 
+                    className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
+                  >
+                    (BRANDING, CONCEPT, PHOTOGRAPHY, VISUAL SYSTEMS)
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom rule */}
+              <div className="w-full border-t border-[#E5FBB8]/40 pt-1 mt-1 flex justify-between items-center text-[7.5px] sm:text-[8.5px] lg:text-[8px] xl:text-[8.5px] font-sometype-mono text-[#E5FBB8]/70 shrink-0">
+                <span>SIGNAL // STABLE</span>
+                <span>DSP • EQ-10</span>
+              </div>
+            </div>
+
+            {/* ----------------------------------------------------
+                COLUMN 3: SKILLS RADAR & TELEMETRY MATRIX
+               ---------------------------------------------------- */}
+            <div 
+              className="flex-1 min-w-0 lg:min-w-[280px] xl:min-w-[310px] relative p-2 sm:p-3 lg:p-2.5 xl:p-3 border-[2px] border-double bg-black flex flex-col justify-between overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.6)] min-h-0"
+              style={{
+                borderColor: '#E5FBB8',
+              }}
+            >
+              {/* Header: SKILLS + LIVE STATUS */}
+              <div className="flex items-center justify-between pb-1 mb-1 border-b border-[#E5FBB8]/40 shrink-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="px-2 py-0.5 bg-black border border-[#E5FBB8] text-[#E5FBB8] font-silkscreen font-normal text-[10px] sm:text-[11px] lg:text-[10px] xl:text-[11.5px] tracking-wider leading-none rounded-[2px]">
+                    SKILLS &amp; TELEMETRY
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2 font-share-tech-mono text-[9px] sm:text-[10px] lg:text-[9.5px] xl:text-[10.5px] text-[#E5FBB8]">
+                  <span className="text-[#E5FBB8] font-bold animate-pulse">
+                    {radarTick % 2 === 0 ? '●' : '○'} LIVE
+                  </span>
+                  <span className="opacity-70">142.8 MHz</span>
+                </div>
+              </div>
+
+              {/* Main Boxed Radar Area with Ruler / Telemetry / Rich Data */}
+              <div className="relative border border-[#E5FBB8] p-1.5 sm:p-2 lg:p-2 bg-black flex flex-col justify-between flex-1 min-h-[220px] lg:min-h-0 overflow-hidden shadow-inner">
+                
+                {/* Top Ruler Ticks with Coordinate Marks */}
+                <div className="w-full flex justify-between items-center px-1 text-[7px] sm:text-[8px] lg:text-[7.5px] text-[#E5FBB8]/70 font-mono select-none border-b border-[#E5FBB8]/20 pb-0.5 mb-1 shrink-0">
+                  <span>+00°00'</span>
+                  <span>┬─┬─┬─┬─┬─┬</span>
+                  <span>AZ: 042.8°</span>
+                  <span>┬─┬─┬─┬─┬─┬</span>
+                  <span>SIG: -48dBm</span>
+                </div>
+
+                {/* Upper Section: Experience Badges + System Metrics */}
+                <div className="grid grid-cols-2 gap-1.5 shrink-0 z-20">
+                  {/* Badge 1: +10Y Design Experience */}
+                  <div className="p-1 sm:p-1.5 bg-black border border-[#E5FBB8] rounded-[2px] shadow-[1px_1px_0px_rgba(229,251,184,0.3)] flex flex-col justify-center">
+                    <div className="font-silkscreen text-[9px] sm:text-[10px] lg:text-[9.5px] xl:text-[10.5px] text-[#E5FBB8] font-normal leading-tight">
+                      +10Y DESIGN
+                    </div>
+                    <div className="font-share-tech-mono text-[8px] sm:text-[9px] lg:text-[8.5px] text-[#E5FBB8]/80 leading-tight mt-0.5">
+                      EXPERIENCE &amp; ARCH
+                    </div>
+                  </div>
+
+                  {/* Badge 2: +20Y Artistic Experience */}
+                  <div className="p-1 sm:p-1.5 bg-black border border-[#E5FBB8] rounded-[2px] shadow-[1px_1px_0px_rgba(229,251,184,0.3)] flex flex-col justify-center">
+                    <div className="font-silkscreen text-[9px] sm:text-[10px] lg:text-[9.5px] xl:text-[10.5px] text-[#E5FBB8] font-normal leading-tight">
+                      +20Y ARTISTIC
+                    </div>
+                    <div className="font-share-tech-mono text-[8px] sm:text-[9px] lg:text-[8.5px] text-[#E5FBB8]/80 leading-tight mt-0.5">
+                      CREATIVE PRACTICE
+                    </div>
+                  </div>
+                </div>
+
+                {/* Middle Section: Retro Radar Graphic & Tech Chips */}
+                <div className="relative flex-1 flex flex-col justify-between py-1 my-0.5 border-y border-[#E5FBB8]/25 bg-[#E5FBB8]/[0.02] px-1 min-h-0">
+                  
+                  {/* Telemetry Graphic Background */}
+                  <div className="relative w-full flex-1 flex flex-row items-center pt-0.5">
+                    
+                    {/* Left Column: Dither + Solid Bar */}
+                    <div className="flex flex-row items-stretch shrink-0 pr-1.5 select-none h-full">
+                      <div className="flex flex-col justify-between text-[6.5px] sm:text-[7.5px] lg:text-[7px] font-mono leading-tight text-[#E5FBB8]/70 pr-0.5">
+                        <span>▒</span>
+                        <span>?</span>
+                        <span>░</span>
+                        <span>,</span>
+                        <span>▓</span>
+                      </div>
+
+                      <div 
+                        className="w-2 sm:w-2.5 h-full bg-[#E5FBB8] rounded-[1px] border border-black"
+                        style={{
+                          boxShadow: '0 0 5px rgba(229, 251, 184, 0.45)',
+                        }}
+                      />
+                    </div>
+
+                    {/* Wireframe Distance Lines */}
+                    <div className="relative flex-1 h-full flex flex-col justify-between font-sometype-mono text-[#E5FBB8] select-none text-[7.5px] sm:text-[8.5px] lg:text-[8px] pl-1 pb-0.5">
+                      
+                      {/* Top Line */}
+                      <div className="w-full flex items-center justify-between text-[7px] sm:text-[8px] lg:text-[7.5px] leading-tight">
+                        <span className="opacity-0">.</span>
+                        <div className="flex items-center gap-0.5 font-normal text-[#E5FBB8]/90">
+                          <span>════</span>
+                          <span>15.8NM</span>
+                          <span>════</span>
+                        </div>
+                        <span className="font-normal text-[#E5FBB8]/80 pr-1">X</span>
+                      </div>
+
+                      {/* Middle Arc */}
+                      <div className="w-full flex items-center justify-between text-[7px] sm:text-[8px] lg:text-[7.5px] leading-tight">
+                        <div className="text-[6.5px] text-[#E5FBB8]/60 leading-none">
+                          <div>,-?</div>
+                        </div>
+
+                        <div className="flex items-center gap-0.5 font-normal text-[#E5FBB8]/90">
+                          <span>════</span>
+                          <span>7.9NM</span>
+                          <span>════</span>
+                        </div>
+
+                        <span className="text-[6.5px] sm:text-[7.5px] lg:text-[7px] font-normal tracking-tight text-[#E5FBB8]/70 pr-1">
+                          3
+                        </span>
+                      </div>
+
+                      {/* Inner Arc */}
+                      <div className="w-full flex items-center justify-between text-[7px] sm:text-[8px] lg:text-[7.5px] leading-tight">
+                        <span className="font-normal text-[#E5FBB8]/70">UN</span>
+                        <div className="flex items-center gap-0.5 font-normal text-[#E5FBB8]/90">
+                          <span>═══</span>
+                          <span>3.6NM</span>
+                          <span>═══</span>
+                        </div>
+                        <span className="opacity-0">.</span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Tech Stack Chips Strip (without REACT) */}
+                  <div className="flex items-center justify-center flex-wrap gap-1 pt-1 shrink-0">
+                    {['FIGMA', 'FRAMER', 'WEBFLOW', 'WORDPRESS', 'HTML/CSS'].map((tool) => (
+                      <span
+                        key={tool}
+                        className="px-1.5 py-0.5 bg-black text-[#E5FBB8] font-silkscreen font-normal text-[7.5px] sm:text-[8.5px] lg:text-[8px] xl:text-[9px] border border-[#E5FBB8]/70 rounded-[1px] leading-none shadow-[1px_1px_0px_rgba(0,0,0,0.8)]"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Lower Section: ARROWS EQUALIZER ("el coso con las flechas") */}
+                <div 
+                  className="w-full bg-black/90 border border-[#E5FBB8]/70 p-1.5 rounded-[2px] flex items-center justify-center shadow-[0_2px_4px_rgba(0,0,0,0.8)] shrink-0 z-20"
+                  title="Frequency Spectrum Equalizer"
+                >
+                  {/* Centered Inverted Triangle Equalizer Graphic */}
+                  <div className="w-full flex items-end justify-center gap-1.5 sm:gap-2 py-0.5 px-1 bg-black border border-[#E5FBB8]/40 rounded-[2px]">
+                    {eqLevels.map((lvl, colIdx) => (
+                      <div key={colIdx} className="flex flex-col items-center justify-end leading-none select-none">
+                        {Array.from({ length: Math.min(8, lvl) }).map((_, rIdx) => (
+                          <span 
+                            key={rIdx}
+                            className="text-[10px] sm:text-[12px] lg:text-[10.5px] xl:text-[12px] text-[#E5FBB8] leading-[9px] sm:leading-[10.5px] lg:leading-[9.5px] xl:leading-[10.5px] block font-bold"
+                            style={{
+                              opacity: 0.5 + (rIdx / lvl) * 0.5,
+                              filter: 'drop-shadow(0 0 2.5px rgba(229, 251, 184, 0.9))',
+                            }}
+                          >
+                            ▼
+                          </span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom Banner: WEBMASTER AT + PUENTES/ESCUCHADORAS */}
+              <div 
+                id="radar-webmaster-banner"
+                className="mt-1.5 w-full bg-black border border-[#E5FBB8] text-[#E5FBB8] py-1 px-2 leading-none flex items-center justify-between relative z-20 shrink-0 shadow-[1px_1px_0px_rgba(0,0,0,0.8)]"
+              >
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span 
+                    style={{
+                      fontFamily: "'Share Tech Mono', monospace",
+                      fontSize: '12.5px',
+                      fontWeight: 'bold',
+                    }}
+                    className="text-[#E5FBB8]"
+                  >
+                    WEBMASTER AT:
+                  </span>
+                  <div className="flex items-center gap-2 text-[#E5FBB8] uppercase">
+                    <span className="text-[6px]">●</span>
+                    <span
+                      style={{
+                        fontFamily: "'Share Tech Mono', monospace",
+                        fontSize: '11.5px',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      PUENTES
+                    </span>
+                    <span className="text-[6px]">●</span>
+                    <span
+                      style={{
+                        fontFamily: "'Share Tech Mono', monospace",
+                        fontSize: '11.5px',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      ESCUCHADORAS
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+      {/* ========================================================
+          SCREEN 3: WORKS SHOWCASE WITH VIDEO & GLITCH RENDER REVEAL
+         ======================================================== */}
+      {currentScreen === 3 && (
+        <WorksScreen 
+          currentIndex={activeWorkIndex}
+          onIndexChange={(idx) => setActiveWorkIndex(idx)}
+          onBack={() => setCurrentScreen(1)} 
+          onNavigateAbout={() => setCurrentScreen(4)}
+        />
+      )}
+
+      {/* ========================================================
+          SCREEN 4: DEDICATED ABOUT PAGE WITH GLITCH PORTRAIT
+         ======================================================== */}
+      {currentScreen === 4 && (
+        <AboutScreen 
+          onBack={() => setCurrentScreen(1)} 
+          onNavigateWorks={() => setCurrentScreen(3)} 
+          onNavigateCv={() => setCurrentScreen(5)}
+        />
+      )}
+
+      {/* ========================================================
+          SCREEN 5: DEDICATED CV / CURRICULUM VITAE PAGE
+         ======================================================== */}
+      {currentScreen === 5 && (
+        <CvScreen 
+          onBack={() => setCurrentScreen(4)} 
+          onNavigateWorks={() => setCurrentScreen(3)} 
+        />
+      )}
+
+      {/* CRT Edge Shadow */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          boxShadow: 'inset 0 0 35px rgba(0, 0, 0, 0.95), inset 0 0 10px rgba(0, 0, 0, 1)',
+        }}
+      />
+    </div>
+  );
+};

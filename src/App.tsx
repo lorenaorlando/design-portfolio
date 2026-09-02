@@ -1,0 +1,32 @@
+import { useState } from 'react';
+import { MonitorSettings } from './types';
+import { RetroMonitor } from './components/RetroMonitor';
+
+export default function App() {
+  const [settings, setSettings] = useState<MonitorSettings>({
+    power: 'on',
+    crtMode: 'clean',
+    audioMuted: false,
+    tilt: 0,
+    brightness: 100,
+    contrast: 100,
+    viewMode: 'desktop',
+    activeTab: 'product',
+  });
+
+  const [currentScreen, setCurrentScreen] = useState<1 | 3 | 4 | 5>(1);
+
+  return (
+    <main
+      id="app-root-viewport"
+      className="fixed inset-0 w-screen h-screen overflow-hidden p-0 m-0 bg-[#e8e4d4] select-none touch-none sm:touch-auto"
+    >
+      <RetroMonitor
+        settings={settings}
+        onUpdateSettings={setSettings}
+        currentScreen={currentScreen}
+        onScreenChange={setCurrentScreen}
+      />
+    </main>
+  );
+}

@@ -1,0 +1,370 @@
+@import "tailwindcss";
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+@layer base {
+  body {
+    font-family: 'VT323', monospace;
+  }
+}
+
+.font-general-sans {
+  font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.font-share-tech-mono {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.font-sometype-mono {
+  font-family: 'Share Tech Mono', 'Sometype Mono', monospace;
+}
+
+.font-vt323 {
+  font-family: 'VT323', monospace;
+}
+
+.font-silkscreen {
+  font-family: 'Silkscreen', monospace;
+}
+
+/* Vintage CRT deep black curved gradient with phosphor depth */
+.crt-screen-bg {
+  background: 
+    radial-gradient(ellipse at 50% 45%, #181d24 0%, #0d1117 55%, #05070a 100%);
+}
+
+.crt-glass-ambient-glare {
+  background: linear-gradient(
+    130deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.05) 18%,
+    rgba(255, 255, 255, 0.0) 35%,
+    rgba(255, 255, 255, 0.02) 65%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+}
+
+.crt-vignette {
+  box-shadow: 
+    inset 0 0 60px rgba(0, 0, 0, 0.9),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Custom hardware & CRT lighting textures */
+.bezel-chassis-shadow {
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.22),
+    0 12px 28px -8px rgba(0, 0, 0, 0.16),
+    inset 0 2px 4px rgba(255, 255, 255, 0.7),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.plum-plate-shadow {
+  box-shadow:
+    inset 0 4px 12px rgba(0, 0, 0, 0.75),
+    inset 0 -2px 6px rgba(255, 255, 255, 0.15),
+    0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.navy-plate-shadow {
+  box-shadow:
+    inset 0 4px 12px rgba(0, 0, 0, 0.75),
+    inset 0 -2px 6px rgba(255, 255, 255, 0.15),
+    0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.crt-bezel-recess {
+  box-shadow:
+    inset 0 10px 24px rgba(0, 0, 0, 0.9),
+    inset 0 -6px 16px rgba(0, 0, 0, 0.6),
+    inset 6px 0 16px rgba(0, 0, 0, 0.7),
+    inset -6px 0 16px rgba(0, 0, 0, 0.7),
+    0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.vintage-bezel-tunnel {
+  box-shadow:
+    inset 0 16px 30px rgba(0, 0, 0, 0.45),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.35),
+    inset 12px 0 24px rgba(0, 0, 0, 0.3),
+    inset -12px 0 24px rgba(0, 0, 0, 0.3);
+}
+
+.vintage-chin-socket {
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.6),
+    inset 0 -1px 2px rgba(255, 255, 255, 0.4),
+    0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.vintage-button-shadow {
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.35),
+    0 1px 3px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.vintage-button-active {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.crt-glass-glare {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 22%,
+    rgba(255, 255, 255, 0.0) 45%,
+    rgba(255, 255, 255, 0.03) 70%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
+.crt-scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.18) 50%,
+    rgba(0, 0, 0, 0.18)
+  );
+  background-size: 100% 4px;
+}
+
+.crt-curvature {
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.45);
+}
+
+.dot-pattern-purple {
+  background-image: radial-gradient(#b83280 1.2px, transparent 1.2px);
+  background-size: 14px 14px;
+}
+
+.dot-pattern-canvas {
+  background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.hardware-screw {
+  box-shadow: 
+    inset 0 1px 2px rgba(0, 0, 0, 0.8),
+    0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Rendering raster scanline / decode effect for photos */
+@keyframes photo-raster-decode {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    filter: brightness(2.5) contrast(1.5) grayscale(1);
+    opacity: 0.3;
+  }
+  50% {
+    clip-path: inset(0 0 45% 0);
+    filter: brightness(1.8) contrast(1.4) grayscale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    filter: brightness(1) contrast(1.2) grayscale(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scan-beam-sweep {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+  95% {
+    top: 100%;
+    opacity: 0.9;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-render-decode {
+  animation: photo-raster-decode 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scan-beam {
+  animation: scan-beam-sweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtle pulse for active LEDs */
+@keyframes led-glow {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px currentColor); }
+  50% { opacity: 0.85; filter: drop-shadow(0 0 3px currentColor); }
+}
+
+.animate-led {
+  animation: led-glow 2.5s ease-in-out infinite;
+}
+
+/* CRT power up flash */
+@keyframes crt-on {
+  0% {
+    transform: scale(0.01, 0.002);
+    opacity: 0.2;
+    filter: brightness(3);
+  }
+  35% {
+    transform: scale(1, 0.005);
+    opacity: 1;
+    filter: brightness(4);
+  }
+  65% {
+    transform: scale(1, 0.85);
+    opacity: 0.95;
+    filter: brightness(2);
+  }
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+.animate-crt-warmup {
+  animation: crt-on 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* CRT power off collapse */
+@keyframes crt-off {
+  0% {
+    transform: scale(1, 1);
+    opacity: 1;
+    filter: brightness(1.5);
+  }
+  40% {
+    transform: scale(1, 0.006);
+    opacity: 0.9;
+    filter: brightness(3);
+  }
+  80% {
+    transform: scale(0.01, 0.006);
+    opacity: 0.9;
+    filter: brightness(4);
+  }
+  100% {
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+}
+
+.animate-crt-collapse {
+  animation: crt-off 0.35s ease-in forwards;
+}
+
+/* Case study rich HTML rendering styles */
+.case-study-html h3 {
+  font-family: 'Silkscreen', monospace;
+  font-size: 23px;
+  font-weight: 400;
+  color: #E5FBB8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(229, 251, 184, 0.35);
+  padding-bottom: 6px;
+}
+
+.case-study-html h3:first-child {
+  margin-top: 0;
+}
+
+.case-study-html p {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 19px;
+  color: rgba(229, 251, 184, 0.95);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.case-study-html ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.case-study-html li {
+  position: relative;
+  padding-left: 24px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 19px;
+  color: rgba(229, 251, 184, 0.95);
+  line-height: 1.55;
+}
+
+.case-study-html li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #E5FBB8;
+  font-size: 19px;
+}
+
+.case-study-html em {
+  font-style: normal;
+  color: #FFFFFF;
+  background-color: rgba(229, 251, 184, 0.15);
+  padding: 0 3px;
+}
+
+/* Retro CRT custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(229, 251, 184, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #E5FBB8;
+  border-radius: 0px;
+}
+
+/* Glitch effect on hover/tap for profile photo */
+@keyframes photo-rgb-glitch {
+  0% {
+    transform: translate(0);
+    filter: drop-shadow(-2px 0 #ff0055) drop-shadow(2px 0 #00ffff);
+  }
+  20% {
+    transform: translate(-2px, 1px);
+    filter: drop-shadow(2px -1px #ff0055) drop-shadow(-2px 1px #00ffff);
+  }
+  40% {
+    transform: translate(2px, -1px);
+    filter: drop-shadow(-3px 1px #ff0055) drop-shadow(3px -1px #00ffff);
+  }
+  60% {
+    transform: translate(-1px, 2px);
+    filter: drop-shadow(2px 1px #ff0055) drop-shadow(-2px -1px #00ffff);
+  }
+  80% {
+    transform: translate(1px, -2px);
+    filter: drop-shadow(-1px -1px #ff0055) drop-shadow(1px 1px #00ffff);
+  }
+  100% {
+    transform: translate(0);
+    filter: drop-shadow(-2px 0 #ff0055) drop-shadow(2px 0 #00ffff);
+  }
+}
+
+.animate-glitch-active {
+  animation: photo-rgb-glitch 0.2s infinite steps(2);
+}
+
