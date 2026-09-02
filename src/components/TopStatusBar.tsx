@@ -1,7 +1,8 @@
 import React from 'react';
-import { Maximize2, Minimize2, RotateCcw, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Globe, Maximize2, Minimize2, RotateCcw, Sparkles, Volume2, VolumeX } from 'lucide-react';
 import { MonitorSettings } from '../types';
 import { audioEngine } from '../utils/audio';
+import { TRANSLATIONS } from '../data/translations';
 
 interface TopStatusBarProps {
   settings: MonitorSettings;
@@ -13,6 +14,15 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
   onUpdateSettings,
 }) => {
   const isFocused = settings.viewMode === 'focus';
+  const t = TRANSLATIONS[settings.language || 'en'];
+
+  const toggleLanguage = () => {
+    audioEngine.playClick(1.4);
+    onUpdateSettings((s) => ({
+      ...s,
+      language: s.language === 'en' ? 'es' : 'en',
+    }));
+  };
 
   const toggleViewMode = () => {
     audioEngine.playClick(1.2);
@@ -33,6 +43,7 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
       contrast: 100,
       viewMode: 'desktop',
       activeTab: 'product',
+      language: s.language || 'es',
     }));
   };
 
@@ -46,7 +57,7 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]" />
           <span className="text-xs sm:text-sm font-semibold tracking-tight text-neutral-800">
-            Data General CRT Frame
+            {t.topBar.hardwareTitle}
           </span>
         </div>
         <span className="hidden sm:inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-neutral-200/80 text-neutral-600 font-mono">
@@ -57,6 +68,22 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
 
       {/* Action Controls Pill */}
       <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/80 backdrop-blur-md border border-neutral-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+        {/* Language Switcher Button */}
+        <button
+          id="btn-top-lang-toggle"
+          type="button"
+          onClick={toggleLanguage}
+          className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold text-amber-900 bg-amber-100/80 hover:bg-amber-200/90 border border-amber-300/80 transition-colors cursor-pointer"
+          title={t.topBar.langTooltip}
+        >
+          <Globe className="w-3.5 h-3.5 text-amber-700" />
+          <span className="font-mono tracking-wider font-bold">
+            {settings.language === 'en' ? 'EN' : 'ES'}
+          </span>
+        </button>
+
+        <div className="w-[1px] h-4 bg-neutral-200 my-auto" />
+
         {/* Focus / Full View Toggle */}
         <button
           id="btn-view-mode-toggle"
@@ -68,12 +95,12 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
           {isFocused ? (
             <>
               <Minimize2 className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Full Hardware</span>
+              <span className="hidden xs:inline">{t.topBar.fullHardware}</span>
             </>
           ) : (
             <>
               <Maximize2 className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">Focus Viewport</span>
+              <span className="hidden xs:inline">{t.topBar.focusViewport}</span>
             </>
           )}
         </button>
@@ -95,7 +122,7 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
               ? 'text-neutral-400 hover:bg-neutral-100'
               : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100'
           }`}
-          title={settings.audioMuted ? 'Unmute mechanical audio' : 'Mute audio'}
+          title={settings.audioMuted ? t.topBar.unmute : t.topBar.mute}
         >
           {settings.audioMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
         </button>
@@ -106,7 +133,7 @@ export const TopStatusBar: React.FC<TopStatusBarProps> = ({
           type="button"
           onClick={handleReset}
           className="p-1.5 rounded-lg text-xs font-medium text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors cursor-pointer"
-          title="Reset monitor alignment & settings"
+          title={t.topBar.reset}
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>

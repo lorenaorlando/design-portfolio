@@ -1,9 +1,12 @@
 import React from 'react';
 import { WorkProject } from '../data/worksData';
 import { audioEngine } from '../utils/audio';
+import { Language } from '../types';
+import { TRANSLATIONS } from '../data/translations';
 
 interface CaseStudyScreenProps {
   project: WorkProject;
+  language?: Language;
   onBack: () => void;
   onNext?: () => void;
   onPrev?: () => void;
@@ -13,12 +16,15 @@ interface CaseStudyScreenProps {
 
 export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
   project,
+  language = 'es',
   onBack,
   onNext,
   onPrev,
   hasPrev = true,
   hasNext = true,
 }) => {
+  const t = TRANSLATIONS[language];
+
   return (
     <div className="w-full h-full flex flex-col bg-black text-[#E5FBB8] p-2 sm:p-3 overflow-hidden select-none animate-fadeIn">
       
@@ -32,7 +38,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
             }}
             className="px-2.5 py-1 bg-[#E5FBB8] text-black font-silkscreen text-[11px] sm:text-[12px] font-normal hover:bg-[#B980F0] transition-colors cursor-pointer shrink-0 flex items-center gap-1 leading-none border border-black"
           >
-            <span>←</span> BACK
+            <span>←</span> {t.caseStudy.back}
           </button>
           <span className="font-silkscreen text-[12px] sm:text-[15px] text-[#E5FBB8] uppercase truncate font-normal">
             {project.title}
@@ -49,9 +55,9 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
               }}
               disabled={!hasPrev}
               className="px-2 py-1 border border-[#E5FBB8]/60 text-[#E5FBB8] hover:bg-[#B980F0] hover:text-black font-silkscreen text-[10px] sm:text-[11px] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed leading-none"
-              title="Previous Case Study"
+              title={t.caseStudy.prev}
             >
-              PREV
+              {t.caseStudy.prev}
             </button>
           )}
           {onNext && (
@@ -62,9 +68,9 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
               }}
               disabled={!hasNext}
               className="px-2 py-1 border border-[#E5FBB8]/60 text-[#E5FBB8] hover:bg-[#B980F0] hover:text-black font-silkscreen text-[10px] sm:text-[11px] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed leading-none"
-              title="Next Case Study"
+              title={t.caseStudy.next}
             >
-              NEXT
+              {t.caseStudy.next}
             </button>
           )}
         </div>
@@ -77,7 +83,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-2.5 border border-[#E5FBB8]/40 bg-[#E5FBB8]/5">
           <div>
             <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8]/70 block mb-0.5">
-              SCOPE:
+              {t.caseStudy.scope}
             </span>
             <span className="font-share-tech-mono text-[12.5px] sm:text-[14px] text-[#E5FBB8] font-normal leading-normal">
               {project.category}
@@ -85,7 +91,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
           </div>
           <div>
             <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8]/70 block mb-0.5">
-              TYPE OF CLIENT:
+              {t.caseStudy.typeOfClient}
             </span>
             <span className="font-share-tech-mono text-[12.5px] sm:text-[14px] text-[#E5FBB8] font-normal leading-normal">
               {project.typeOfProject}
@@ -100,7 +106,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8] tracking-wider uppercase">
-                [ VISUAL ARTIFACT ]
+                {t.caseStudy.visualArtifact}
               </span>
               <span className="font-share-tech-mono text-[10px] text-[#E5FBB8]/70">
                 100% HI-RES
@@ -120,7 +126,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8] tracking-wider uppercase">
-                [ MOTION ARTIFACT ]
+                {t.caseStudy.motionArtifact}
               </span>
               <span className="font-share-tech-mono text-[10px] text-[#E5FBB8]/70">
                 LIVE LOOP
@@ -182,7 +188,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
             }}
             className="px-3.5 py-1.5 bg-[#E5FBB8] text-black font-silkscreen text-[11px] font-normal hover:bg-[#B980F0] transition-colors cursor-pointer border border-black"
           >
-            ← RETURN TO WORKS
+            ← {t.caseStudy.returnToWorks}
           </button>
         </div>
 

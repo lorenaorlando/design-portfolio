@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import { WorkProject, WORKS_DATA } from '../data/worksData';
+import { WorkProject, getWorksData } from '../data/worksData';
 import { CaseStudyScreen } from './CaseStudyScreen';
 import { audioEngine } from '../utils/audio';
+import { Language } from '../types';
+import { TRANSLATIONS } from '../data/translations';
 
 interface WorksScreenProps {
   currentIndex?: number;
+  language?: Language;
   onIndexChange?: (index: number) => void;
   onBack: () => void;
   onNavigateAbout: () => void;
 }
 
 export const WorksScreen: React.FC<WorksScreenProps> = ({ 
+  language = 'es',
   onBack, 
   onNavigateAbout 
 }) => {
+  const t = TRANSLATIONS[language];
+  const worksData = getWorksData(language);
   const [selectedProjectIndex, setSelectedProjectIndex] = useState<number | null>(null);
   const [pressedBtnSlug, setPressedBtnSlug] = useState<string | null>(null);
 
@@ -28,17 +34,17 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
 
   const handleNextCase = () => {
     if (selectedProjectIndex !== null) {
-      setSelectedProjectIndex((selectedProjectIndex + 1) % WORKS_DATA.length);
+      setSelectedProjectIndex((selectedProjectIndex + 1) % worksData.length);
     }
   };
 
   const handlePrevCase = () => {
     if (selectedProjectIndex !== null) {
-      setSelectedProjectIndex((selectedProjectIndex - 1 + WORKS_DATA.length) % WORKS_DATA.length);
+      setSelectedProjectIndex((selectedProjectIndex - 1 + worksData.length) % worksData.length);
     }
   };
 
-  const activeCaseProject = selectedProjectIndex !== null ? WORKS_DATA[selectedProjectIndex] : null;
+  const activeCaseProject = selectedProjectIndex !== null ? worksData[selectedProjectIndex] : null;
 
   return (
     <div className="relative z-10 w-full h-full flex flex-col bg-black text-[#E5FBB8] select-none overflow-hidden">
@@ -52,21 +58,21 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
         <div className="w-full max-w-[840px] flex items-center justify-between border-b border-[#E5FBB8]/40 pb-2 mb-4 sm:mb-6 shrink-0">
           <div className="flex items-center gap-2">
             <span className="font-silkscreen text-[11px] sm:text-[13px] text-[#E5FBB8] uppercase tracking-wider">
-              PROJECTS ARCHIVE
+              {t.works.archiveTitle}
             </span>
             <span className="font-sometype-mono text-[9px] sm:text-[10px] text-[#E5FBB8]/70">
-              [{WORKS_DATA.length} WORKS]
+              [{worksData.length} {t.works.worksCountSuffix}]
             </span>
           </div>
 
           <div className="flex items-center gap-2 font-share-tech-mono text-[9px] sm:text-[10px] text-[#E5FBB8]/70">
-            <span>▼ SCROLL DOWN</span>
+            <span>▼ {t.works.scrollDown}</span>
           </div>
         </div>
 
         {/* List of all projects rendered naturally for fluid scrolling */}
         <div className="w-full max-w-[840px] flex flex-col gap-8 sm:gap-14 pb-8">
-          {WORKS_DATA.map((project, idx) => {
+          {worksData.map((project, idx) => {
             const projectNumber = String(idx + 1).padStart(2, '0');
             const isPressed = pressedBtnSlug === project.slug;
 
@@ -80,7 +86,7 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
                 <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] aspect-square relative bg-black border-[3px] sm:border-[4px] border-[#E5FBB8] overflow-hidden flex items-center justify-center shrink-0 shadow-[2px_2px_0px_rgba(0,0,0,0.6)]">
                   {/* Corner index guide */}
                   <span className="absolute top-1 left-1.5 font-silkscreen text-[7.5px] sm:text-[8.5px] text-[#E5FBB8] bg-black/80 px-1 py-0.5 z-20 border border-[#E5FBB8]/50 leading-none">
-                    [{projectNumber}/{WORKS_DATA.length}]
+                    [{projectNumber}/{worksData.length}]
                   </span>
 
                   {/* Video Player */}
@@ -106,10 +112,8 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
                     </div>
                   </div>
 
-                  {/* Year and Type Tag */}
+                  {/* Type Tag */}
                   <div className="flex items-center gap-2 font-sometype-mono text-[9.5px] sm:text-[11px] text-[#E5FBB8]/80">
-                    <span className="text-[#E5FBB8] font-bold">YEAR: {project.year}</span>
-                    <span>•</span>
                     <span className="truncate">{project.typeOfProject}</span>
                   </div>
 
@@ -133,9 +137,9 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
                       className={`px-3.5 sm:px-4 py-1.5 bg-[#E5FBB8] text-black font-silkscreen font-normal leading-none uppercase tracking-wider transition-all duration-75 cursor-pointer outline-none border border-black text-[13px] sm:text-[14px] md:text-[15px] ${
                         isPressed ? 'scale-95 bg-[#B980F0]' : 'hover:bg-[#B980F0] active:scale-95'
                       }`}
-                      title={`Explore Case Study for ${project.title}`}
+                      title={`${t.works.seeCaseStudy} - ${project.title}`}
                     >
-                      SEE CASE STUDY →
+                      {t.works.seeCaseStudy} →
                     </button>
                   </div>
                 </div>
@@ -147,7 +151,7 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
 
         {/* Footer info at the bottom of the list */}
         <div className="w-full max-w-[840px] border-t border-[#E5FBB8]/40 pt-3 pb-4 flex items-center justify-between text-[9px] sm:text-[10px] font-sometype-mono text-[#E5FBB8]/70">
-          <span>END OF ARCHIVE</span>
+          <span>{t.works.endOfArchive}</span>
           <button 
             onClick={() => {
               const el = document.getElementById('works-scroll-container');
@@ -155,7 +159,7 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
             }}
             className="hover:text-[#E5FBB8] underline cursor-pointer"
           >
-            ▲ BACK TO TOP
+            ▲ {t.works.backToTop}
           </button>
         </div>
 
@@ -168,6 +172,7 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
         <div className="absolute inset-0 z-40 bg-black">
           <CaseStudyScreen
             project={activeCaseProject}
+            language={language}
             onBack={() => setSelectedProjectIndex(null)}
             onNext={handleNextCase}
             onPrev={handlePrevCase}

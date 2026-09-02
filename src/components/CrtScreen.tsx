@@ -1,5 +1,5 @@
 import React from 'react';
-import { CrtScreenMode, PowerState } from '../types';
+import { CrtScreenMode, Language, PowerState } from '../types';
 import { ChiQuachCanvas } from './ChiQuachCanvas';
 
 interface CrtScreenProps {
@@ -8,6 +8,7 @@ interface CrtScreenProps {
   brightness: number; // 20 to 120
   contrast: number; // 50 to 150
   activeTab?: string;
+  language?: Language;
   onTabChange?: (tab: any) => void;
   onPowerToggle?: () => void;
   currentScreen?: 1 | 3 | 4 | 5;
@@ -19,6 +20,7 @@ export const CrtScreen: React.FC<CrtScreenProps> = ({
   crtMode,
   brightness,
   contrast,
+  language = 'es',
   onPowerToggle,
   currentScreen,
   onScreenChange,
@@ -78,7 +80,7 @@ export const CrtScreen: React.FC<CrtScreenProps> = ({
           }}
         >
           {/* The Pure Black CRT Screen */}
-          <ChiQuachCanvas currentScreen={currentScreen} onScreenChange={onScreenChange} />
+          <ChiQuachCanvas currentScreen={currentScreen} onScreenChange={onScreenChange} language={language} />
 
           {/* Optional Vintage Scanlines Overlay */}
           {crtMode !== 'clean' && (

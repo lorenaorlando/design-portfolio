@@ -2,6 +2,7 @@ export type PowerState = 'on' | 'off' | 'warming';
 export type CrtScreenMode = 'clean' | 'scanlines' | 'amber' | 'phosphor';
 export type ActiveTab = 'product' | 'visual' | 'about';
 export type ViewMode = 'desktop' | 'focus' | 'cinema';
+export type Language = 'en' | 'es';
 
 export interface MonitorSettings {
   power: PowerState;
@@ -12,4 +13,6 @@ export interface MonitorSettings {
   contrast: number; // 50 to 150
   viewMode: ViewMode;
   activeTab: ActiveTab;
+  language: Language;
 }
+

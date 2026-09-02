@@ -12,6 +12,7 @@ export default function App() {
     contrast: 100,
     viewMode: 'desktop',
     activeTab: 'product',
+    language: 'es',
   });
 
   const [currentScreen, setCurrentScreen] = useState<1 | 3 | 4 | 5>(1);

@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { audioEngine } from '../utils/audio';
-import { WORKS_DATA } from '../data/worksData';
+import { getWorksData } from '../data/worksData';
+import { TRANSLATIONS } from '../data/translations';
+import { Language } from '../types';
 import { WorksScreen } from './WorksScreen';
 import { AboutScreen } from './AboutScreen';
 import { CvScreen } from './CvScreen';
 
 interface ChiQuachCanvasProps {
   currentScreen?: 1 | 3 | 4 | 5;
+  language?: Language;
   onScreenChange?: (screen: 1 | 3 | 4 | 5) => void;
 }
 
 export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
   currentScreen: controlledScreen,
+  language = 'es',
   onScreenChange,
 }) => {
+  const t = TRANSLATIONS[language];
+  const worksList = getWorksData(language);
+
   // Navigation: 1 = START (Complete 3-Panel Dashboard), 3 = WORKS, 4 = ABOUT, 5 = CV
   const [internalScreen, setInternalScreen] = useState<1 | 3 | 4 | 5>(1);
   const currentScreen = controlledScreen !== undefined ? controlledScreen : internalScreen;
@@ -81,7 +88,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
 
   const handleNavPrevWork = () => {
     audioEngine.playClick(0.9);
-    setActiveWorkIndex((prev) => (prev > 0 ? prev - 1 : WORKS_DATA.length - 1));
+    setActiveWorkIndex((prev) => (prev > 0 ? prev - 1 : worksList.length - 1));
     if (currentScreen !== 3) {
       setCurrentScreen(3);
     }
@@ -89,7 +96,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
 
   const handleNavNextWork = () => {
     audioEngine.playClick(1.3);
-    setActiveWorkIndex((prev) => (prev < WORKS_DATA.length - 1 ? prev + 1 : 0));
+    setActiveWorkIndex((prev) => (prev < worksList.length - 1 ? prev + 1 : 0));
     if (currentScreen !== 3) {
       setCurrentScreen(3);
     }
@@ -127,7 +134,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
         <div className="relative z-30 w-full max-w-[700px] px-1 sm:px-2 pt-0.5 animate-fadeIn">
           <div className="w-full flex items-center justify-between pb-1 text-[#E5FBB8] select-none min-h-[28px] border-b border-[#E5FBB8]/30 mb-1">
             <span className="font-silkscreen text-[8.5px] sm:text-[9.5px] tracking-widest text-[#E5FBB8]/80 uppercase">
-              SELECTED WORKS
+              {t.works.selectedWorks}
             </span>
 
             {/* Navigation Arrows for Project Switching */}
@@ -136,18 +143,18 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                 id="nav-works-prev-btn"
                 onClick={handleNavPrevWork}
                 className="px-2.5 py-0.5 border border-[#E5FBB8]/70 hover:border-[#B980F0] hover:bg-[#B980F0] hover:text-black text-[#E5FBB8] flex items-center justify-center text-[7.5px] sm:text-[8.5px] rounded-[1px] transition-all cursor-pointer outline-none active:scale-95 shadow-[1px_1px_0px_rgba(229,251,184,0.3)]"
-                title="PREV PROJECT"
+                title={t.works.prevProject}
               >
-                ◀ PREV
+                {t.works.prevProject}
               </button>
 
               <button
                 id="nav-works-next-btn"
                 onClick={handleNavNextWork}
                 className="px-2.5 py-0.5 border border-[#E5FBB8]/70 hover:border-[#B980F0] hover:bg-[#B980F0] hover:text-black text-[#E5FBB8] flex items-center justify-center text-[7.5px] sm:text-[8.5px] rounded-[1px] transition-all cursor-pointer outline-none active:scale-95 shadow-[1px_1px_0px_rgba(229,251,184,0.3)]"
-                title="NEXT PROJECT"
+                title={t.works.nextProject}
               >
-                NEXT ▶
+                {t.works.nextProject}
               </button>
             </div>
           </div>
@@ -212,9 +219,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                   </h1>
                   <div className="flex items-center gap-1 text-black font-share-tech-mono font-normal text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px] leading-tight tracking-[0.05em] mt-1 opacity-90">
                     <span className="text-black/60 text-[7.5px]">■</span>
-                    <span>CRAFT, DESIGN</span>
-                    <span className="text-black/50">&amp;</span>
-                    <span>INTERFACES</span>
+                    <span>{t.screen1.lorenaRole}</span>
                   </div>
                 </div>
 
@@ -224,9 +229,9 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                     id="card-about-btn"
                     onClick={handleAboutClick}
                     className="w-fit px-3 py-1 bg-black text-[#E5FBB8] font-silkscreen font-normal text-[8.5px] sm:text-[9.5px] lg:text-[8.5px] xl:text-[9.5px] leading-none uppercase tracking-wider transition-all duration-75 cursor-pointer outline-none border border-black hover:bg-[#B980F0] hover:text-black flex items-center gap-1 active:scale-95 shadow-[1px_1px_0px_rgba(0,0,0,0.5)]"
-                    title="Navigate to About Page"
+                    title={t.screen1.aboutBtn}
                   >
-                    <span>ABOUT</span>
+                    <span>{t.screen1.aboutBtn}</span>
                     <span className="text-[9px]">→</span>
                   </button>
                 </div>
@@ -246,7 +251,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
               {/* Header: DESIGN */}
               <div>
                 <div className="font-silkscreen font-normal text-[12px] sm:text-[14px] lg:text-[13px] xl:text-[14.5px] uppercase tracking-widest text-[#E5FBB8]">
-                  DESIGN
+                  {t.screen1.design}
                 </div>
                 <div className="w-full border-b-[2px] border-double border-[#E5FBB8] mt-1 mb-1.5 lg:mb-2" />
               </div>
@@ -259,12 +264,12 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
                   >
-                    NO-CODE &amp; FRONTEND
+                    {t.screen1.discipline1Title}
                   </div>
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] font-bold text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
                   >
-                    (FRAMER, FIGMA, WEBFLOW, WORDPRESS, VIBE CODING, HTML/CSS, WEBMASTERING)
+                    {t.screen1.discipline1Subtitle}
                   </div>
                 </div>
 
@@ -273,12 +278,12 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
                   >
-                    PRODUCT &amp; INTERFACE
+                    {t.screen1.discipline2Title}
                   </div>
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] font-bold text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
                   >
-                    (UX/UI DESIGN, WEB DESIGN, APP DEVELOPMENT, MOTION &amp; ANIMATION)
+                    {t.screen1.discipline2Subtitle}
                   </div>
                 </div>
 
@@ -287,12 +292,12 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8] tracking-[0.05em] font-bold uppercase leading-tight text-[14px] sm:text-[16px] lg:text-[14.5px] xl:text-[16px]"
                   >
-                    ART DIRECTION &amp; VISUALS
+                    {t.screen1.discipline3Title}
                   </div>
                   <div 
                     className="font-share-tech-mono text-[#E5FBB8]/85 leading-[1.35] tracking-[0.05em] text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[10.5px]"
                   >
-                    (BRANDING, CONCEPT, PHOTOGRAPHY, VISUAL SYSTEMS)
+                    {t.screen1.discipline3Subtitle}
                   </div>
                 </div>
 
@@ -300,7 +305,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
 
               {/* Bottom rule */}
               <div className="w-full border-t border-[#E5FBB8]/40 pt-1 mt-1 flex justify-between items-center text-[7.5px] sm:text-[8.5px] lg:text-[8px] xl:text-[8.5px] font-sometype-mono text-[#E5FBB8]/70 shrink-0">
-                <span>SIGNAL // STABLE</span>
+                <span>{t.screen1.signalStable}</span>
                 <span>DSP • EQ-10</span>
               </div>
             </div>
@@ -318,7 +323,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
               <div className="flex items-center justify-between pb-1 mb-1 border-b border-[#E5FBB8]/40 shrink-0">
                 <div className="flex items-center gap-1.5">
                   <span className="px-2 py-0.5 bg-black border border-[#E5FBB8] text-[#E5FBB8] font-silkscreen font-normal text-[10px] sm:text-[11px] lg:text-[10px] xl:text-[11.5px] tracking-wider leading-none rounded-[2px]">
-                    SKILLS &amp; TELEMETRY
+                    {t.screen1.skillsTelemetry}
                   </span>
                 </div>
 
@@ -347,20 +352,20 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                   {/* Badge 1: +10Y Design Experience */}
                   <div className="p-1 sm:p-1.5 bg-black border border-[#E5FBB8] rounded-[2px] shadow-[1px_1px_0px_rgba(229,251,184,0.3)] flex flex-col justify-center">
                     <div className="font-silkscreen text-[9px] sm:text-[10px] lg:text-[9.5px] xl:text-[10.5px] text-[#E5FBB8] font-normal leading-tight">
-                      +10Y DESIGN
+                      {t.screen1.badgeDesign}
                     </div>
                     <div className="font-share-tech-mono text-[8px] sm:text-[9px] lg:text-[8.5px] text-[#E5FBB8]/80 leading-tight mt-0.5">
-                      EXPERIENCE &amp; ARCH
+                      {t.screen1.badgeDesignSub}
                     </div>
                   </div>
 
                   {/* Badge 2: +20Y Artistic Experience */}
                   <div className="p-1 sm:p-1.5 bg-black border border-[#E5FBB8] rounded-[2px] shadow-[1px_1px_0px_rgba(229,251,184,0.3)] flex flex-col justify-center">
                     <div className="font-silkscreen text-[9px] sm:text-[10px] lg:text-[9.5px] xl:text-[10.5px] text-[#E5FBB8] font-normal leading-tight">
-                      +20Y ARTISTIC
+                      {t.screen1.badgeArt}
                     </div>
                     <div className="font-share-tech-mono text-[8px] sm:text-[9px] lg:text-[8.5px] text-[#E5FBB8]/80 leading-tight mt-0.5">
-                      CREATIVE PRACTICE
+                      {t.screen1.badgeArtSub}
                     </div>
                   </div>
                 </div>
@@ -489,7 +494,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
                     }}
                     className="text-[#E5FBB8]"
                   >
-                    WEBMASTER AT:
+                    {t.screen1.webmasterAt}
                   </span>
                   <div className="flex items-center gap-2 text-[#E5FBB8] uppercase">
                     <span className="text-[6px]">●</span>
@@ -528,6 +533,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
       {currentScreen === 3 && (
         <WorksScreen 
           currentIndex={activeWorkIndex}
+          language={language}
           onIndexChange={(idx) => setActiveWorkIndex(idx)}
           onBack={() => setCurrentScreen(1)} 
           onNavigateAbout={() => setCurrentScreen(4)}
@@ -539,6 +545,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
          ======================================================== */}
       {currentScreen === 4 && (
         <AboutScreen 
+          language={language}
           onBack={() => setCurrentScreen(1)} 
           onNavigateWorks={() => setCurrentScreen(3)} 
           onNavigateCv={() => setCurrentScreen(5)}
@@ -550,6 +557,7 @@ export const ChiQuachCanvas: React.FC<ChiQuachCanvasProps> = ({
          ======================================================== */}
       {currentScreen === 5 && (
         <CvScreen 
+          language={language}
           onBack={() => setCurrentScreen(4)} 
           onNavigateWorks={() => setCurrentScreen(3)} 
         />

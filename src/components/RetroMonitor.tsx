@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Check, Linkedin, Mail, Power } from 'lucide-react';
+import { Check, Globe, Linkedin, Mail, Power } from 'lucide-react';
 import { MonitorSettings } from '../types';
 import { audioEngine } from '../utils/audio';
 import { CrtScreen } from './CrtScreen';
+import { TRANSLATIONS } from '../data/translations';
 
 interface RetroMonitorProps {
   settings: MonitorSettings;
@@ -21,6 +22,18 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
   const [activeBtn, setActiveBtn] = useState<string | null>(null);
   const [emailCopied, setEmailCopied] = useState(false);
   const emailCopyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const lang = settings.language || 'es';
+  const t = TRANSLATIONS[lang];
+
+  const handleLanguageToggle = () => {
+    audioEngine.playClick(1.4);
+    const nextLang = lang === 'en' ? 'es' : 'en';
+    onUpdateSettings((s) => ({
+      ...s,
+      language: nextLang,
+    }));
+  };
 
   const isPowered = settings.power === 'on' || settings.power === 'warming';
 
@@ -184,38 +197,78 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
             </div>
           </div>
 
-          {/* Mobile Nav Menu (Horizontal Buttons) */}
-          <div
-            className="flex flex-row gap-1 p-1 rounded-[4px] bg-[#cbb55a] flex-1 max-w-[270px] justify-between items-center"
-            style={{
-              boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
-              border: '1px solid #b8a147',
-            }}
-          >
-            {[
-              { label: 'START', screen: 1, color: '#6d540d' },
-              { label: 'WORKS', screen: 3, color: '#6d540d' },
-              { label: 'ABOUT', screen: 4, color: '#9f853f' },
-              { label: 'CV', screen: 5, color: '#8c7f56' },
-            ].map((item) => {
-              const isActive = currentScreen === item.screen && isPowered;
-              return (
-                <button
-                  key={item.label}
-                  onClick={() => handleNavClick(item.screen as any)}
-                  disabled={!isPowered}
-                  className={`flex-1 py-1 px-1 rounded-[2px] transition-all duration-75 select-none text-[8.5px] font-share-tech-mono font-bold tracking-wider uppercase flex items-center justify-center cursor-pointer outline-none border ${
-                    isActive
-                      ? 'translate-y-[1px] bg-[#a88d30] text-[#3d3002] shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.5)] border-[#876e20]'
-                      : 'bg-gradient-to-b from-[#fdf7db] to-[#ecd281] hover:from-[#fffdf0] hover:to-[#dec473] border-[#caa348] active:translate-y-[0.5px] active:shadow-[inset_0_1px_1.5px_rgba(0,0,0,0.4)] shadow-[0_1px_0_rgba(255,255,255,0.75),_0_1px_1.5px_rgba(0,0,0,0.2)]'
-                  } ${!isPowered ? 'opacity-55 cursor-not-allowed' : ''}`}
-                  style={!isActive ? { color: item.color } : {}}
-                  title={`Switch Screen to ${item.label}`}
+          {/* Mobile Nav Menu (Horizontal Buttons) + Language Switcher */}
+          <div className="flex items-center gap-1">
+            <div
+              className="flex flex-row gap-0.5 p-0.5 rounded-[4px] bg-[#cbb55a] items-center"
+              style={{
+                boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
+                border: '1px solid #b8a147',
+              }}
+            >
+              {[
+                { label: t.nav.start, screen: 1, color: '#6d540d' },
+                { label: t.nav.works, screen: 3, color: '#6d540d' },
+                { label: t.nav.about, screen: 4, color: '#9f853f' },
+                { label: t.nav.cv, screen: 5, color: '#8c7f56' },
+              ].map((item) => {
+                const isActive = currentScreen === item.screen && isPowered;
+                return (
+                  <button
+                    key={item.screen}
+                    onClick={() => handleNavClick(item.screen as any)}
+                    disabled={!isPowered}
+                    className={`py-0.5 px-1.5 rounded-[2px] transition-all duration-75 select-none text-[8px] font-share-tech-mono font-bold tracking-wider uppercase flex items-center justify-center cursor-pointer outline-none border ${
+                      isActive
+                        ? 'translate-y-[1px] bg-[#a88d30] text-[#3d3002] shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.5)] border-[#876e20]'
+                        : 'bg-gradient-to-b from-[#fdf7db] to-[#ecd281] hover:from-[#fffdf0] hover:to-[#dec473] border-[#caa348] active:translate-y-[0.5px] active:shadow-[inset_0_1px_1.5px_rgba(0,0,0,0.4)] shadow-[0_1px_0_rgba(255,255,255,0.75),_0_1px_1.5px_rgba(0,0,0,0.2)]'
+                    } ${!isPowered ? 'opacity-55 cursor-not-allowed' : ''}`}
+                    style={!isActive ? { color: item.color } : {}}
+                    title={`Switch Screen to ${item.label}`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Mobile Language Toggle: Mini Physical Dual-Rocker Switch */}
+            <div
+              className="p-0.5 rounded-[4px] bg-[#1a1408] flex items-center justify-center"
+              style={{
+                boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.75), 0 0.5px 0.5px rgba(255,255,255,0.3)',
+                border: '1px solid #7a5e18',
+              }}
+            >
+              <button
+                id="mobile-btn-lang-toggle"
+                onClick={handleLanguageToggle}
+                type="button"
+                className="h-5 rounded-[2px] bg-[#2d220b] p-0.5 grid grid-cols-2 gap-0.5 cursor-pointer outline-none select-none border border-[#120e05]"
+                title={lang === 'es' ? 'Switch to English (ENG)' : 'Cambiar a Español (ESP)'}
+              >
+                <div
+                  className={`px-1 flex items-center justify-center gap-0.5 rounded-[1.5px] transition-all duration-75 ${
+                    lang === 'es'
+                      ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
+                      : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
+                  } font-share-tech-mono text-[7px] font-black leading-none`}
                 >
-                  {item.label}
-                </button>
-              );
-            })}
+                  <span className={`w-1 h-1 rounded-full ${lang === 'es' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
+                  ESP
+                </div>
+                <div
+                  className={`px-1 flex items-center justify-center gap-0.5 rounded-[1.5px] transition-all duration-75 ${
+                    lang === 'en'
+                      ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
+                      : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
+                  } font-share-tech-mono text-[7px] font-black leading-none`}
+                >
+                  <span className={`w-1 h-1 rounded-full ${lang === 'en' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
+                  ENG
+                </div>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -224,7 +277,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
            ======================================================== */}
         <div
           id="side-controls-bar"
-          className="relative z-10 hidden sm:flex w-[78px] sm:w-[98px] md:w-[124px] flex-col justify-between items-center py-2 sm:py-3 px-1 sm:px-1.5 border-r border-[#dec874]/60 bg-[#ebd88a]/15 shrink-0 select-none gap-2 sm:gap-3 self-stretch"
+          className="relative z-10 hidden sm:flex w-[82px] sm:w-[102px] md:w-[128px] flex-col justify-between items-center py-2 sm:py-2.5 px-1 sm:px-1.5 border-r border-[#dec874]/60 bg-[#ebd88a]/15 shrink-0 select-none gap-2 sm:gap-2.5 self-stretch"
         >
           {/* Top: Ventilation grille + Brand name .CLICK-26 */}
           <div className="w-full flex flex-col items-center gap-1">
@@ -246,10 +299,10 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
               <div className="absolute right-1.5 top-0.5 w-1 h-1 bg-[#473e1c] rounded-[1px] border border-black/30" />
             </div>
             <div className="w-full flex items-center justify-between text-[5px] sm:text-[6px] font-share-tech-mono text-[#7c661d] leading-none select-none font-bold tracking-wider">
-              <span>CURRENTLY:</span>
+              <span>{t.chassis.currently}</span>
               <span className="flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] shadow-[0_0_4px_#39ff14] inline-block animate-pulse shrink-0" />
-                <span className="text-[5.5px] sm:text-[6.5px] text-[#4b7a21] font-extrabold uppercase">AVAILABLE</span>
+                <span className="text-[5.5px] sm:text-[6.5px] text-[#4b7a21] font-extrabold uppercase">{t.chassis.available}</span>
               </span>
             </div>
           </div>
@@ -314,14 +367,14 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
             </div>
             
             <span className="font-share-tech-mono text-[6px] sm:text-[7.5px] text-[#ccaF5c] uppercase tracking-wider text-center select-none font-bold">
-              POWER
+              {t.chassis.power}
             </span>
           </div>
 
           {/* Middle-Center: NEW RETRO CARVED NAVIGATION PANEL WITH SUNKEN COLOR STYLES */}
           <div className="flex flex-col items-center w-full gap-1">
             <span className="font-share-tech-mono text-[6px] sm:text-[7.5px] text-[#ccaF5c] uppercase tracking-widest text-center select-none font-bold">
-              NAV MENU
+              {t.chassis.navMenu}
             </span>
 
             {/* Sunken Bezel Compartment for Nav Buttons */}
@@ -333,18 +386,18 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
               }}
             >
               {[
-                { label: 'START', screen: 1, color: '#6d540d' },
-                { label: 'WORKS', screen: 3, color: '#6d540d' },
-                { label: 'ABOUT', screen: 4, color: '#9f853f' },
-                { label: 'CV', screen: 5, color: '#8c7f56' },
+                { label: t.nav.start, screen: 1, color: '#6d540d' },
+                { label: t.nav.works, screen: 3, color: '#6d540d' },
+                { label: t.nav.about, screen: 4, color: '#9f853f' },
+                { label: t.nav.cv, screen: 5, color: '#8c7f56' },
               ].map((item) => {
                 const isActive = currentScreen === item.screen && isPowered;
                 return (
                   <button
-                    key={item.label}
+                    key={item.screen}
                     onClick={() => handleNavClick(item.screen as any)}
                     disabled={!isPowered}
-                    className={`w-full py-1 sm:py-1.5 rounded-[3px] transition-all duration-75 select-none text-[8px] sm:text-[9.5px] md:text-[11.5px] font-share-tech-mono font-bold tracking-[0.1em] sm:tracking-[0.15em] uppercase flex items-center justify-center cursor-pointer outline-none border ${
+                    className={`w-full py-1 sm:py-1.5 rounded-[3px] transition-all duration-75 select-none text-[8px] sm:text-[9.5px] md:text-[11px] font-share-tech-mono font-bold tracking-[0.08em] sm:tracking-[0.12em] uppercase flex items-center justify-center cursor-pointer outline-none border ${
                       isActive
                         ? 'translate-y-[1.5px] bg-[#a88d30] text-[#3d3002] shadow-[inset_0_2px_4px_rgba(0,0,0,0.5)] border-[#876e20]'
                         : 'bg-gradient-to-b from-[#fdf7db] to-[#ecd281] hover:from-[#fffdf0] hover:to-[#dec473] border-[#caa348] active:translate-y-[1px] active:shadow-[inset_0_1.5px_2px_rgba(0,0,0,0.4)] shadow-[0_1px_0_rgba(255,255,255,0.75),_0_1.5px_2px_rgba(0,0,0,0.2)]'
@@ -356,6 +409,89 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          {/* ========================================================
+              NEW DEDICATED HARDWARE LANGUAGE SWITCHER (LEFT PANEL) - PHYSICAL MECHANICAL ROCKER SWITCH WITH STATUS INDICATOR LIGHTS
+             ======================================================== */}
+          <div className="flex flex-col items-center w-full gap-0.5">
+            <span className="font-share-tech-mono text-[7px] sm:text-[8px] text-[#ccaF5c] uppercase tracking-widest text-center select-none font-bold flex items-center justify-center gap-1">
+              <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#ccaF5c]" />
+            </span>
+
+            {/* Recessed Mechanical Socket Housing */}
+            <div
+              className="w-full p-1 rounded-[5px] bg-[#1a1408] flex items-center justify-center"
+              style={{
+                boxShadow: 'inset 0 2.5px 5px rgba(0,0,0,0.75), 0 0.5px 1px rgba(255,255,255,0.3)',
+                border: '1px solid #7a5e18',
+              }}
+            >
+              {/* Mechanical 2-Position Rocker Switch Plate */}
+              <button
+                id="btn-chassis-lang-toggle"
+                onClick={handleLanguageToggle}
+                type="button"
+                className="w-full h-7 sm:h-8 rounded-[3px] bg-[#2d220b] p-0.5 grid grid-cols-2 gap-0.5 cursor-pointer outline-none select-none border border-[#120e05] shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-all"
+                title={lang === 'es' ? 'Switch to English (ENG)' : 'Cambiar a Español (ESP)'}
+              >
+                {/* Left Rocker Half: ESP */}
+                <div
+                  className={`relative flex flex-col items-center justify-center rounded-[2px] transition-all duration-100 ${
+                    lang === 'es'
+                      ? 'translate-y-[1.5px] bg-[#9e832d] shadow-[inset_0_2px_4px_rgba(0,0,0,0.65),inset_0_-0.5px_1px_rgba(255,255,255,0.15)] border-t border-[#685215]'
+                      : 'translate-y-[-1px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_2px_3px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.9)] border-b border-[#96771e]'
+                  }`}
+                >
+                  {/* Physical Indicator Light: Glowing Amber/Green LED when ESP active, dark unlit diode when inactive */}
+                  <div className="absolute top-1 flex items-center justify-center">
+                    {lang === 'es' ? (
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ffea79] shadow-[0_0_5px_#ffea79,0_0_8px_#e5b922,inset_0_0.5px_1px_#ffffff] border border-[#d6a512]" />
+                    ) : (
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#463914] shadow-[inset_0_0.5px_1px_rgba(0,0,0,0.8)] border border-[#2b2106] opacity-60" />
+                    )}
+                  </div>
+
+                  <span
+                    className={`font-share-tech-mono text-[7.5px] sm:text-[9px] font-black tracking-wider leading-none mt-2 ${
+                      lang === 'es'
+                        ? 'text-[#2a1e04] drop-shadow-[0_0.5px_0px_rgba(255,255,255,0.25)] font-bold'
+                        : 'text-[#6b4e09]'
+                    }`}
+                  >
+                    ESP
+                  </span>
+                </div>
+
+                {/* Right Rocker Half: ENG */}
+                <div
+                  className={`relative flex flex-col items-center justify-center rounded-[2px] transition-all duration-100 ${
+                    lang === 'en'
+                      ? 'translate-y-[1.5px] bg-[#9e832d] shadow-[inset_0_2px_4px_rgba(0,0,0,0.65),inset_0_-0.5px_1px_rgba(255,255,255,0.15)] border-t border-[#685215]'
+                      : 'translate-y-[-1px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_2px_3px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.9)] border-b border-[#96771e]'
+                  }`}
+                >
+                  {/* Physical Indicator Light: Glowing Amber/Green LED when ENG active, dark unlit diode when inactive */}
+                  <div className="absolute top-1 flex items-center justify-center">
+                    {lang === 'en' ? (
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ffea79] shadow-[0_0_5px_#ffea79,0_0_8px_#e5b922,inset_0_0.5px_1px_#ffffff] border border-[#d6a512]" />
+                    ) : (
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#463914] shadow-[inset_0_0.5px_1px_rgba(0,0,0,0.8)] border border-[#2b2106] opacity-60" />
+                    )}
+                  </div>
+
+                  <span
+                    className={`font-share-tech-mono text-[7.5px] sm:text-[9px] font-black tracking-wider leading-none mt-2 ${
+                      lang === 'en'
+                        ? 'text-[#2a1e04] drop-shadow-[0_0.5px_0px_rgba(255,255,255,0.25)] font-bold'
+                        : 'text-[#6b4e09]'
+                    }`}
+                  >
+                    ENG
+                  </span>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -384,7 +520,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                   : 'text-[#ccaF5c]'
               }`}
             >
-              {emailCopied ? 'EMAIL COPIED!' : 'CONTACT'}
+              {emailCopied ? t.chassis.emailCopied : t.chassis.contact}
             </span>
 
             {/* 1. LinkedIn Icon Button */}
@@ -439,7 +575,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                 <div 
                   className="absolute -top-7 sm:-top-8 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black text-[#4ef985] font-silkscreen text-[7.5px] sm:text-[9px] px-1.5 py-0.5 rounded-[2px] border border-[#4ef985] shadow-[0_0_8px_rgba(78,249,133,0.9)] z-50 animate-bounce pointer-events-none"
                 >
-                  EMAIL COPIED!
+                  {t.chassis.emailCopied}
                 </div>
               )}
 
@@ -469,7 +605,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                     ? '1px solid rgba(100, 45, 150, 0.6)'
                     : '1px solid rgba(255, 255, 255, 0.55)',
                 }}
-                title={emailCopied ? "EMAIL COPIED! (soylorenaorlando@gmail.com)" : "Send Email (soylorenaorlando@gmail.com)"}
+                title={emailCopied ? `${t.chassis.emailCopied} (soylorenaorlando@gmail.com)` : "Send Email (soylorenaorlando@gmail.com)"}
               >
                 {emailCopied ? (
                   <Check 
@@ -479,7 +615,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                 ) : (
                   <Mail 
                     className="w-3 h-3 sm:w-3.5 sm:h-3.5" 
-                    style={{ color: '#6b5c7d' }}
+                    style={{ color: '#6b5c7d' }} 
                   />
                 )}
               </button>
@@ -512,6 +648,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
               brightness={settings.brightness}
               contrast={settings.contrast}
               activeTab={settings.activeTab}
+              language={settings.language || 'es'}
               onTabChange={(tab) => onUpdateSettings((s) => ({ ...s, activeTab: tab }))}
               onPowerToggle={handlePowerToggle}
               currentScreen={currentScreen}
@@ -541,12 +678,12 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
           {/* Center: Currently Available Status with Green Pulsing LED */}
           <div className="flex items-center gap-1.5 px-2 py-1 bg-[#d6be62]/40 border border-[#bfa546]/80 rounded-[4px] shadow-[inset_0_1px_2px_rgba(0,0,0,0.15)]">
             <span className="font-share-tech-mono text-[6.5px] text-[#7c661d] font-bold tracking-wider">
-              CURRENTLY:
+              {t.chassis.currently}
             </span>
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] shadow-[0_0_4px_#39ff14] inline-block animate-pulse shrink-0" />
               <span className="text-[7px] text-[#4b7a21] font-extrabold uppercase font-share-tech-mono">
-                AVAILABLE
+                {t.chassis.available}
               </span>
             </span>
           </div>
@@ -605,7 +742,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                 <div 
                   className="absolute -top-7 right-0 whitespace-nowrap bg-black text-[#4ef985] font-silkscreen text-[7.5px] px-1.5 py-0.5 rounded-[2px] border border-[#4ef985] shadow-[0_0_8px_rgba(78,249,133,0.9)] z-50 animate-bounce pointer-events-none"
                 >
-                  EMAIL COPIED!
+                  {t.chassis.emailCopied}
                 </div>
               )}
 
@@ -635,7 +772,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                     ? '1px solid rgba(100, 45, 150, 0.6)'
                     : '1px solid rgba(255, 255, 255, 0.55)',
                 }}
-                title={emailCopied ? "EMAIL COPIED! (soylorenaorlando@gmail.com)" : "Send Email"}
+                title={emailCopied ? `${t.chassis.emailCopied} (soylorenaorlando@gmail.com)` : "Send Email"}
               >
                 {emailCopied ? (
                   <Check 

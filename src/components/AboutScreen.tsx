@@ -1,17 +1,22 @@
 import React, { useState, useRef } from 'react';
 import { audioEngine } from '../utils/audio';
+import { Language } from '../types';
+import { TRANSLATIONS } from '../data/translations';
 
 interface AboutScreenProps {
+  language?: Language;
   onBack: () => void;
   onNavigateWorks: () => void;
   onNavigateCv: () => void;
 }
 
 export const AboutScreen: React.FC<AboutScreenProps> = ({
+  language = 'es',
   onBack,
   onNavigateWorks,
   onNavigateCv,
 }) => {
+  const t = TRANSLATIONS[language];
   const [isGlitched, setIsGlitched] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const touchTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -67,11 +72,11 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
 
   // Simulated retro stats
   const coreStats = [
-    { label: 'DESIGN EXP', value: '+10 YRS', width: '70%', dots: '■■■■■■■□□□' },
-    { label: 'ARTISTIC PATH', value: '+20 YRS', width: '100%', dots: '■■■■■■■■■■' },
-    { label: 'WEBMASTERING', value: '+5 YRS', width: '50%', dots: '■■■■■□□□□□' },
-    { label: 'PHOTO EXP', value: '+20 YRS', width: '100%', dots: '■■■■■■■■■■' },
-    { label: 'HAPPY CLIENTS', value: '+20 PROJ', width: '90%', dots: '■■■■■■■■■□' },
+    { label: t.about.stats.designExp, value: t.about.stats.years10, width: '70%', dots: '■■■■■■■□□□' },
+    { label: t.about.stats.artisticPath, value: t.about.stats.years20, width: '100%', dots: '■■■■■■■■■■' },
+    { label: t.about.stats.webmastering, value: t.about.stats.years5, width: '50%', dots: '■■■■■□□□□□' },
+    { label: t.about.stats.photoExp, value: t.about.stats.years20, width: '100%', dots: '■■■■■■■■■■' },
+    { label: t.about.stats.happyClients, value: t.about.stats.proj20, width: '90%', dots: '■■■■■■■■■□' },
   ];
 
   return (
@@ -81,7 +86,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
       <div className="w-full border-b border-[#E5FBB8]/40 pb-1.5 mb-1 flex items-center justify-between text-[7.5px] sm:text-[9px] font-mono text-[#E5FBB8]/80">
         <span className="font-bold flex items-center gap-1.5">
           <span className="text-[#E5FBB8] animate-pulse">●</span> 
-          FILE: README.TXT
+          {t.about.fileReadme}
         </span>
       </div>
 
@@ -136,7 +141,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
               >
                 {copiedEmail ? (
                   <span className="text-[#4ef985] bg-black px-1 border border-[#4ef985] rounded-[1px] animate-pulse">
-                    EMAIL COPIED!
+                    {t.about.emailCopied}
                   </span>
                 ) : (
                   <span>SOYLORENAORLANDO@GMAIL.COM</span>
@@ -148,7 +153,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
           {/* Retro Diagnostic Stat Bars */}
           <div className="w-full p-2 border border-[#E5FBB8]/30 bg-black/60 rounded-[3px] flex flex-col gap-1.5 text-left font-mono text-[7px] sm:text-[8px]">
             <div className="font-silkscreen text-[8px] sm:text-[9px] text-[#E5FBB8] border-b border-[#E5FBB8]/20 pb-0.5 uppercase tracking-wide">
-              DIAGNOSTICS
+              {t.about.diagnostics}
             </div>
             {coreStats.map((st) => (
               <div key={st.label} className="flex flex-col gap-0.5">
@@ -174,7 +179,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
               className="w-full py-1.5 bg-[#E5FBB8] hover:bg-[#B980F0] hover:text-black text-black font-silkscreen font-normal text-[8px] sm:text-[9.5px] tracking-widest uppercase border border-[#E5FBB8] active:translate-y-0.5 cursor-pointer transition-colors leading-none rounded-[2px] text-center"
               title="View Curriculum Vitae"
             >
-              CV
+              {t.about.cvBtn}
             </button>
           </div>
 
@@ -186,23 +191,23 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
           {/* Framed Section: Who I Am */}
           <div className="p-2.5 sm:p-3.5 border-2 border-double border-[#E5FBB8]/60 bg-black/40 rounded-[2px] relative flex flex-col gap-2">
             <div className="absolute top-[-7.5px] left-3 bg-black px-1.5 text-[8.5px] sm:text-[9.5px] font-silkscreen text-[#E5FBB8]">
-              BACKGROUND
+              {t.about.backgroundTitle}
             </div>
             <p className="indent-4 text-[15px] leading-relaxed">
-              I STARTED DESIGNING WEBPAGES IN MY TEENAGE YEARS, BACK ON THE OLD, WILD, RETRO WEB. THIS EVOLVED TROUGH TIME AS I TRIED NEW PLATFORMS AND TOOLS, DEVELOPING A DEEP UNDERSTANDING OF HOW DESIGN WORKS.
+              {t.about.backgroundP1}
             </p>
             <p className="text-[15px] leading-relaxed">
-              WHILE I GREW AS A DESIGNER I RESEARCHED AND STUDIED ALL OF THE DIFFERENT WAYS A VISUAL DISTINCTIVE LANGUAGE CAN TAKE SHAPE: COLOR PALETTES, GRAPHICS, TYPOGRAPHIES, DESIGN TRENDS. I CAN GET LOST FOR HOURS LOOKING INTO THEM, FINDING INSPIRATION.
+              {t.about.backgroundP2}
             </p>
           </div>
 
           {/* Framed Section: Approach */}
           <div className="p-2.5 sm:p-3.5 border border-[#E5FBB8]/40 bg-black/40 rounded-[2px] relative flex flex-col gap-2">
             <div className="absolute top-[-7.5px] left-3 bg-black px-1.5 text-[8.5px] sm:text-[9.5px] font-silkscreen text-[#E5FBB8]">
-              CRAFT &amp; INTENTION
+              {t.about.craftTitle}
             </div>
             <p className="text-[15px] leading-relaxed">
-              CREATIVE PEOPLE, PROJECTS, INITIATIVES AND CONTENT CREATORS HAVE ALWAYS BEEN IN MY PROFESSIONAL ORBIT BECAUSE I'M AN ARTIST TOO, AND THIS IS MY APPROACH TO ALL THE DIGITAL DESIGN PROJECTS THAT COME MY WAY. I PUT INTENTION, CREATIVITY AND THOUGHT IN MY WORK.
+              {t.about.craftP1}
             </p>
           </div>
 
