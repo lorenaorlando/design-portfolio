@@ -4,6 +4,7 @@ import { MonitorSettings } from '../types';
 import { audioEngine } from '../utils/audio';
 import { CrtScreen } from './CrtScreen';
 import { TRANSLATIONS } from '../data/translations';
+import { saveLanguagePreference } from '../utils/geoLanguage';
 
 interface RetroMonitorProps {
   settings: MonitorSettings;
@@ -29,6 +30,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
   const handleLanguageToggle = () => {
     audioEngine.playClick(1.4);
     const nextLang = lang === 'en' ? 'es' : 'en';
+    saveLanguagePreference(nextLang);
     onUpdateSettings((s) => ({
       ...s,
       language: nextLang,

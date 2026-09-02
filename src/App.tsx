@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MonitorSettings } from './types';
 import { RetroMonitor } from './components/RetroMonitor';
+import { getInitialLanguage, detectLanguageByIp } from './utils/geoLanguage';
 
 export default function App() {
-  const [settings, setSettings] = useState<MonitorSettings>({
+  const [settings, setSettings] = useState<MonitorSettings>(() => ({
     power: 'on',
     crtMode: 'clean',
     audioMuted: false,
@@ -12,10 +13,28 @@ export default function App() {
     contrast: 100,
     viewMode: 'desktop',
     activeTab: 'product',
-    language: 'es',
-  });
+    language: getInitialLanguage(),
+  }));
 
   const [currentScreen, setCurrentScreen] = useState<1 | 3 | 4 | 5>(1);
+
+  // Auto-detect language by IP on initial mount (if not manually chosen)
+  useEffect(() => {
+    let isMounted = true;
+    detectLanguageByIp().then((detectedLang) => {
+      if (isMounted && detectedLang) {
+        setSettings((prev) => {
+          if (prev.language !== detectedLang) {
+            return { ...prev, language: detectedLang };
+          }
+          return prev;
+        });
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <main
@@ -31,3 +50,4 @@ export default function App() {
     </main>
   );
 }
+
