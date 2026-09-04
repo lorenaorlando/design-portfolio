@@ -30,6 +30,8 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
+  const emailTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Toggle selection of a service
   const handleToggleService = (serviceId: string) => {
@@ -123,9 +125,10 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
     }
   };
 
-  // Email contact handler (mailto:soylorenaorlando@gmail.com)
-  const handleWorkWithMeContact = () => {
+  // Email contact handler (mailto:soylorenaorlando@gmail.com with clipboard fallback and 2-second alert)
+  const handleWorkWithMeContact = async () => {
     audioEngine.playClick(1.4);
+    const email = 'soylorenaorlando@gmail.com';
     const summaryText = generateBudgetText();
     const subject = encodeURIComponent(
       language === 'es'
@@ -133,8 +136,35 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
         : `Let's Work Together! Budget Request - $${totalUSD.toFixed(2)} USD`
     );
     const body = encodeURIComponent(summaryText);
-    const mailtoUrl = `mailto:soylorenaorlando@gmail.com?subject=${subject}&body=${body}`;
+    const mailtoUrl = `mailto:${email}?subject=${subject}&body=${body}`;
+
+    // 1. Copy email automatically to clipboard (fallback ensures clipboard works anywhere)
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = email;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
+    } catch (err) {
+      console.warn('Clipboard write exception:', err);
+    }
+
+    // 2. Open mail client with mailto
     window.location.href = mailtoUrl;
+
+    // 3. Show "EMAIL COPIED" for 2 seconds
+    setEmailCopied(true);
+    if (emailTimeoutRef.current) clearTimeout(emailTimeoutRef.current);
+    emailTimeoutRef.current = setTimeout(() => {
+      setEmailCopied(false);
+    }, 2000);
   };
 
   return (
@@ -419,12 +449,23 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
                   className={`w-full py-2 px-3 text-[10px] sm:text-[11px] font-silkscreen uppercase tracking-wider rounded-[2px] transition-all flex items-center justify-center gap-2 cursor-pointer outline-none border active:scale-95 shadow-[1.5px_1.5px_0px_rgba(0,0,0,0.8)] ${
                     selectedServices.length === 0
                       ? 'bg-black/50 text-[#E5FBB8]/40 border-[#E5FBB8]/30 cursor-not-allowed'
+                      : emailCopied
+                      ? 'bg-[#166534] text-[#bbf7d0] border-[#bbf7d0] font-bold shadow-[0_0_10px_rgba(74,222,128,0.8)] scale-[1.02]'
                       : 'bg-[#4ef985] text-black border-black font-bold hover:bg-[#39ff14] shadow-[0_0_8px_rgba(78,249,133,0.5)]'
                   }`}
                   title={t.pricing.workWithMeBtn}
                 >
-                  <Mail className="w-3.5 h-3.5" />
-                  <span>{t.pricing.workWithMeBtn}</span>
+                  {emailCopied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      <span>{language === 'es' ? '✓ ¡CORREO COPIADO!' : '✓ EMAIL COPIED!'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>{t.pricing.workWithMeBtn}</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

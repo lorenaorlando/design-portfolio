@@ -219,33 +219,14 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
            ======================================================== */}
         <div
           id="side-controls-bar"
-          className="relative z-10 hidden sm:flex w-[82px] sm:w-[102px] md:w-[128px] flex-col justify-between items-center py-2 sm:py-2.5 px-1 sm:px-1.5 border-r border-[#dec874]/60 bg-[#ebd88a]/15 shrink-0 select-none gap-2 sm:gap-2.5 self-stretch"
+          className="relative z-10 hidden sm:flex w-[82px] sm:w-[102px] md:w-[128px] flex-col justify-between items-center py-2.5 sm:py-3 px-1 sm:px-1.5 border-r border-[#dec874]/60 bg-[#ebd88a]/15 shrink-0 select-none gap-2 sm:gap-3 self-stretch"
         >
-          {/* Top: Ventilation grille + Brand name .CLICK-26 */}
+          {/* Top: Ventilation grille */}
           <div className="w-full flex flex-col items-center gap-1">
             <div className="w-full flex flex-col gap-1 px-1 opacity-70">
               <div className="h-0.5 bg-[#ebd88a] border-b border-black/15 w-full" />
               <div className="h-0.5 bg-[#ebd88a] border-b border-black/15 w-full" />
               <div className="h-0.5 bg-[#ebd88a] border-b border-black/15 w-full" />
-            </div>
-            
-            <div className="font-share-tech-mono text-[8px] sm:text-[10px] md:text-[12px] text-[#ccaF5c] leading-none text-center tracking-widest pt-1 uppercase font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]">
-              .CLICK-26
-            </div>
-          </div>
-
-          {/* Retro Detail: Currently Available Status Bar with Green LED beside it */}
-          <div className="w-full flex flex-col gap-1 px-1 sm:px-1.5 py-1.5 bg-[#d6be62]/35 border border-[#bfa546]/80 rounded-[5px] shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.15)]">
-            <div className="w-full h-1.5 bg-[#17140b] rounded-[1px] relative">
-              {/* Eject button engraving */}
-              <div className="absolute right-1.5 top-0.5 w-1 h-1 bg-[#473e1c] rounded-[1px] border border-black/30" />
-            </div>
-            <div className="w-full flex items-center justify-between text-[5px] sm:text-[6px] font-share-tech-mono text-[#7c661d] leading-none select-none font-bold tracking-wider">
-              <span>{t.chassis.currently}</span>
-              <span className="flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#39ff14] shadow-[0_0_4px_#39ff14] inline-block animate-pulse shrink-0" />
-                <span className="text-[5.5px] sm:text-[6.5px] text-[#4b7a21] font-extrabold uppercase">{t.chassis.available}</span>
-              </span>
             </div>
           </div>
 
@@ -307,18 +288,10 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                 />
               </button>
             </div>
-            
-            <span className="font-share-tech-mono text-[6px] sm:text-[7.5px] text-[#ccaF5c] uppercase tracking-wider text-center select-none font-bold">
-              {t.chassis.power}
-            </span>
           </div>
 
-          {/* Middle-Center: NEW RETRO CARVED NAVIGATION PANEL WITH SUNKEN COLOR STYLES */}
-          <div className="flex flex-col items-center w-full gap-1">
-            <span className="font-share-tech-mono text-[6px] sm:text-[7.5px] text-[#ccaF5c] uppercase tracking-widest text-center select-none font-bold">
-              {t.chassis.navMenu}
-            </span>
-
+          {/* Middle-Center: RETRO CARVED NAVIGATION PANEL WITH SUNKEN COLOR STYLES */}
+          <div className="flex flex-col items-center w-full">
             {/* Sunken Bezel Compartment for Nav Buttons */}
             <div
               className="w-full flex flex-col gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-[6px] bg-[#cbb55a]"
