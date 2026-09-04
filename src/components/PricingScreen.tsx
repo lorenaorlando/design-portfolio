@@ -11,7 +11,7 @@ import {
   Plus,
   Trash2,
   Copy,
-  MessageSquare,
+  Mail,
   Calculator,
 } from 'lucide-react';
 
@@ -123,14 +123,18 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
     }
   };
 
-  // WhatsApp contact handler
-  const handleWhatsAppContact = () => {
+  // Email contact handler (mailto:soylorenaorlando@gmail.com)
+  const handleWorkWithMeContact = () => {
     audioEngine.playClick(1.4);
     const summaryText = generateBudgetText();
-    const encoded = encodeURIComponent(summaryText);
-    // Open WhatsApp link with prefilled text
-    const waUrl = `https://api.whatsapp.com/send?text=${encoded}`;
-    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    const subject = encodeURIComponent(
+      language === 'es'
+        ? `¡Trabajemos Juntos! Solicitud de Presupuesto - $${totalUSD.toFixed(2)} USD`
+        : `Let's Work Together! Budget Request - $${totalUSD.toFixed(2)} USD`
+    );
+    const body = encodeURIComponent(summaryText);
+    const mailtoUrl = `mailto:soylorenaorlando@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailtoUrl;
   };
 
   return (
@@ -407,20 +411,20 @@ export const PricingScreen: React.FC<PricingScreenProps> = ({
                   )}
                 </button>
 
-                {/* Contact via WhatsApp Button */}
+                {/* Work With Me / Let's Work Together Email Button */}
                 <button
-                  id="btn-whatsapp-budget"
-                  onClick={handleWhatsAppContact}
+                  id="btn-work-with-me-budget"
+                  onClick={handleWorkWithMeContact}
                   disabled={selectedServices.length === 0}
                   className={`w-full py-2 px-3 text-[10px] sm:text-[11px] font-silkscreen uppercase tracking-wider rounded-[2px] transition-all flex items-center justify-center gap-2 cursor-pointer outline-none border active:scale-95 shadow-[1.5px_1.5px_0px_rgba(0,0,0,0.8)] ${
                     selectedServices.length === 0
                       ? 'bg-black/50 text-[#E5FBB8]/40 border-[#E5FBB8]/30 cursor-not-allowed'
                       : 'bg-[#4ef985] text-black border-black font-bold hover:bg-[#39ff14] shadow-[0_0_8px_rgba(78,249,133,0.5)]'
                   }`}
-                  title={t.pricing.whatsappBtn}
+                  title={t.pricing.workWithMeBtn}
                 >
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  <span>{t.pricing.whatsappBtn}</span>
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>{t.pricing.workWithMeBtn}</span>
                 </button>
               </div>
             </div>

@@ -71,7 +71,7 @@ export interface Translations {
     currencySelector: string;
     copySummaryBtn: string;
     copiedSummaryBtn: string;
-    whatsappBtn: string;
+    workWithMeBtn: string;
     clearAllBtn: string;
     refRatesNotice: string;
   };
@@ -196,7 +196,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       currencySelector: 'CURRENCY CONVERTER',
       copySummaryBtn: '📋 COPY BUDGET SUMMARY',
       copiedSummaryBtn: '✓ COPIED TO CLIPBOARD',
-      whatsappBtn: '💬 CONTACT VIA WHATSAPP',
+      workWithMeBtn: "LET'S WORK TOGETHER!",
       clearAllBtn: 'CLEAR SELECTION',
       refRatesNotice: '* COP & CLP values calculated using approximate reference rates.',
     },
@@ -323,7 +323,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       currencySelector: 'CONVERSOR DE MONEDA',
       copySummaryBtn: '📋 COPIAR RESUMEN DE PRESUPUESTO',
       copiedSummaryBtn: '✓ ¡RESUMEN COPIADO!',
-      whatsappBtn: '💬 CONTACTAR POR WHATSAPP',
+      workWithMeBtn: '¡TRABAJA CONMIGO!',
       clearAllBtn: 'VACIAR SELECCIÓN',
       refRatesNotice: '* Valores en COP y CLP calculados con tasas de cambio referenciales aproximadas.',
     },
