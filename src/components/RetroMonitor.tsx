@@ -9,8 +9,8 @@ import { saveLanguagePreference } from '../utils/geoLanguage';
 interface RetroMonitorProps {
   settings: MonitorSettings;
   onUpdateSettings: (updater: (prev: MonitorSettings) => MonitorSettings) => void;
-  currentScreen?: 1 | 3 | 4 | 5;
-  onScreenChange?: (screen: 1 | 3 | 4 | 5) => void;
+  currentScreen?: 1 | 3 | 4 | 5 | 6;
+  onScreenChange?: (screen: 1 | 3 | 4 | 5 | 6) => void;
 }
 
 export const RetroMonitor: React.FC<RetroMonitorProps> = ({
@@ -134,143 +134,83 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
         />
 
         {/* ========================================================
-            2.A MOBILE TOP BAR (POWER + NAV MENU) - ONLY ON MOBILE (< sm)
+            2.A MOBILE TOP BAR (EXPANDED NAV MENU + LANGUAGE TOGGLE) - ONLY ON MOBILE (< sm)
            ======================================================== */}
         <div
           id="mobile-top-controls-bar"
-          className="flex sm:hidden z-10 w-full flex-row items-center justify-between px-2 py-1.5 bg-[#ebd88a]/35 border-b border-[#dec874]/80 rounded-[4px] shrink-0 select-none gap-2"
+          className="flex sm:hidden z-10 w-full flex-row items-center justify-between px-1.5 py-1 bg-[#ebd88a]/35 border-b border-[#dec874]/80 rounded-[4px] shrink-0 select-none gap-1.5"
         >
-          {/* Mobile Power Section */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            {/* Organic Soft Round Tactile Power Button (#FE9898 Coral Pink) */}
-            <div
-              className="p-0.5 rounded-full shrink-0 flex items-center justify-center"
-              style={{
-                backgroundColor: '#cbb55a',
-                boxShadow: 'inset 0 1.5px 2.5px rgba(0,0,0,0.6), 0 0.5px 1px rgba(255,255,255,0.45)',
-                border: '1px solid #b8a147',
-              }}
-            >
-              <button
-                id="mobile-btn-power"
-                onClick={handlePowerToggle}
-                className="relative w-7 h-7 rounded-full transition-all duration-100 flex items-center justify-center cursor-pointer outline-none active:scale-95 active:translate-y-0.5"
-                style={{
-                  background: isPowered
-                    ? 'radial-gradient(circle at 40% 35%, #ffd4d4 0%, #FE9898 45%, #ea7a7a 80%, #d86464 100%)'
-                    : 'radial-gradient(circle at 40% 35%, #8f4d4d 0%, #683232 60%, #441d1d 100%)',
-                  boxShadow: isPowered
-                    ? '0 1.5px 3px rgba(0, 0, 0, 0.35), 0 0 8px rgba(254, 152, 152, 0.6), inset 0 1px 1.5px rgba(255, 255, 255, 0.7), inset 0 -1.5px 2px rgba(160, 45, 45, 0.4)'
-                    : '0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)',
-                  border: isPowered
-                    ? '1px solid rgba(255, 230, 230, 0.8)'
-                    : '1px solid rgba(100, 40, 40, 0.8)',
-                }}
-                title={isPowered ? 'Turn Off Monitor' : 'Turn On Monitor'}
-              >
-                <Power 
-                  className={`w-3.5 h-3.5 transition-all ${
-                    isPowered 
-                      ? 'opacity-90 drop-shadow-[0_0.5px_0.5px_rgba(255,255,255,0.6)]' 
-                      : 'opacity-40'
-                  }`}
-                  style={{ color: '#b2778a' }}
-                />
-              </button>
-            </div>
-
-            {/* Green Power LED Pill */}
-            <div
-              className="shrink-0 flex items-center justify-center p-0.5 rounded-[2px]"
-              style={{
-                backgroundColor: '#cbb55a',
-                boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
-                border: '1px solid #bba44b',
-              }}
-              title="System Power LED"
-            >
-              <div
-                className={`w-3 h-1.5 rounded-[1px] transition-all duration-300 ${
-                  isPowered
-                    ? 'bg-[#4ef985] shadow-[0_0_6px_#4ef985,0_0_10px_rgba(78,249,133,0.8)]'
-                    : 'bg-[#1b4e28] opacity-40'
-                }`}
-              />
-            </div>
+          {/* Mobile Nav Menu (Slightly larger, takes comfortable space across top) */}
+          <div
+            className="flex-1 min-w-0 flex flex-row gap-1 p-1 rounded-[5px] bg-[#cbb55a] items-center"
+            style={{
+              boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
+              border: '1px solid #b8a147',
+            }}
+          >
+            {[
+              { label: t.nav.start, screen: 1, color: '#6d540d' },
+              { label: t.nav.works, screen: 3, color: '#6d540d' },
+              { label: t.nav.pricing, screen: 6, color: '#6d540d' },
+              { label: t.nav.about, screen: 4, color: '#9f853f' },
+              { label: t.nav.cv, screen: 5, color: '#8c7f56' },
+            ].map((item) => {
+              const isActive = currentScreen === item.screen && isPowered;
+              return (
+                <button
+                  key={item.screen}
+                  onClick={() => handleNavClick(item.screen as any)}
+                  disabled={!isPowered}
+                  className={`flex-1 py-1 px-1 rounded-[2.5px] transition-all duration-75 select-none text-[8.5px] font-share-tech-mono font-bold tracking-wider uppercase flex items-center justify-center cursor-pointer outline-none border ${
+                    isActive
+                      ? 'translate-y-[1px] bg-[#a88d30] text-[#3d3002] shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.5)] border-[#876e20]'
+                      : 'bg-gradient-to-b from-[#fdf7db] to-[#ecd281] hover:from-[#fffdf0] hover:to-[#dec473] border-[#caa348] active:translate-y-[0.5px] active:shadow-[inset_0_1px_1.5px_rgba(0,0,0,0.4)] shadow-[0_1px_0_rgba(255,255,255,0.75),_0_1px_1.5px_rgba(0,0,0,0.2)]'
+                  } ${!isPowered ? 'opacity-55 cursor-not-allowed' : ''}`}
+                  style={!isActive ? { color: item.color } : {}}
+                  title={`Switch Screen to ${item.label}`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Mobile Nav Menu (Horizontal Buttons) + Language Switcher */}
-          <div className="flex items-center gap-1">
-            <div
-              className="flex flex-row gap-0.5 p-0.5 rounded-[4px] bg-[#cbb55a] items-center"
-              style={{
-                boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
-                border: '1px solid #b8a147',
-              }}
+          {/* Mobile Language Toggle: Mini Physical Dual-Rocker Switch */}
+          <div
+            className="shrink-0 p-0.5 rounded-[4px] bg-[#1a1408] flex items-center justify-center"
+            style={{
+              boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.75), 0 0.5px 0.5px rgba(255,255,255,0.3)',
+              border: '1px solid #7a5e18',
+            }}
+          >
+            <button
+              id="mobile-btn-lang-toggle"
+              onClick={handleLanguageToggle}
+              type="button"
+              className="h-6 rounded-[2.5px] bg-[#2d220b] p-0.5 grid grid-cols-2 gap-0.5 cursor-pointer outline-none select-none border border-[#120e05]"
+              title={lang === 'es' ? 'Switch to English (ENG)' : 'Cambiar a Español (ESP)'}
             >
-              {[
-                { label: t.nav.start, screen: 1, color: '#6d540d' },
-                { label: t.nav.works, screen: 3, color: '#6d540d' },
-                { label: t.nav.about, screen: 4, color: '#9f853f' },
-                { label: t.nav.cv, screen: 5, color: '#8c7f56' },
-              ].map((item) => {
-                const isActive = currentScreen === item.screen && isPowered;
-                return (
-                  <button
-                    key={item.screen}
-                    onClick={() => handleNavClick(item.screen as any)}
-                    disabled={!isPowered}
-                    className={`py-0.5 px-1.5 rounded-[2px] transition-all duration-75 select-none text-[8px] font-share-tech-mono font-bold tracking-wider uppercase flex items-center justify-center cursor-pointer outline-none border ${
-                      isActive
-                        ? 'translate-y-[1px] bg-[#a88d30] text-[#3d3002] shadow-[inset_0_1.5px_3px_rgba(0,0,0,0.5)] border-[#876e20]'
-                        : 'bg-gradient-to-b from-[#fdf7db] to-[#ecd281] hover:from-[#fffdf0] hover:to-[#dec473] border-[#caa348] active:translate-y-[0.5px] active:shadow-[inset_0_1px_1.5px_rgba(0,0,0,0.4)] shadow-[0_1px_0_rgba(255,255,255,0.75),_0_1px_1.5px_rgba(0,0,0,0.2)]'
-                    } ${!isPowered ? 'opacity-55 cursor-not-allowed' : ''}`}
-                    style={!isActive ? { color: item.color } : {}}
-                    title={`Switch Screen to ${item.label}`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Mobile Language Toggle: Mini Physical Dual-Rocker Switch */}
-            <div
-              className="p-0.5 rounded-[4px] bg-[#1a1408] flex items-center justify-center"
-              style={{
-                boxShadow: 'inset 0 1.5px 3px rgba(0,0,0,0.75), 0 0.5px 0.5px rgba(255,255,255,0.3)',
-                border: '1px solid #7a5e18',
-              }}
-            >
-              <button
-                id="mobile-btn-lang-toggle"
-                onClick={handleLanguageToggle}
-                type="button"
-                className="h-5 rounded-[2px] bg-[#2d220b] p-0.5 grid grid-cols-2 gap-0.5 cursor-pointer outline-none select-none border border-[#120e05]"
-                title={lang === 'es' ? 'Switch to English (ENG)' : 'Cambiar a Español (ESP)'}
+              <div
+                className={`px-1.5 flex items-center justify-center gap-0.5 rounded-[2px] transition-all duration-75 ${
+                  lang === 'es'
+                    ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
+                    : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
+                } font-share-tech-mono text-[7.5px] font-black leading-none`}
               >
-                <div
-                  className={`px-1 flex items-center justify-center gap-0.5 rounded-[1.5px] transition-all duration-75 ${
-                    lang === 'es'
-                      ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
-                      : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
-                  } font-share-tech-mono text-[7px] font-black leading-none`}
-                >
-                  <span className={`w-1 h-1 rounded-full ${lang === 'es' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
-                  ESP
-                </div>
-                <div
-                  className={`px-1 flex items-center justify-center gap-0.5 rounded-[1.5px] transition-all duration-75 ${
-                    lang === 'en'
-                      ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
-                      : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
-                  } font-share-tech-mono text-[7px] font-black leading-none`}
-                >
-                  <span className={`w-1 h-1 rounded-full ${lang === 'en' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
-                  ENG
-                </div>
-              </button>
-            </div>
+                <span className={`w-1 h-1 rounded-full ${lang === 'es' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
+                ESP
+              </div>
+              <div
+                className={`px-1.5 flex items-center justify-center gap-0.5 rounded-[2px] transition-all duration-75 ${
+                  lang === 'en'
+                    ? 'translate-y-[1px] bg-[#9e832d] shadow-[inset_0_1.5px_2.5px_rgba(0,0,0,0.65)] text-[#2a1e04]'
+                    : 'translate-y-[-0.5px] bg-gradient-to-b from-[#fffbe8] to-[#dec16a] shadow-[0_1px_1.5px_rgba(0,0,0,0.35)] text-[#6b4e09]'
+                } font-share-tech-mono text-[7.5px] font-black leading-none`}
+              >
+                <span className={`w-1 h-1 rounded-full ${lang === 'en' ? 'bg-[#ffea79] shadow-[0_0_3px_#ffea79]' : 'bg-[#463914] opacity-40'}`} />
+                ENG
+              </div>
+            </button>
           </div>
         </div>
 
@@ -390,6 +330,7 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
               {[
                 { label: t.nav.start, screen: 1, color: '#6d540d' },
                 { label: t.nav.works, screen: 3, color: '#6d540d' },
+                { label: t.nav.pricing, screen: 6, color: '#6d540d' },
                 { label: t.nav.about, screen: 4, color: '#9f853f' },
                 { label: t.nav.cv, screen: 5, color: '#8c7f56' },
               ].map((item) => {
@@ -494,22 +435,6 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
                   </span>
                 </div>
               </button>
-            </div>
-          </div>
-
-          {/* Retro Printed Status Board to fill empty vertical space */}
-          <div className="hidden sm:flex flex-col gap-0.5 text-left w-full px-1 py-1 border-t border-[#dfc978]/60 mt-0.5">
-            <div className="flex justify-between font-share-tech-mono text-[5.5px] sm:text-[6.5px] text-[#7a6423] leading-tight font-bold">
-              <span>CPU SPEED</span>
-              <span>12 MHz</span>
-            </div>
-            <div className="flex justify-between font-share-tech-mono text-[5.5px] sm:text-[6.5px] text-[#7a6423] leading-tight font-bold">
-              <span>RAM ADDR</span>
-              <span>0x3FF0</span>
-            </div>
-            <div className="flex justify-between font-share-tech-mono text-[5.5px] sm:text-[6.5px] text-[#7a6423] leading-tight font-bold">
-              <span>BUS SPEED</span>
-              <span>8-BIT</span>
             </div>
           </div>
 
@@ -660,20 +585,68 @@ export const RetroMonitor: React.FC<RetroMonitorProps> = ({
         </div>
 
         {/* ========================================================
-            4. MOBILE BOTTOM CONTROLS BAR (.CLICK-26, AVAILABLE, CONTACT) - ONLY ON MOBILE (< sm)
+            4. MOBILE BOTTOM CONTROLS BAR (POWER + AVAILABLE + CONTACT) - ONLY ON MOBILE (< sm)
            ======================================================== */}
         <div
           id="mobile-bottom-controls-bar"
           className="flex sm:hidden z-10 w-full flex-row items-center justify-between px-2 py-1.5 bg-[#ebd88a]/35 border-t border-[#dec874]/80 rounded-[4px] shrink-0 select-none gap-2"
         >
-          {/* Left: Brand name .CLICK-26 + mini ventilation */}
+          {/* Left: Mobile Power Section (Tactile Coral Pink Button + Green LED) */}
           <div className="flex items-center gap-1.5 shrink-0">
-            <div className="flex flex-col gap-0.5 opacity-70 w-3">
-              <div className="h-0.5 bg-[#ebd88a] border-b border-black/15 w-full" />
-              <div className="h-0.5 bg-[#ebd88a] border-b border-black/15 w-full" />
+            {/* Organic Soft Round Tactile Power Button (#FE9898 Coral Pink) */}
+            <div
+              className="p-0.5 rounded-full shrink-0 flex items-center justify-center"
+              style={{
+                backgroundColor: '#cbb55a',
+                boxShadow: 'inset 0 1.5px 2.5px rgba(0,0,0,0.6), 0 0.5px 1px rgba(255,255,255,0.45)',
+                border: '1px solid #b8a147',
+              }}
+            >
+              <button
+                id="mobile-btn-power"
+                onClick={handlePowerToggle}
+                className="relative w-6.5 h-6.5 rounded-full transition-all duration-100 flex items-center justify-center cursor-pointer outline-none active:scale-95 active:translate-y-0.5"
+                style={{
+                  background: isPowered
+                    ? 'radial-gradient(circle at 40% 35%, #ffd4d4 0%, #FE9898 45%, #ea7a7a 80%, #d86464 100%)'
+                    : 'radial-gradient(circle at 40% 35%, #8f4d4d 0%, #683232 60%, #441d1d 100%)',
+                  boxShadow: isPowered
+                    ? '0 1.5px 3px rgba(0, 0, 0, 0.35), 0 0 8px rgba(254, 152, 152, 0.6), inset 0 1px 1.5px rgba(255, 255, 255, 0.7), inset 0 -1.5px 2px rgba(160, 45, 45, 0.4)'
+                    : '0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)',
+                  border: isPowered
+                    ? '1px solid rgba(255, 230, 230, 0.8)'
+                    : '1px solid rgba(100, 40, 40, 0.8)',
+                }}
+                title={isPowered ? 'Turn Off Monitor' : 'Turn On Monitor'}
+              >
+                <Power 
+                  className={`w-3.5 h-3.5 transition-all ${
+                    isPowered 
+                      ? 'opacity-90 drop-shadow-[0_0.5px_0.5px_rgba(255,255,255,0.6)]' 
+                      : 'opacity-40'
+                  }`}
+                  style={{ color: '#b2778a' }}
+                />
+              </button>
             </div>
-            <div className="font-share-tech-mono text-[9.5px] text-[#ccaF5c] leading-none tracking-wider uppercase font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.4)]">
-              .CLICK-26
+
+            {/* Green Power LED Pill */}
+            <div
+              className="shrink-0 flex items-center justify-center p-0.5 rounded-[2px]"
+              style={{
+                backgroundColor: '#cbb55a',
+                boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.55), 0 0.5px 0.5px rgba(255,255,255,0.4)',
+                border: '1px solid #bba44b',
+              }}
+              title="System Power LED"
+            >
+              <div
+                className={`w-3 h-1.5 rounded-[1px] transition-all duration-300 ${
+                  isPowered
+                    ? 'bg-[#4ef985] shadow-[0_0_6px_#4ef985,0_0_10px_rgba(78,249,133,0.8)]'
+                    : 'bg-[#1b4e28] opacity-40'
+                }`}
+              />
             </div>
           </div>
 

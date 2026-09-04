@@ -26,7 +26,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
   const t = TRANSLATIONS[language];
 
   return (
-    <div className="w-full h-full flex flex-col bg-black text-[#E5FBB8] p-2 sm:p-3 overflow-hidden select-none animate-fadeIn">
+    <div className="w-full h-full min-h-0 flex flex-col bg-black text-[#E5FBB8] p-2 sm:p-3 overflow-hidden select-none animate-fadeIn">
       
       {/* Top Header Bar */}
       <div className="w-full flex items-center justify-between pb-2 border-b border-[#E5FBB8] shrink-0 gap-2">
@@ -60,6 +60,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
               {t.caseStudy.prev}
             </button>
           )}
+
           {onNext && (
             <button
               onClick={() => {
@@ -77,7 +78,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
       </div>
 
       {/* Main Scrollable Content */}
-      <div className="flex-1 w-full overflow-y-auto pr-1 sm:pr-2 pt-2.5 pb-4 space-y-4 font-share-tech-mono text-[13px] sm:text-[14px] leading-relaxed custom-scrollbar">
+      <div className="flex-1 min-h-0 w-full overflow-y-auto pr-1 sm:pr-2 pt-2.5 pb-4 space-y-4 font-share-tech-mono text-[13px] sm:text-[14px] leading-relaxed custom-scrollbar touch-pan-y overscroll-contain">
         
         {/* Meta Specs Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-2.5 border border-[#E5FBB8]/40 bg-[#E5FBB8]/5">
@@ -99,40 +100,40 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
           </div>
         </div>
 
-        {/* Media Grid: Image + Live Video Preview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+        {/* Media Stack: Visual Artifact Image on Top, Motion Artifact Video Underneath (Full Width) */}
+        <div className="w-full flex flex-col gap-4">
           
-          {/* 1. Main Project Case Study Image */}
-          <div className="flex flex-col gap-1.5">
+          {/* 1. Main Project Case Study Image (Visual Artifact) - Full Width on Top */}
+          <div className="w-full flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8] tracking-wider uppercase">
+              <span className="font-silkscreen text-[11px] sm:text-[12px] text-[#E5FBB8] tracking-wider uppercase font-normal">
                 {t.caseStudy.visualArtifact}
               </span>
-              <span className="font-share-tech-mono text-[10px] text-[#E5FBB8]/70">
+              <span className="font-share-tech-mono text-[10.5px] sm:text-[11.5px] text-[#E5FBB8]/70">
                 100% HI-RES
               </span>
             </div>
-            <div className="w-full border-2 border-[#E5FBB8] bg-[#E5FBB8] p-1 flex items-center justify-center overflow-hidden">
+            <div className="w-full border-2 border-[#E5FBB8] bg-[#E5FBB8] p-1.5 sm:p-2 flex items-center justify-center overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
               <img
                 src={project.imageUrl}
                 alt={project.title}
-                className="w-full h-auto max-h-[220px] object-contain border border-black/20"
+                className="w-full h-auto max-h-[380px] sm:max-h-[480px] md:max-h-[540px] object-contain border border-black/20 block"
                 loading="eager"
               />
             </div>
           </div>
 
-          {/* 2. Motion Artifact / Looping Video Player */}
-          <div className="flex flex-col gap-1.5">
+          {/* 2. Motion Artifact / Looping Video Player - Full Width Underneath */}
+          <div className="w-full flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <span className="font-silkscreen text-[10px] sm:text-[11px] text-[#E5FBB8] tracking-wider uppercase">
+              <span className="font-silkscreen text-[11px] sm:text-[12px] text-[#E5FBB8] tracking-wider uppercase font-normal">
                 {t.caseStudy.motionArtifact}
               </span>
-              <span className="font-share-tech-mono text-[10px] text-[#E5FBB8]/70">
+              <span className="font-share-tech-mono text-[10.5px] sm:text-[11.5px] text-[#E5FBB8]/70">
                 LIVE LOOP
               </span>
             </div>
-            <div className="w-full border-2 border-[#E5FBB8] bg-black p-1 flex items-center justify-center overflow-hidden">
+            <div className="w-full border-2 border-[#E5FBB8] bg-black p-1.5 sm:p-2 flex items-center justify-center overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
               <video
                 key={project.videoUrl}
                 src={project.videoUrl}
@@ -140,7 +141,7 @@ export const CaseStudyScreen: React.FC<CaseStudyScreenProps> = ({
                 loop
                 muted
                 playsInline
-                className="w-full h-auto max-h-[220px] object-cover border border-[#E5FBB8]/30"
+                className="w-full h-auto max-h-[380px] sm:max-h-[480px] md:max-h-[540px] object-cover border border-[#E5FBB8]/30 block"
               />
             </div>
           </div>

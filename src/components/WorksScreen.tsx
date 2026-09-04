@@ -47,12 +47,12 @@ export const WorksScreen: React.FC<WorksScreenProps> = ({
   const activeCaseProject = selectedProjectIndex !== null ? worksData[selectedProjectIndex] : null;
 
   return (
-    <div className="relative z-10 w-full h-full flex flex-col bg-black text-[#E5FBB8] select-none overflow-hidden">
+    <div className="relative z-10 w-full h-full min-h-0 flex flex-col bg-black text-[#E5FBB8] select-none overflow-hidden">
       
       {/* Works Continuous Natural Scroll List */}
       <div 
         id="works-scroll-container"
-        className="w-full h-full overflow-y-auto custom-scrollbar touch-pan-y overscroll-contain flex flex-col items-center px-2 sm:px-6 md:px-8 py-3 sm:py-6"
+        className="w-full h-full min-h-0 overflow-y-auto custom-scrollbar touch-pan-y overscroll-contain flex flex-col items-center px-2 sm:px-6 md:px-8 py-3 sm:py-6"
       >
         {/* Header Ribbon */}
         <div className="w-full max-w-[840px] flex items-center justify-between border-b border-[#E5FBB8]/40 pb-2 mb-4 sm:mb-6 shrink-0">

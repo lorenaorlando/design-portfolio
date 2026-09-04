@@ -4,6 +4,7 @@ export interface Translations {
   nav: {
     start: string;
     works: string;
+    pricing: string;
     about: string;
     cv: string;
   };
@@ -54,6 +55,25 @@ export interface Translations {
     selectedWorks: string;
     prevProject: string;
     nextProject: string;
+  };
+  pricing: {
+    title: string;
+    subtitle: string;
+    categories: string;
+    allCategories: string;
+    addBtn: string;
+    addedBtn: string;
+    removeBtn: string;
+    budgetSidebarTitle: string;
+    estimatedTotal: string;
+    selectedServices: string;
+    noServicesSelected: string;
+    currencySelector: string;
+    copySummaryBtn: string;
+    copiedSummaryBtn: string;
+    whatsappBtn: string;
+    clearAllBtn: string;
+    refRatesNotice: string;
   };
   about: {
     fileReadme: string;
@@ -109,6 +129,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     nav: {
       start: 'START',
       works: 'WORKS',
+      pricing: 'PRICING',
       about: 'ABOUT',
       cv: 'CV',
     },
@@ -159,6 +180,25 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       selectedWorks: 'SELECTED WORKS',
       prevProject: '◀ PREV',
       nextProject: 'NEXT ▶',
+    },
+    pricing: {
+      title: 'SERVICES & BUDGET CALCULATOR',
+      subtitle: 'SELECT SERVICES TO BUILD YOUR ESTIMATE IN REAL-TIME',
+      categories: 'CATEGORIES',
+      allCategories: 'ALL SERVICES',
+      addBtn: '+ ADD TO BUDGET',
+      addedBtn: '✓ ADDED',
+      removeBtn: 'REMOVE',
+      budgetSidebarTitle: 'YOUR ESTIMATED BUDGET',
+      estimatedTotal: 'ESTIMATED TOTAL',
+      selectedServices: 'SELECTED SERVICES',
+      noServicesSelected: 'NO SERVICES SELECTED YET. CHOOSE FROM THE CATALOG TO ESTIMATE.',
+      currencySelector: 'CURRENCY CONVERTER',
+      copySummaryBtn: '📋 COPY BUDGET SUMMARY',
+      copiedSummaryBtn: '✓ COPIED TO CLIPBOARD',
+      whatsappBtn: '💬 CONTACT VIA WHATSAPP',
+      clearAllBtn: 'CLEAR SELECTION',
+      refRatesNotice: '* COP & CLP values calculated using approximate reference rates.',
     },
     about: {
       fileReadme: 'FILE: README.TXT',
@@ -216,6 +256,7 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     nav: {
       start: 'INICIO',
       works: 'PROYECTOS',
+      pricing: 'PRECIOS',
       about: 'SOBRE MÍ',
       cv: 'CV',
     },
@@ -266,6 +307,25 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       selectedWorks: 'PROYECTOS SELECCIONADOS',
       prevProject: '◀ ANT',
       nextProject: 'SIG ▶',
+    },
+    pricing: {
+      title: 'TABLA DE SERVICIOS Y CALCULADORA',
+      subtitle: 'SELECCIONA LOS SERVICIOS PARA CALCULAR TU PRESUPUESTO EN TIEMPO REAL',
+      categories: 'CATEGORÍAS',
+      allCategories: 'TODOS LOS SERVICIOS',
+      addBtn: '+ AÑADIR A PRESUPUESTO',
+      addedBtn: '✓ EN PRESUPUESTO',
+      removeBtn: 'ELIMINAR',
+      budgetSidebarTitle: 'TU PRESUPUESTO ESTIMADO',
+      estimatedTotal: 'TOTAL ESTIMADO',
+      selectedServices: 'SERVICIOS SELECCIONADOS',
+      noServicesSelected: 'AÚN NO HAS SELECCIONADO NINGÚN SERVICIO. SELECCIONA EN LA LISTA PARA ESTIMAR.',
+      currencySelector: 'CONVERSOR DE MONEDA',
+      copySummaryBtn: '📋 COPIAR RESUMEN DE PRESUPUESTO',
+      copiedSummaryBtn: '✓ ¡RESUMEN COPIADO!',
+      whatsappBtn: '💬 CONTACTAR POR WHATSAPP',
+      clearAllBtn: 'VACIAR SELECCIÓN',
+      refRatesNotice: '* Valores en COP y CLP calculados con tasas de cambio referenciales aproximadas.',
     },
     about: {
       fileReadme: 'ARCHIVO: LEEME.TXT',
@@ -320,3 +380,4 @@ export const TRANSLATIONS: Record<Language, Translations> = {
     },
   },
 };
+

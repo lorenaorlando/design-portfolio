@@ -42,7 +42,7 @@ export const CrtScreen: React.FC<CrtScreenProps> = ({
   return (
     <div
       id="crt-screen-housing"
-      className="relative w-full h-full rounded-[16px] overflow-hidden crt-bezel-recess bg-black flex items-center justify-center select-none"
+      className="relative w-full h-full min-h-0 rounded-[16px] overflow-hidden crt-bezel-recess bg-black flex items-center justify-center select-none touch-pan-y"
       style={{
         border: '3px solid #000000',
       }}
@@ -72,7 +72,7 @@ export const CrtScreen: React.FC<CrtScreenProps> = ({
       {isPoweredOn && (
         <div
           id="crt-screen-active"
-          className={`relative w-full h-full overflow-hidden bg-black ${
+          className={`relative w-full h-full min-h-0 overflow-hidden bg-black touch-pan-y ${
             power === 'warming' ? 'animate-crt-warmup' : ''
           }`}
           style={{

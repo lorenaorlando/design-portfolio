@@ -16,7 +16,7 @@ export default function App() {
     language: getInitialLanguage(),
   }));
 
-  const [currentScreen, setCurrentScreen] = useState<1 | 3 | 4 | 5>(1);
+  const [currentScreen, setCurrentScreen] = useState<1 | 3 | 4 | 5 | 6>(1);
 
   // Auto-detect language by IP on initial mount (if not manually chosen)
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function App() {
   return (
     <main
       id="app-root-viewport"
-      className="fixed inset-0 w-screen h-screen overflow-hidden p-0 m-0 bg-[#e8e4d4] select-none touch-none sm:touch-auto"
+      className="fixed inset-0 w-screen h-screen overflow-hidden p-0 m-0 bg-[#e8e4d4] select-none touch-auto"
     >
       <RetroMonitor
         settings={settings}

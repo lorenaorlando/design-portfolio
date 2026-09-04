@@ -322,6 +322,12 @@
 }
 
 /* Retro CRT custom scrollbar */
+.custom-scrollbar {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
+}
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }

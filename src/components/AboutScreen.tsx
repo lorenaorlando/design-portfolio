@@ -80,7 +80,7 @@ export const AboutScreen: React.FC<AboutScreenProps> = ({
   ];
 
   return (
-    <div className="relative z-10 w-full max-w-[720px] px-2 sm:px-4 py-2 flex-1 overflow-y-auto custom-scrollbar animate-fadeIn select-none flex flex-col gap-3 pr-1.5 sm:pr-2.5">
+    <div className="relative z-10 w-full max-w-[720px] px-2 sm:px-4 py-2 flex-1 min-h-0 overflow-y-auto custom-scrollbar touch-pan-y overscroll-contain animate-fadeIn select-none flex flex-col gap-3 pr-1.5 sm:pr-2.5">
       
       {/* 1. Terminal Top Banner */}
       <div className="w-full border-b border-[#E5FBB8]/40 pb-1.5 mb-1 flex items-center justify-between text-[7.5px] sm:text-[9px] font-mono text-[#E5FBB8]/80">

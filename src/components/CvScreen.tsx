@@ -19,7 +19,7 @@ export const CvScreen: React.FC<CvScreenProps> = ({
   const cvData = getCvData(language);
 
   return (
-    <div className="relative z-10 w-full h-full flex-1 flex flex-col justify-between px-2 sm:px-4 md:px-6 py-2 sm:py-3 animate-fadeIn select-none text-[#E5FBB8] overflow-hidden">
+    <div className="relative z-10 w-full h-full min-h-0 flex-1 flex flex-col justify-between px-2 sm:px-4 md:px-6 py-2 sm:py-3 animate-fadeIn select-none text-[#E5FBB8] overflow-hidden">
       
       {/* CV Terminal Header */}
       <div className="flex items-center justify-between border-b border-[#E5FBB8]/40 pb-2 mb-2 shrink-0">
@@ -37,7 +37,7 @@ export const CvScreen: React.FC<CvScreenProps> = ({
       </div>
 
       {/* Main Text Content - Full-height Scrollable Terminal */}
-      <div className="flex-1 w-full overflow-y-auto pr-2 sm:pr-4 space-y-5 custom-scrollbar text-left font-sometype-mono leading-relaxed uppercase touch-pan-y overscroll-contain pb-3">
+      <div className="flex-1 min-h-0 w-full overflow-y-auto pr-2 sm:pr-4 space-y-5 custom-scrollbar text-left font-sometype-mono leading-relaxed uppercase touch-pan-y overscroll-contain pb-3">
         
         {/* 1. Header & Contact Section */}
         <div className="space-y-1.5 pb-3 border-b border-[#E5FBB8]/20">
