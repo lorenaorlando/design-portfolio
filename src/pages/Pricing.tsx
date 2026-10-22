@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Window } from '../components/Window';
 import { EMAIL } from '../content/copy';
-import { formatCurrency, PRICING_CATEGORIES, PRICING_SERVICES, ServiceCategory } from '../data/pricingData';
+import { formatUSD, PRICING_CATEGORIES, PRICING_SERVICES, ServiceCategory } from '../data/pricingData';
 import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 
@@ -20,8 +20,8 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
   const summary = () =>
     [
       `${p.title} — Lorena Orlando`,
-      ...picked.map((s) => `• ${s.name[lang]}: ${formatCurrency(s.priceUSD, 'USD')}`),
-      `${p.total}: ${formatCurrency(total, 'USD')}`,
+      ...picked.map((s) => `• ${s.name[lang]}: ${formatUSD(s.priceUSD)}`),
+      `${p.total}: ${formatUSD(total)}`,
     ].join('\n');
 
   const copy = async () => {
@@ -58,7 +58,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
                 <div className="name">{s.name[lang]}</div>
                 <div className="desc">{s.description[lang]}</div>
                 <div className="foot">
-                  <span className="price">{formatCurrency(s.priceUSD, 'USD')}</span>
+                  <span className="price">{formatUSD(s.priceUSD)}</span>
                   <button className={`chip small ${on ? 'active' : ''}`} onClick={() => toggle(s.id)}>
                     {on ? `✓ ${p.added}` : `+ ${p.add}`}
                   </button>
@@ -76,7 +76,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
                 <div className="budget-line" key={s.id}>
                   <span>{s.name[lang]}</span>
                   <span style={{ display: 'flex', gap: 8, whiteSpace: 'nowrap' }}>
-                    <span className="mono">{formatCurrency(s.priceUSD, 'USD')}</span>
+                    <span className="mono">{formatUSD(s.priceUSD)}</span>
                     <button onClick={() => toggle(s.id)} aria-label="Remove">
                       ×
                     </button>
@@ -87,7 +87,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
             <div className="mono caps muted" style={{ fontSize: 10.5, marginTop: 18 }}>
               {p.total}
             </div>
-            <div className="budget-total">{formatCurrency(total, 'USD')}</div>
+            <div className="budget-total">{formatUSD(total)}</div>
             <div className="btn-row">
               <a
                 className="chip solid"

@@ -3,7 +3,7 @@ import { CSSProperties, ReactNode, useEffect, useState } from 'react';
 import { EMAIL, PROFILE_PHOTO } from '../content/copy';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
-import { audioEngine } from '../utils/audio';
+import { playClick } from '../lib/sound';
 import { DesktopIcon, MailAppIcon } from './DesktopIcon';
 import { Logo } from './Logo';
 import { Photo } from './Photo';
@@ -81,7 +81,7 @@ export function Desktop() {
 
   const focus = (id: WinId) => setOrder((prev) => [...prev.filter((x) => x !== id), id]);
   const open = (id: WinId) => {
-    audioEngine.playClick(1.3);
+    playClick(1.3);
     setClosed((prev) => prev.filter((x) => x !== id));
     setMinimized((prev) => prev.filter((x) => x !== id));
     focus(id);
@@ -124,7 +124,7 @@ export function Desktop() {
             </span>
           }
         />
-        <DesktopIcon label={d.mailIcon} href={`mailto:${EMAIL}`} onClick={() => audioEngine.playClick(1.2)} icon={<MailAppIcon />} />
+        <DesktopIcon label={d.mailIcon} href={`mailto:${EMAIL}`} onClick={() => playClick(1.2)} icon={<MailAppIcon />} />
       </div>
 
       {isOpen('hello') && (
@@ -143,7 +143,7 @@ export function Desktop() {
                 {d.shapeAfter}
               </p>
               <div className="btn-row" style={{ marginTop: 34 }}>
-                <a className="chip solid" href={PATHS.works} onClick={() => audioEngine.playClick(1.1)}>
+                <a className="chip solid" href={PATHS.works} onClick={() => playClick(1.1)}>
                   {d.seeWorks} →
                 </a>
               </div>

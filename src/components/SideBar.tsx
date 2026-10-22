@@ -3,7 +3,7 @@ import { EMAIL, LINKEDIN_URL } from '../content/copy';
 import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 import { PATHS, Route } from '../lib/router';
-import { audioEngine } from '../utils/audio';
+import { playClick } from '../lib/sound';
 import { Logo } from './Logo';
 
 interface SideBarProps {
@@ -23,7 +23,7 @@ export function SideBar({ route, onToast }: SideBarProps) {
     { id: 'cv', label: t.nav.cv, href: PATHS.cv },
   ];
 
-  const click = () => audioEngine.playClick(1.1);
+  const click = () => playClick(1.1);
 
   const copyEmail = async () => {
     click();

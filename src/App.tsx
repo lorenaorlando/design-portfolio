@@ -12,7 +12,7 @@ import { Playground } from './pages/Playground';
 import { Pricing } from './pages/Pricing';
 import { Works } from './pages/Works';
 import { Language } from './types';
-import { detectLanguageByIp, getInitialLanguage, saveLanguagePreference } from './utils/geoLanguage';
+import { detectLanguageByIp, getInitialLanguage, saveLanguagePreference } from './lib/geoLanguage';
 
 export default function App() {
   const [lang, setLangState] = useState<Language>(getInitialLanguage);

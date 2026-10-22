@@ -188,7 +188,6 @@ button.light.min:not(:disabled):hover::after { content: '−'; }
 .hello-name { font-size: clamp(54px, 5.4vw, 78px); margin-top: 10px; }
 .shape-line { margin-top: 22px; font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; font-size: clamp(26px, 2.5vw, 38px); line-height: 1.8; max-width: 20em; text-wrap: balance; }
 .shape-line .selection { line-height: 1.1; margin: 0 2px; }
-.hello-intro { font-size: 16.5px; line-height: 1.55; color: #555; margin-top: 22px; max-width: 520px; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
 
 .chip {
@@ -312,9 +311,6 @@ button.light.min:not(:disabled):hover::after { content: '−'; }
 .budget-line button { color: var(--muted); }
 .budget-line button:hover { color: #d33; }
 .budget-total { font-family: var(--display); font-weight: 600; font-size: 34px; letter-spacing: -0.03em; margin-top: 6px; }
-.seg { display: inline-flex; border: 1px solid var(--keys-edge); background: var(--keys-well); border-radius: 7px; padding: 2px; gap: 2px; }
-.seg button { font-family: var(--mono); font-size: 11px; padding: 6px 10px; border-radius: 5px; background: linear-gradient(#f7f7f6, #ebebe8); }
-.seg button.on { background: #e2e2de; box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.14); color: var(--accent); }
 
 /* ---------------- About / CV ---------------- */
 .about-grid { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 28px; align-items: start; }
@@ -390,8 +386,7 @@ button.light.min:not(:disabled):hover::after { content: '−'; }
     background: linear-gradient(var(--plastic-1), var(--plastic-2));
   }
   .bar-logo, .bar-label, .bar-status, .bar-extra { display: none; }
-  .bar-keys { margin: 0; }
-  .bar nav .keys { flex-direction: row; }
+    .bar nav .keys { flex-direction: row; }
   .bar nav .keys .key { width: 58px; height: 58px; font-size: 11px; }
   .toast { left: 16px; bottom: 100px; }
 

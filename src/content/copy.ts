@@ -66,7 +66,6 @@ const es = {
     kicker: 'Archivo',
     title: 'Proyectos',
     all: 'Todos',
-    count: (n: number) => `${n} proyectos`,
   },
   caseStudy: {
     back: 'Volver',
@@ -191,7 +190,6 @@ const en: Copy = {
     kicker: 'Archive',
     title: 'Works',
     all: 'All',
-    count: (n: number) => `${n} projects`,
   },
   caseStudy: {
     back: 'Back',

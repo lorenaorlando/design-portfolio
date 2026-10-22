@@ -5,4 +5,8 @@ export default defineConfig({
   // Relative base so the build works on the custom domain and in previews.
   base: './',
   plugins: [react()],
+  build: {
+    // Keep bundled code apart from public/assets (photos, project media).
+    assetsDir: 'static',
+  },
 });
