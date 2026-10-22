@@ -12,8 +12,8 @@ const es = {
   bar: { language: 'Idioma', contact: 'Contacto', available: 'Disponible', emailCopied: 'Email copiado', email: 'Email' },
   desktop: {
     hello: '> hola! soy',
-    shapeBefore: 'y estoy acá para darle forma y',
-    shapeWord: 'sentido',
+    shapeBefore: 'y estoy acá para darle',
+    shapeWord: 'forma y sentido',
     shapeAfter: 'a tu proyecto en la web.',
     editing: 'Lorena · editando',
     seeWorks: 'Ver proyectos',
@@ -136,8 +136,8 @@ const en: Copy = {
   bar: { language: 'Language', contact: 'Contact', available: 'Available', emailCopied: 'Email copied', email: 'Email' },
   desktop: {
     hello: '> hi! I’m',
-    shapeBefore: 'and I’m here to give shape and',
-    shapeWord: 'meaning',
+    shapeBefore: 'and I’m here to give',
+    shapeWord: 'shape and meaning',
     shapeAfter: 'to your project on the web.',
     editing: 'Lorena · editing',
     seeWorks: 'See works',

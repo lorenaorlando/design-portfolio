@@ -187,7 +187,7 @@ button.light.min:not(:disabled):hover::after { content: '−'; }
 
 .hello-name { font-size: clamp(54px, 5.4vw, 78px); margin-top: 10px; }
 .shape-line { margin-top: 22px; font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; font-size: clamp(26px, 2.5vw, 38px); line-height: 1.8; max-width: 20em; text-wrap: balance; }
-.shape-line .selection { line-height: 1.1; margin: 0 2px; }
+.shape-line .selection { line-height: 1.1; margin: 0 2px; white-space: nowrap; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
 
 .chip {
