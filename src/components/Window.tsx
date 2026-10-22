@@ -6,20 +6,24 @@ interface WindowProps {
   className?: string;
   bodyClassName?: string;
   dark?: boolean;
+  onClose?: () => void;
+  onMinimize?: () => void;
+  minimized?: boolean;
 }
 
-export function Window({ title, children, className = '', bodyClassName = 'win-body', dark }: WindowProps) {
+/** A macOS-style window. Close and minimize work only when handlers are given. */
+export function Window({ title, children, className = '', bodyClassName = 'win-body', dark, onClose, onMinimize, minimized }: WindowProps) {
   return (
     <div className={`win ${dark ? 'dark' : ''} ${className}`}>
       <div className="win-bar">
         <span className="dots">
-          <i />
-          <i />
-          <i />
+          <button className="light close" onClick={onClose} disabled={!onClose} aria-label="Close" tabIndex={onClose ? 0 : -1} />
+          <button className="light min" onClick={onMinimize} disabled={!onMinimize} aria-label="Minimize" tabIndex={onMinimize ? 0 : -1} />
+          <span className="light max" aria-hidden="true" />
         </span>
         <span className="title">{title}</span>
       </div>
-      <div className={bodyClassName}>{children}</div>
+      {!minimized && <div className={bodyClassName}>{children}</div>}
     </div>
   );
 }

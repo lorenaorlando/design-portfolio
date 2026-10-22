@@ -4,19 +4,11 @@ import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 import { PATHS, Route } from '../lib/router';
 import { audioEngine } from '../utils/audio';
+import { Logo } from './Logo';
 
 interface SideBarProps {
   route: Route;
   onToast: (message: string) => void;
-}
-
-export function Logo() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
-      <path d="M5 4v15h6" />
-      <circle cx="16.5" cy="13.5" r="4.5" />
-    </svg>
-  );
 }
 
 export function SideBar({ route, onToast }: SideBarProps) {
@@ -40,7 +32,7 @@ export function SideBar({ route, onToast }: SideBarProps) {
   return (
     <aside className="bar" aria-label="Menu">
       <a className="bar-logo" href={PATHS.home} onClick={click} aria-label="Lorena Orlando">
-        <Logo />
+        <Logo size={21} />
       </a>
 
       <nav className="bar-keys">

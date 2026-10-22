@@ -26,7 +26,7 @@ export function Home({ works, onToast }: HomeProps) {
 
   return (
     <>
-      <Desktop works={works} onToast={onToast} />
+      <Desktop onToast={onToast} />
 
       <section className="section" id="proyectos">
         <Reveal>
@@ -96,6 +96,34 @@ export function Home({ works, onToast }: HomeProps) {
               {h.aboutCta} →
             </a>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="section">
+        <Reveal>
+          <div className="kicker">{h.testimonialsKicker}</div>
+          <h2 className="display page-title" style={{ marginBottom: 48 }}>
+            {h.testimonialsTitle}
+          </h2>
+        </Reveal>
+        <div className="testimonials">
+          {[0, 1, 2].map((i) => (
+            <Reveal key={i} from={i === 0 ? 'left' : i === 2 ? 'right' : 'bottom'} delay={i * 0.08}>
+              <Window title={`testimonio_0${i + 1}.txt`}>
+                <blockquote className="testimonial">
+                  <span className="quote-mark" aria-hidden="true">“</span>
+                  <p>{h.testimonialPlaceholder}</p>
+                  <footer>
+                    <span className="avatar" aria-hidden="true" />
+                    <span>
+                      <strong>{h.testimonialName}</strong>
+                      <span className="muted"> — {h.testimonialRole}</span>
+                    </span>
+                  </footer>
+                </blockquote>
+              </Window>
+            </Reveal>
+          ))}
         </div>
       </section>
 

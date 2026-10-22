@@ -5,14 +5,11 @@ import { formatCurrency, PRICING_CATEGORIES, PRICING_SERVICES, ServiceCategory }
 import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 
-type Currency = 'USD' | 'COP' | 'CLP';
-
 export function Pricing({ onToast }: { onToast: (message: string) => void }) {
   const { t, lang } = useLang();
   const p = t.pricing;
   const [category, setCategory] = useState<ServiceCategory['id'] | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
-  const [currency, setCurrency] = useState<Currency>('USD');
 
   const shown = category ? PRICING_SERVICES.filter((s) => s.category === category) : PRICING_SERVICES;
   const picked = PRICING_SERVICES.filter((s) => selected.includes(s.id));
@@ -23,8 +20,8 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
   const summary = () =>
     [
       `${p.title} — Lorena Orlando`,
-      ...picked.map((s) => `• ${s.name[lang]}: ${formatCurrency(s.priceUSD, currency)}`),
-      `${p.total}: ${formatCurrency(total, currency)}`,
+      ...picked.map((s) => `• ${s.name[lang]}: ${formatCurrency(s.priceUSD, 'USD')}`),
+      `${p.total}: ${formatCurrency(total, 'USD')}`,
     ].join('\n');
 
   const copy = async () => {
@@ -61,7 +58,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
                 <div className="name">{s.name[lang]}</div>
                 <div className="desc">{s.description[lang]}</div>
                 <div className="foot">
-                  <span className="price">{formatCurrency(s.priceUSD, currency)}</span>
+                  <span className="price">{formatCurrency(s.priceUSD, 'USD')}</span>
                   <button className={`chip small ${on ? 'active' : ''}`} onClick={() => toggle(s.id)}>
                     {on ? `✓ ${p.added}` : `+ ${p.add}`}
                   </button>
@@ -73,20 +70,13 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
 
         <div className="budget">
           <Window title={p.budget}>
-            <div className="seg" role="group" aria-label="Currency">
-              {(['USD', 'COP', 'CLP'] as Currency[]).map((c) => (
-                <button key={c} className={currency === c ? 'on' : ''} onClick={() => setCurrency(c)}>
-                  {c}
-                </button>
-              ))}
-            </div>
-            <div style={{ marginTop: 14 }}>
+            <div>
               {picked.length === 0 && <p style={{ fontSize: 14, color: '#888', lineHeight: 1.5 }}>{p.empty}</p>}
               {picked.map((s) => (
                 <div className="budget-line" key={s.id}>
                   <span>{s.name[lang]}</span>
                   <span style={{ display: 'flex', gap: 8, whiteSpace: 'nowrap' }}>
-                    <span className="mono">{formatCurrency(s.priceUSD, currency)}</span>
+                    <span className="mono">{formatCurrency(s.priceUSD, 'USD')}</span>
                     <button onClick={() => toggle(s.id)} aria-label="Remove">
                       ×
                     </button>
@@ -97,7 +87,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
             <div className="mono caps muted" style={{ fontSize: 10.5, marginTop: 18 }}>
               {p.total}
             </div>
-            <div className="budget-total">{formatCurrency(total, currency)}</div>
+            <div className="budget-total">{formatCurrency(total, 'USD')}</div>
             <div className="btn-row">
               <a
                 className="chip solid"
@@ -114,7 +104,6 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
                 </button>
               )}
             </div>
-            <p style={{ fontSize: 11.5, color: '#999', marginTop: 16, lineHeight: 1.5 }}>{p.notice}</p>
           </Window>
         </div>
       </div>

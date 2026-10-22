@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Reveal } from '../components/Reveal';
 import { Shot } from '../components/Shot';
 import { Window } from '../components/Window';
+import { TLDR } from '../data/tldrData';
 import { WorkProject } from '../data/worksData';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
@@ -12,13 +13,14 @@ interface CaseStudyProps {
 }
 
 export function CaseStudy({ works, slug }: CaseStudyProps) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const c = t.caseStudy;
   const index = works.findIndex((w) => w.slug === slug);
   const work = works[index];
-  const [active, setActive] = useState('about');
+  const [active, setActive] = useState('tldr');
 
   const sections = [
+    { id: 'tldr', label: c.sections.tldr },
     { id: 'about', label: c.sections.about, html: work?.aboutHtml },
     { id: 'process', label: c.sections.process, html: work?.processHtml },
     { id: 'result', label: c.sections.result, html: work?.resultHtml },
@@ -78,13 +80,17 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
           {work.typeOfProject} — {work.year}
         </div>
         <h1 className="display case-title">{work.title}</h1>
+        <section id="tldr" className="tldr">
+          <div className="kicker">{c.sections.tldr}</div>
+          <p>{TLDR[work.slug]?.[lang]}</p>
+        </section>
         <Reveal>
           <Window title={work.title.toLowerCase()} bodyClassName="">
             <Shot color={work.globeColor} image={work.imageUrl} alt={work.title} seed={index} />
           </Window>
         </Reveal>
 
-        {sections.slice(0, 3).map((s, i) => (
+        {sections.slice(1, 4).map((s, i) => (
           <section key={s.id} id={s.id} className="case-section">
             <div className="kicker">{s.label}</div>
             <div style={{ display: 'grid', gridTemplateColumns: '70px 1fr', marginTop: 18 }}>
