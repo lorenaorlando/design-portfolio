@@ -121,7 +121,7 @@ img, video { display: block; max-width: 100%; }
 .draggable .win-bar:active { cursor: grabbing; }
 
 /* ---------------- Desktop hero ---------------- */
-.desktop { position: relative; height: 100vh; min-height: 760px; overflow: hidden; }
+.desktop { position: relative; height: max(100vh, 820px); overflow: hidden; }
 .menubar {
   position: absolute; left: 0; right: 0; top: 0; height: 34px; z-index: 5;
   display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
@@ -150,7 +150,7 @@ img, video { display: block; max-width: 100%; }
 .desk-hint { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
 .hello-name { font-size: clamp(54px, 5.4vw, 78px); margin-top: 10px; }
-.shape-line { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 6px 18px; margin-top: 18px; font-family: var(--display); font-weight: 500; letter-spacing: -0.035em; font-size: clamp(30px, 2.8vw, 40px); line-height: 1.1; }
+.shape-line { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 32px 18px; margin-top: 18px; font-family: var(--display); font-weight: 500; letter-spacing: -0.035em; font-size: clamp(30px, 2.8vw, 40px); line-height: 1.1; }
 .hello-intro { font-size: 16.5px; line-height: 1.55; color: #555; margin-top: 22px; max-width: 520px; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
 
@@ -320,7 +320,6 @@ img, video { display: block; max-width: 100%; }
   .bar .keys:not(.row) .key .label { left: 6px; bottom: 7px; }
   .bar .keys:not(.row) .key .led { left: 6px; top: 7px; }
   .keys.row .key { width: 32px; }
-  .shape-line { row-gap: 30px; }
   .menubar nav span:not(:first-child) { display: none; }
   .desk-folders { grid-template-columns: repeat(3, 1fr); }
 }

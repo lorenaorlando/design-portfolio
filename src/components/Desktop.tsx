@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CSSProperties, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import { CSSProperties, ReactNode, useEffect, useState } from 'react';
 import { EMAIL, PROFILE_PHOTO } from '../content/copy';
 import { WorkProject } from '../data/worksData';
 import { copyText } from '../lib/clipboard';
@@ -67,24 +67,22 @@ interface DeskWindowProps {
   id: string;
   layer: number;
   onFocus: (id: string) => void;
-  area: RefObject<HTMLDivElement | null>;
   draggable: boolean;
   style: CSSProperties;
   children: ReactNode;
 }
 
-function DeskWindow({ id, layer, onFocus, area, draggable, style, children }: DeskWindowProps) {
+function DeskWindow({ id, layer, onFocus, draggable, style, children }: DeskWindowProps) {
   return (
     <motion.div
       className="desk-item draggable"
       style={{ ...style, zIndex: 10 + layer }}
       drag={draggable}
-      dragConstraints={area}
       dragMomentum={false}
       dragElastic={0.05}
       onPointerDown={() => onFocus(id)}
-      initial={{ opacity: 0, y: 24, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 120, damping: 18, delay: 0.08 * (5 - layer) }}
     >
       {children}
@@ -95,7 +93,6 @@ function DeskWindow({ id, layer, onFocus, area, draggable, style, children }: De
 export function Desktop({ works, onToast }: DesktopProps) {
   const { t, lang } = useLang();
   const d = t.desktop;
-  const area = useRef<HTMLDivElement>(null);
   const isDesktop = useIsDesktop();
   const clock = useClock(lang);
   const [order, setOrder] = useState<string[]>(['contact', 'latest', 'stats', 'disciplines', 'photo', 'hello']);
@@ -112,14 +109,13 @@ export function Desktop({ works, onToast }: DesktopProps) {
     id,
     layer: order.indexOf(id),
     onFocus: focus,
-    area,
     draggable: isDesktop,
   });
 
   const pixelSize = isDesktop ? 54 : 44;
 
   return (
-    <section className="desktop" ref={area}>
+    <section className="desktop">
       <div className="menubar">
         <nav>
           <span>
@@ -184,7 +180,7 @@ export function Desktop({ works, onToast }: DesktopProps) {
         </Window>
       </DeskWindow>
 
-      <DeskWindow {...win('disciplines')} style={{ left: '66.5%', top: '44%', width: '22%' }}>
+      <DeskWindow {...win('disciplines')} style={{ left: '66.5%', bottom: '9%', width: '22%' }}>
         <Window title={d.disciplinesFile} >
           {t.disciplines.map((x, i) => (
             <div className="discipline" key={x.title}>
@@ -198,7 +194,7 @@ export function Desktop({ works, onToast }: DesktopProps) {
         </Window>
       </DeskWindow>
 
-      <DeskWindow {...win('stats')} style={{ left: '3%', top: '63%', width: '22%' }}>
+      <DeskWindow {...win('stats')} style={{ left: '3%', bottom: '7%', width: '22%' }}>
         <Window title={d.statsFile}>
           <div className="stats">
             {t.stats.map((s) => (
@@ -212,7 +208,7 @@ export function Desktop({ works, onToast }: DesktopProps) {
       </DeskWindow>
 
       {latest && (
-        <DeskWindow {...win('latest')} style={{ left: '27%', top: '61%', width: '19%' }}>
+        <DeskWindow {...win('latest')} style={{ left: '27%', bottom: '7%', width: '19%' }}>
           <Window title={d.latestFile} bodyClassName="">
             <a href={PATHS.case(latest.slug)} style={{ display: 'block' }}>
               <Shot color={latest.globeColor} image={latest.imageUrl} alt={latest.title} />
@@ -225,7 +221,7 @@ export function Desktop({ works, onToast }: DesktopProps) {
         </DeskWindow>
       )}
 
-      <DeskWindow {...win('contact')} style={{ left: '48%', top: '66%', width: '17%' }}>
+      <DeskWindow {...win('contact')} style={{ left: '48%', bottom: '9%', width: '17%' }}>
         <Window title={d.contactFile} dark>
           <div className="display" style={{ fontSize: 26, fontWeight: 500, lineHeight: 1.1, letterSpacing: '-0.03em' }}>
             {d.workTogether}
