@@ -1,7 +1,6 @@
 import { motion } from 'motion/react';
 import { CSSProperties, ReactNode, useEffect, useState } from 'react';
 import { EMAIL, PROFILE_PHOTO } from '../content/copy';
-import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
 import { audioEngine } from '../utils/audio';
@@ -48,14 +47,15 @@ interface DeskWindowProps {
   layer: number;
   onFocus: (id: WinId) => void;
   draggable: boolean;
-  style: CSSProperties;
+  className: string;
+  style?: CSSProperties;
   children: ReactNode;
 }
 
-function DeskWindow({ id, layer, onFocus, draggable, style, children }: DeskWindowProps) {
+function DeskWindow({ id, layer, onFocus, draggable, className, style, children }: DeskWindowProps) {
   return (
     <motion.div
-      className="desk-item draggable"
+      className={`desk-item draggable ${className}`}
       style={{ ...style, zIndex: 10 + layer }}
       drag={draggable}
       dragMomentum={false}
@@ -70,7 +70,7 @@ function DeskWindow({ id, layer, onFocus, draggable, style, children }: DeskWind
   );
 }
 
-export function Desktop({ onToast }: { onToast: (message: string) => void }) {
+export function Desktop() {
   const { t, lang } = useLang();
   const d = t.desktop;
   const isDesktop = useIsDesktop();
@@ -99,11 +99,6 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
   const isOpen = (id: WinId) => !closed.includes(id);
   const somethingHidden = closed.some((id) => id !== 'photo') || minimized.length > 0;
 
-  const copyEmail = async () => {
-    audioEngine.playClick(1.2);
-    if (await copyText(EMAIL)) onToast(`${t.bar.emailCopied} — ${EMAIL}`);
-  };
-
   return (
     <section className="desktop">
       <div className="menubar">
@@ -118,6 +113,7 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
         </span>
       </div>
 
+      <div className="desk-grid">
       <div className="desk-icons">
         <DesktopIcon
           label={d.photoFile}
@@ -132,27 +128,24 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
       </div>
 
       {isOpen('hello') && (
-        <DeskWindow {...win('hello')} style={{ left: '4%', top: '15%', width: 'min(640px, 47%)' }}>
+        <DeskWindow {...win('hello')} className="area-hello">
           <Window title={d.helloFile} {...controls('hello')}>
             <div style={{ padding: '10px 8px 8px' }}>
               <div className="mono muted" style={{ fontSize: 14 }}>
                 {d.hello}
               </div>
               <h1 className="display hello-name">Lorena Orlando</h1>
-              <div className="shape-line">
-                <span>{d.shapeLine}</span>
+              <p className="shape-line">
+                {d.shapeBefore}{' '}
                 <Selection label={d.editing}>
                   <span className="accent-word">{d.shapeWord}</span>
-                </Selection>
-              </div>
-              <p className="hello-intro">{d.intro}</p>
-              <div className="btn-row">
+                </Selection>{' '}
+                {d.shapeAfter}
+              </p>
+              <div className="btn-row" style={{ marginTop: 34 }}>
                 <a className="chip solid" href={PATHS.works} onClick={() => audioEngine.playClick(1.1)}>
                   {d.seeWorks} →
                 </a>
-                <button className="chip" onClick={copyEmail}>
-                  {d.copyEmail}
-                </button>
               </div>
             </div>
           </Window>
@@ -160,7 +153,7 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
       )}
 
       {isOpen('profile') && (
-        <DeskWindow {...win('profile')} style={{ left: '55%', top: '8%', width: '31%' }}>
+        <DeskWindow {...win('profile')} className="area-profile">
           <Window title={d.profileFile} {...controls('profile')}>
             {t.disciplines.map((x, i) => (
               <div className="discipline" key={x.title}>
@@ -184,7 +177,7 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
       )}
 
       {isOpen('currently') && (
-        <DeskWindow {...win('currently')} style={{ left: '55%', top: '59%', width: '31%' }}>
+        <DeskWindow {...win('currently')} className="area-currently">
           <Window title={d.currentlyFile} {...controls('currently')}>
             <div className="mono" style={{ fontSize: 13, color: 'var(--accent)' }}>
               {d.currentlyTitle}
@@ -205,7 +198,7 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
       )}
 
       {isOpen('photo') && (
-        <DeskWindow {...win('photo')} style={{ left: '40%', top: '30%', width: 'min(300px, 22%)' }}>
+        <DeskWindow {...win('photo')} className="desk-float">
           <Window title={d.photoFile} bodyClassName="" {...controls('photo')}>
             <div style={{ aspectRatio: '4 / 5' }}>
               <Photo src={PROFILE_PHOTO} alt="Lorena Orlando" />
@@ -213,6 +206,8 @@ export function Desktop({ onToast }: { onToast: (message: string) => void }) {
           </Window>
         </DeskWindow>
       )}
+
+      </div>
 
       <div className="desk-hint">
         {d.dragHint} · ↓ {d.scroll}

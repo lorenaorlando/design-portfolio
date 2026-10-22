@@ -1,11 +1,24 @@
+import { Download } from 'lucide-react';
+import { useState } from 'react';
 import { Window } from '../components/Window';
 import { TOOLS } from '../content/copy';
 import { getCvData } from '../data/cvData';
+import { downloadCvPdf } from '../lib/cvPdf';
 import { useLang } from '../lib/i18n';
 
 export function Cv() {
   const { t, lang } = useLang();
   const cv = t.cv;
+  const [busy, setBusy] = useState(false);
+
+  const download = async () => {
+    setBusy(true);
+    try {
+      await downloadCvPdf(getCvData(lang), t);
+    } finally {
+      setBusy(false);
+    }
+  };
   return (
     <div className="page">
       <div className="kicker">{cv.kicker}</div>
@@ -14,11 +27,18 @@ export function Cv() {
       </h1>
       <Window title="cv_lorena_orlando.pdf" className="cv-doc">
         <div style={{ padding: 'clamp(4px, 2vw, 24px)' }}>
-          <div className="display" style={{ fontSize: 40 }}>
-            Lorena Orlando
-          </div>
-          <div className="mono muted" style={{ fontSize: 13, marginTop: 8 }}>
-            {cv.role}
+          <div className="cv-head">
+            <div>
+              <div className="display" style={{ fontSize: 40 }}>
+                Lorena Orlando
+              </div>
+              <div className="mono muted" style={{ fontSize: 13, marginTop: 8 }}>
+                {cv.role}
+              </div>
+            </div>
+            <button className="chip solid" onClick={download} disabled={busy}>
+              <Download size={14} /> {busy ? cv.preparing : cv.download}
+            </button>
           </div>
           <p style={{ fontSize: 16.5, lineHeight: 1.65, color: '#555', marginTop: 20, maxWidth: 680 }}>{cv.summary}</p>
 

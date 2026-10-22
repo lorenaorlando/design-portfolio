@@ -8,17 +8,15 @@ export const PROFILE_PHOTO_COLOR = 'https://sandboxlandia.online/wp-content/uplo
 export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
 
 const es = {
-  nav: { home: 'Inicio', works: 'Proyectos', pricing: 'Precios', about: 'Sobre mí', cv: 'CV' },
-  bar: { language: 'Idioma', contact: 'Contacto', available: 'Disponible', emailCopied: 'Email copiado' },
+  nav: { home: 'Inicio', works: 'Proyectos', playground: 'Playground', pricing: 'Precios', about: 'Sobre mí', cv: 'CV' },
+  bar: { language: 'Idioma', contact: 'Contacto', available: 'Disponible', emailCopied: 'Email copiado', email: 'Email' },
   desktop: {
-    hello: '> hola, soy',
-    shapeLine: 'Doy forma a ideas',
-    shapeWord: 'visuales.',
+    hello: '> hola! soy',
+    shapeBefore: 'y estoy acá para darle forma y',
+    shapeWord: 'sentido',
+    shapeAfter: 'a tu proyecto en la web.',
     editing: 'Lorena · editando',
-    intro:
-      'Diseñadora web y visual con más de 10 años de experiencia en diseño web, branding y dirección visual. Trabajo con artistas, editoriales y proyectos culturales.',
     seeWorks: 'Ver proyectos',
-    copyEmail: 'Copiar email',
     disciplinesFile: 'disciplinas.txt',
     statsFile: 'datos.app',
     profileFile: 'perfil.app',
@@ -117,6 +115,17 @@ const es = {
       'Diseñadora digital con más de 10 años de experiencia en diseño web, branding y dirección visual. Actualmente trabajo como webmaster en Puentes y Las Escuchadoras. Me enfoco en transformar estructura e identidad en experiencias digitales atractivas, basadas en la visión y las metas de cada proyecto.',
     experience: 'Experiencia',
     tools: 'Herramientas',
+    download: 'Descargar PDF',
+    preparing: 'Preparando…',
+    contact: 'Contacto',
+  },
+  playground: {
+    kicker: 'Playground',
+    title: 'Jugar también es diseñar.',
+    subtitle: 'Proyectos personales, apps y experimentos que hago por pura curiosidad.',
+    tools: 'Herramientas',
+    soon: 'Pronto',
+    placeholder: 'Aquí va la descripción de este proyecto personal: qué es, por qué lo hice y qué aprendí.',
   },
   footer: 'Diseñado y construido por Lorena Orlando',
 };
@@ -124,17 +133,15 @@ const es = {
 export type Copy = typeof es;
 
 const en: Copy = {
-  nav: { home: 'Home', works: 'Works', pricing: 'Pricing', about: 'About', cv: 'CV' },
-  bar: { language: 'Language', contact: 'Contact', available: 'Available', emailCopied: 'Email copied' },
+  nav: { home: 'Home', works: 'Works', playground: 'Playground', pricing: 'Pricing', about: 'About', cv: 'CV' },
+  bar: { language: 'Language', contact: 'Contact', available: 'Available', emailCopied: 'Email copied', email: 'Email' },
   desktop: {
-    hello: '> hi, I’m',
-    shapeLine: 'I give shape to',
-    shapeWord: 'visual ideas.',
+    hello: '> hi! I’m',
+    shapeBefore: 'and I’m here to give shape and',
+    shapeWord: 'meaning',
+    shapeAfter: 'to your project on the web.',
     editing: 'Lorena · editing',
-    intro:
-      'Web & visual designer with over 10 years of experience across web design, branding and visual direction. I work with artists, publishers and cultural projects.',
     seeWorks: 'See works',
-    copyEmail: 'Copy email',
     disciplinesFile: 'disciplines.txt',
     statsFile: 'stats.app',
     profileFile: 'profile.app',
@@ -233,6 +240,17 @@ const en: Copy = {
       'Digital designer with over 10 years of experience across web design, branding and visual direction. Currently working as a webmaster at Puentes and Las Escuchadoras. Focused on shaping structure and identity into engaging digital experiences based on the vision and goals of every project.',
     experience: 'Experience',
     tools: 'Tools',
+    download: 'Download PDF',
+    preparing: 'Preparing…',
+    contact: 'Contact',
+  },
+  playground: {
+    kicker: 'Playground',
+    title: 'Playing is designing too.',
+    subtitle: 'Personal projects, apps and experiments I make out of pure curiosity.',
+    tools: 'Tools',
+    soon: 'Soon',
+    placeholder: 'This is where the description of this personal project goes: what it is, why I made it and what I learned.',
   },
   footer: 'Designed and built by Lorena Orlando',
 };

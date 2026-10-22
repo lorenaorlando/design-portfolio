@@ -8,6 +8,7 @@ import { About } from './pages/About';
 import { CaseStudy } from './pages/CaseStudy';
 import { Cv } from './pages/Cv';
 import { Home } from './pages/Home';
+import { Playground } from './pages/Playground';
 import { Pricing } from './pages/Pricing';
 import { Works } from './pages/Works';
 import { Language } from './types';
@@ -51,6 +52,9 @@ export default function App() {
   switch (route.page) {
     case 'works':
       page = <Works works={works} />;
+      break;
+    case 'playground':
+      page = <Playground />;
       break;
     case 'case':
       page = <CaseStudy works={works} slug={route.slug} />;

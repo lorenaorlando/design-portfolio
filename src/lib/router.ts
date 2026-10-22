@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export type Route =
   | { page: 'home' }
   | { page: 'works' }
+  | { page: 'playground' }
   | { page: 'case'; slug: string }
   | { page: 'pricing' }
   | { page: 'about' }
@@ -11,6 +12,7 @@ export type Route =
 export const PATHS = {
   home: '#/',
   works: '#/proyectos',
+  playground: '#/playground',
   pricing: '#/precios',
   about: '#/sobre-mi',
   cv: '#/cv',
@@ -22,6 +24,8 @@ function parse(hash: string): Route {
   switch (parts[0]) {
     case 'proyectos':
       return parts[1] ? { page: 'case', slug: parts[1] } : { page: 'works' };
+    case 'playground':
+      return { page: 'playground' };
     case 'precios':
       return { page: 'pricing' };
     case 'sobre-mi':

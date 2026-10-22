@@ -26,7 +26,7 @@ export function Home({ works, onToast }: HomeProps) {
 
   return (
     <>
-      <Desktop onToast={onToast} />
+      <Desktop />
 
       <section className="section" id="proyectos">
         <Reveal>
