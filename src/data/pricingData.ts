@@ -1,5 +1,3 @@
-import { Language } from '../types';
-
 export interface ServiceItem {
   id: string;
   category: 'visual' | 'web' | 'adicionales' | 'especializadas' | 'extras' | 'otros';
@@ -385,24 +383,5 @@ export const PRICING_SERVICES: ServiceItem[] = [
   },
 ];
 
-// Reference currency rates (approximate)
-export const EXCHANGE_RATES = {
-  USD: 1,
-  COP: 3950, // 1 USD ~ 3,950 COP
-  CLP: 940,  // 1 USD ~ 940 CLP
-};
-
-export const formatCurrency = (amountUSD: number, currency: 'USD' | 'COP' | 'CLP'): string => {
-  if (currency === 'USD') {
-    return `$${amountUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;
-  }
-  if (currency === 'COP') {
-    const copAmount = Math.round(amountUSD * EXCHANGE_RATES.COP);
-    return `$${copAmount.toLocaleString('es-CO')} COP`;
-  }
-  if (currency === 'CLP') {
-    const clpAmount = Math.round(amountUSD * EXCHANGE_RATES.CLP);
-    return `$${clpAmount.toLocaleString('es-CL')} CLP`;
-  }
-  return `$${amountUSD.toFixed(2)} USD`;
-};
+export const formatUSD = (amount: number): string =>
+  `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`;

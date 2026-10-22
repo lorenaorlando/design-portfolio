@@ -382,8 +382,6 @@ export const WORKS_DATA_ES: WorkProject[] = [
   },
 ];
 
-export const WORKS_DATA = WORKS_DATA_EN;
-
 export function getWorksData(lang?: Language | string): WorkProject[] {
   return lang === 'es' ? WORKS_DATA_ES : WORKS_DATA_EN;
 }
