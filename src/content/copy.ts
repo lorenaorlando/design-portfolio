@@ -4,7 +4,7 @@ export const EMAIL = 'soylorenaorlando@gmail.com';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/lorenaorlando/';
 export const PROFILE_PHOTO = 'assets/profile/lorena.webp';
 /** Photos in the Photo Booth gallery, in order. */
-export const PROFILE_PHOTOS = [PROFILE_PHOTO];
+export const PROFILE_PHOTOS = [PROFILE_PHOTO, 'assets/profile/lorena-2.webp', 'assets/profile/lorena-3.webp', 'assets/profile/lorena-4.webp'];
 /** Photo printed on the downloadable CV. */
 export const CV_PHOTO = PROFILE_PHOTO;
 
@@ -58,7 +58,9 @@ const es = {
     seeCase: 'Ver caso',
     seeAll: 'Ver los 12 proyectos',
     aboutKicker: 'Sobre mí',
-    aboutTitle: 'Diseño con intención, oficio y un poco de magia retro.',
+    aboutTitle: 'Ojo de artista, entregas siempre a tiempo.',
+    aboutBody:
+      'Soy artista visual hace más de 20 años y diseño sitios web hace más de 10. Combino esa sensibilidad con una forma de trabajar rápida y organizada: cumplo los plazos, respondo a tiempo y pongo el 100% en cada proyecto. Trabajo sobre todo con artistas, proyectos creativos y causas con propósito, y convierto su esencia en interfaces e identidades visuales únicas.',
     aboutCta: 'Conóceme',
     contactKicker: 'Contacto',
     contactTitle: '¿Tienes un proyecto en mente?',
@@ -99,14 +101,24 @@ const es = {
   about: {
     kicker: 'Sobre mí',
     title: 'Hola, soy Lorena.',
-    backgroundTitle: 'Trayectoria',
-    background: [
-      'Comencé a diseñar páginas web en mi adolescencia, en los tiempos de la antigua, salvaje y retro web. Esto evolucionó con el tiempo mientras experimentaba con nuevas plataformas y herramientas, desarrollando un profundo entendimiento de cómo funciona el diseño.',
-      'A medida que crecí como diseñadora, investigué y estudié todas las formas en que un lenguaje visual distintivo puede tomar forma: paletas de color, gráficas, tipografías y tendencias de diseño. Puedo perderme por horas explorándolas y encontrando inspiración.',
+    sections: [
+      {
+        title: 'Puntualidad y compromiso',
+        body: 'Te garantizo que conmigo no se te pasará ninguna fecha de entrega. Trabajar de forma eficiente y respetar los plazos que acordamos desde el inicio es parte esencial de mi ética de trabajo, y es algo que mis clientes siempre destacan. Me entrego al 100% en cada proyecto: para mí, la responsabilidad, la disponibilidad y responder a tiempo son fundamentales para trabajar bien juntos.',
+      },
+      {
+        title: 'Mirada de artista',
+        body: 'Soy artista visual desde hace más de 20 años, y esa sensibilidad está presente en todo lo que hago. La misma atención al detalle la llevo a cada proyecto con mis clientes. Me resulta natural imaginar cómo una idea puede traducirse al lenguaje visual: mi visión creativa es una de mis mayores fortalezas. Me encanta idear propuestas que capturen la esencia de un proyecto y la conviertan en interfaces e identidades visuales únicas.',
+      },
+      {
+        title: 'Proyectos con propósito',
+        body: 'En más de 10 años diseñando sitios web he trabajado sobre todo con artistas, proyectos creativos, creadores de contenido y activistas. Siento una conexión especial con este tipo de proyectos, porque yo también soy artista y creo que desde la web también se puede cambiar el mundo.',
+      },
+      {
+        title: 'Cómo empezó todo',
+        body: 'Diseño páginas web desde mi adolescencia (hace ya muuucho tiempo). Sé que esa Lorena joven estaría feliz de saber que esas tardes aprendiendo sobre paletas de color, tipografías y código hoy son su trabajo.',
+      },
     ],
-    craftTitle: 'Oficio e intención',
-    craft:
-      'Personas creativas, proyectos, iniciativas y creadores de contenido siempre han estado en mi órbita profesional porque también soy artista, y este es mi enfoque para todos los proyectos de diseño digital que llegan a mí. Pongo intención, creatividad y reflexión en mi trabajo.',
     cvCta: 'Ver CV',
   },
   cv: {
@@ -182,7 +194,9 @@ const en: Copy = {
     seeCase: 'See case study',
     seeAll: 'See all 12 projects',
     aboutKicker: 'About',
-    aboutTitle: 'Design with intention, craft and a bit of retro magic.',
+    aboutTitle: 'An artist’s eye, always on time.',
+    aboutBody:
+      'I’ve been a visual artist for over 20 years and a web designer for over 10. I pair that sensibility with a fast, organized way of working: I meet deadlines, reply on time and give 100% to every project. I mostly work with artists, creative projects and purpose-driven causes, turning their essence into unique interfaces and visual identities.',
     aboutCta: 'Get to know me',
     contactKicker: 'Contact',
     contactTitle: 'Have a project in mind?',
@@ -223,14 +237,24 @@ const en: Copy = {
   about: {
     kicker: 'About',
     title: 'Hi, I’m Lorena.',
-    backgroundTitle: 'Background',
-    background: [
-      'I started designing webpages in my teenage years, back on the old, wild, retro web. This evolved through time as I tried new platforms and tools, developing a deep understanding of how design works.',
-      'While I grew as a designer I researched and studied all of the different ways a distinctive visual language can take shape: color palettes, graphics, typographies, design trends. I can get lost for hours looking into them, finding inspiration.',
+    sections: [
+      {
+        title: 'On time, every time',
+        body: 'I can guarantee you’ll never miss a deadline working with me. Working efficiently and within the timeline we agree on is at the core of my work ethic, and it’s something my clients always highlight. I give 100% to every project: responsibility, availability and quick replies are some of the things I value most when working together.',
+      },
+      {
+        title: 'An artist’s eye',
+        body: 'I’ve been a visual artist for over 20 years, and that sensibility shows up in everything I do. I bring the same eye for detail to every client project. Imagining how an idea can translate into a visual language comes naturally to me, and my creative vision is one of my greatest strengths. I love coming up with visual proposals that capture the essence of a project and turn it into unique interfaces and visual identities.',
+      },
+      {
+        title: 'Projects with purpose',
+        body: 'In over 10 years of designing websites, I’ve mostly worked with artists, creative projects, content creators and activists. I feel a real connection with this kind of work, because I’m an artist too, and I believe the web can also be a place to change the world.',
+      },
+      {
+        title: 'Where it all started',
+        body: 'I’ve been designing websites since I was a teenager (a looong time ago now). I know young Lorena would be thrilled to see that those afternoons spent learning about color palettes, typography and code are now her job.',
+      },
     ],
-    craftTitle: 'Craft & intention',
-    craft:
-      'Creative people, projects, initiatives and content creators have always been in my professional orbit because I’m an artist too, and this is my approach to all the digital design projects that come my way. I put intention, creativity and thought in my work.',
     cvCta: 'See CV',
   },
   cv: {

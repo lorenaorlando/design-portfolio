@@ -37,12 +37,12 @@ export function About() {
           <Reveal from="right">
             <Window title="readme.txt">
               <div className="prose" style={{ padding: '8px 6px' }}>
-                <h2>{a.backgroundTitle}</h2>
-                {a.background.map((p) => (
-                  <p key={p}>{p}</p>
+                {a.sections.map((s) => (
+                  <section key={s.title}>
+                    <h2>{s.title}</h2>
+                    <p>{s.body}</p>
+                  </section>
                 ))}
-                <h2>{a.craftTitle}</h2>
-                <p>{a.craft}</p>
               </div>
             </Window>
           </Reveal>
