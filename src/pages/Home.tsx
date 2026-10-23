@@ -81,7 +81,7 @@ export function Home({ works, onToast }: HomeProps) {
       <section className="section">
         <div className="about-grid" style={{ alignItems: 'center' }}>
           <Reveal from="left">
-            <Window title="estudio.jpg" bodyClassName="">
+            <Window title="lorena.jpg" bodyClassName="">
               <div style={{ aspectRatio: '1 / 1' }}>
                 <Photo src={PROFILE_PHOTO} alt="Lorena Orlando" />
               </div>

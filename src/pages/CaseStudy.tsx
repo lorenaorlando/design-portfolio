@@ -75,7 +75,7 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
   };
 
   return (
-    <div className="case">
+    <div className="case pg-case">
       <aside className="case-side">
         <a className="back-btn" href={PATHS.works}>
           ‹ {c.back}

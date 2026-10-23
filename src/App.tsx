@@ -3,6 +3,7 @@ import { SideBar } from './components/SideBar';
 import { COPY } from './content/copy';
 import { getWorksData } from './data/worksData';
 import { LangContext } from './lib/i18n';
+import { initAnalytics, trackPageView } from './lib/analytics';
 import { useRoute } from './lib/router';
 import { About } from './pages/About';
 import { CaseStudy } from './pages/CaseStudy';
@@ -34,6 +35,14 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  useEffect(() => {
+    trackPageView();
+  }, [route]);
 
   // Playground pages sit on plain white so screenshots with white edges blend in.
   useEffect(() => {
