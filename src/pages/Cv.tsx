@@ -40,7 +40,17 @@ export function Cv() {
               <Download size={14} /> {busy ? cv.preparing : cv.download}
             </button>
           </div>
-          <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 20, maxWidth: 680 }}>{cv.summary}</p>
+          <div className="kicker" style={{ margin: '28px 0 12px' }}>
+            {cv.tools}
+          </div>
+          <div className="filters">
+            {TOOLS.map((tool) => (
+              <span className="chip small" key={tool}>
+                {tool}
+              </span>
+            ))}
+          </div>
+          <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 28, maxWidth: 680 }}>{cv.summary}</p>
 
           <div className="kicker" style={{ margin: '40px 0 12px' }}>
             {cv.experience}
@@ -66,16 +76,6 @@ export function Cv() {
             </div>
           ))}
 
-          <div className="kicker" style={{ margin: '40px 0 14px' }}>
-            {cv.tools}
-          </div>
-          <div className="filters">
-            {TOOLS.map((tool) => (
-              <span className="chip small" key={tool}>
-                {tool}
-              </span>
-            ))}
-          </div>
         </div>
       </Window>
     </div>

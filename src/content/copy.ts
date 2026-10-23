@@ -8,7 +8,7 @@ export const PROFILE_PHOTOS = [PROFILE_PHOTO, 'assets/profile/lorena-2.webp', 'a
 /** Photo printed on the downloadable CV. */
 export const CV_PHOTO = PROFILE_PHOTO;
 
-export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
+export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce', 'Vibe coding'];
 
 const es = {
   nav: { home: 'Inicio', works: 'Proyectos', playground: 'Playground', pricing: 'Precios', about: 'Sobre mí', cv: 'CV' },

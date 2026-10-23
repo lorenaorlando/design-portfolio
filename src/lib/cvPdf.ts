@@ -124,12 +124,30 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy) {
   doc.text([EMAIL, LINKEDIN_URL.replace('https://www.', ''), 'lorenaorlando.click'].join('   ·   '), textX, 46);
   if (emblem) doc.addImage(emblem, 'PNG', PAGE_W - M - 13, 14, 13, 13);
 
+  y = 72;
+  // Tools as pills
+  label(t.cv.tools);
+  font('DMSans', 'normal', 9, VIOLETA);
+  let x = M;
+  for (const tool of TOOLS) {
+    const w = doc.getTextWidth(tool) + 8;
+    if (x + w > PAGE_W - M) {
+      x = M;
+      y += 9;
+    }
+    doc.setDrawColor(...VIOLETA);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(x, y - 4.6, w, 6.6, 3.3, 3.3, 'S');
+    doc.text(tool, x + 4, y);
+    x += w + 3;
+  }
+  y += 10;
+
   // Summary
-  y = 74;
   font('DMSans', 'normal', 10.5, INK);
   const summary = doc.splitTextToSize(t.cv.summary, PAGE_W - M * 2);
   doc.text(summary, M, y, { lineHeightFactor: 1.55 });
-  y += summary.length * 5.7 + 9;
+  y += summary.length * 5.5 + 7;
 
   // Experience
   label(t.cv.experience);
@@ -158,29 +176,11 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy) {
       }
       y += 1.6;
     }
-    y = Math.max(y, top + 8) + 1;
+    y = Math.max(y, top + 7) + 0.6;
     doc.setDrawColor(...LINE);
     doc.setLineWidth(0.2);
     doc.line(M, y - 2.6, PAGE_W - M, y - 2.6);
-    y += 2.4;
-  }
-
-  // Tools as pills
-  y += 2;
-  label(t.cv.tools);
-  font('DMSans', 'normal', 9, VIOLETA);
-  let x = M;
-  for (const tool of TOOLS) {
-    const w = doc.getTextWidth(tool) + 8;
-    if (x + w > PAGE_W - M) {
-      x = M;
-      y += 9;
-    }
-    doc.setDrawColor(...VIOLETA);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(x, y - 4.6, w, 6.6, 3.3, 3.3, 'S');
-    doc.text(tool, x + 4, y);
-    x += w + 3;
+    y += 2;
   }
 
   // Footer on every page

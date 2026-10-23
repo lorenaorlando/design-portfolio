@@ -25,9 +25,10 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
     { id: 'tldr', label: c.sections.tldr },
     { id: 'about', label: c.sections.about, html: work?.aboutHtml },
     { id: 'process', label: c.sections.process, html: work?.processHtml },
-    { id: 'result', label: c.sections.result, html: work?.resultHtml },
     ...(media.details.length ? [{ id: 'details', label: c.sections.details }] : []),
+    { id: 'result', label: c.sections.result, html: work?.resultHtml },
   ];
+  const textSections = sections.filter((s) => s.html !== undefined);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,6 +57,16 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
 
   const prev = works[(index - 1 + works.length) % works.length];
   const next = works[(index + 1) % works.length];
+
+  const renderText = (s: { id: string; label: string; html?: string }, i: number) => (
+    <section key={s.id} id={s.id} className="case-section">
+      <div className="kicker">{s.label}</div>
+      <div style={{ display: 'grid', gridTemplateColumns: '70px 1fr', marginTop: 18 }}>
+        <div className="case-num">0{i + 1}</div>
+        <div className="rich" dangerouslySetInnerHTML={{ __html: s.html ?? '' }} />
+      </div>
+    </section>
+  );
 
   const jump = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -92,15 +103,7 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
           </Window>
         </Reveal>
 
-        {sections.slice(1, 4).map((s, i) => (
-          <section key={s.id} id={s.id} className="case-section">
-            <div className="kicker">{s.label}</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '70px 1fr', marginTop: 18 }}>
-              <div className="case-num">0{i + 1}</div>
-              <div className="rich" dangerouslySetInnerHTML={{ __html: s.html ?? '' }} />
-            </div>
-          </section>
-        ))}
+        {textSections.slice(0, 2).map((s, i) => renderText(s, i))}
 
         {media.details.length > 0 && (
           <section id="details" className="case-section">
@@ -115,6 +118,7 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
           </section>
         )}
 
+        {textSections.slice(2).map((s, i) => renderText(s, i + 2))}
 
         <nav className="case-nav">
           <a href={PATHS.case(prev.slug)}>
