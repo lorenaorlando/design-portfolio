@@ -136,7 +136,7 @@ const es = {
   playground: {
     kicker: 'Playground',
     title: 'Jugar también es diseñar.',
-    subtitle: 'Proyectos personales, apps y experimentos que hago por pura curiosidad.',
+    subtitle: 'Proyectos personales, apps y experimentos que hago por amor al diseño y las computadoras.',
     tools: 'Herramientas',
     open: 'Abrir',
     back: 'Volver',
@@ -277,7 +277,7 @@ const en: Copy = {
   playground: {
     kicker: 'Playground',
     title: 'Playing is designing too.',
-    subtitle: 'Personal projects, apps and experiments I make out of pure curiosity.',
+    subtitle: 'Personal projects, apps and experiments I make out of love for design and computers.',
     tools: 'Tools',
     open: 'Open',
     back: 'Back',
