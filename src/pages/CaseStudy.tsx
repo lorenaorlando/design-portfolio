@@ -19,7 +19,7 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
   const index = works.findIndex((w) => w.slug === slug);
   const work = works[index];
   const [active, setActive] = useState('tldr');
-  const media = work ? mediaFor(work) : { video: '', cover: '', details: [] as string[] };
+  const media = work ? mediaFor(work) : { video: '', details: [] as string[] };
 
   const sections = [
     { id: 'tldr', label: c.sections.tldr },
@@ -27,7 +27,6 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
     { id: 'process', label: c.sections.process, html: work?.processHtml },
     { id: 'result', label: c.sections.result, html: work?.resultHtml },
     ...(media.details.length ? [{ id: 'details', label: c.sections.details }] : []),
-    { id: 'video', label: c.sections.video },
   ];
 
   useEffect(() => {
@@ -87,9 +86,9 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
           <div className="kicker">{c.sections.tldr}</div>
           <p>{TLDR[work.slug]?.[lang]}</p>
         </section>
-        <Reveal>
-          <Window title={work.title.toLowerCase()} bodyClassName="">
-            <Shot color={work.globeColor} image={media.cover} alt={work.title} seed={index} />
+        <Reveal className="case-video">
+          <Window title={`${work.slug}.mp4`} bodyClassName="">
+            <Shot color={work.globeColor} video={media.video} alt={work.title} seed={index} square />
           </Window>
         </Reveal>
 
@@ -106,28 +105,16 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
         {media.details.length > 0 && (
           <section id="details" className="case-section">
             <div className="kicker">{c.sections.details}</div>
-            <div className="details-grid">
+            <div className="details">
               {media.details.map((src, i) => (
-                <Reveal key={src} from={i % 2 ? 'right' : 'left'} delay={(i % 3) * 0.05} className={i % 5 === 0 ? 'wide' : ''}>
-                  <Window title={`detalle_${String(i + 1).padStart(2, '0')}.jpg`} bodyClassName="">
-                    <img className="detail-img" src={src} alt={`${work.title} — ${c.sections.details} ${i + 1}`} loading="lazy" />
-                  </Window>
+                <Reveal key={src} from={i % 2 ? 'right' : 'left'} delay={0.05}>
+                  <img className="detail-img" src={src} alt={`${work.title} — ${c.sections.details} ${i + 1}`} loading="lazy" />
                 </Reveal>
               ))}
             </div>
           </section>
         )}
 
-        <section id="video" className="case-section">
-          <div className="kicker">{c.sections.video}</div>
-          <Reveal>
-            <div className="case-video">
-              <Window title={c.videoCaption} bodyClassName="">
-                <Shot color={work.globeColor} video={media.video} alt={work.title} seed={index + 1} square />
-              </Window>
-            </div>
-          </Reveal>
-        </section>
 
         <nav className="case-nav">
           <a href={PATHS.case(prev.slug)}>

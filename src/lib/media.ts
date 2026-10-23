@@ -6,7 +6,6 @@ export function mediaFor(work: WorkProject) {
   const local = PROJECT_MEDIA[work.slug] ?? {};
   return {
     video: local.video ?? work.videoUrl,
-    cover: local.cover ?? work.imageUrl,
     details: local.details ?? [],
   };
 }

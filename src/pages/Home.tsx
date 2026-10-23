@@ -4,7 +4,7 @@ import { Photo } from '../components/Photo';
 import { Reveal } from '../components/Reveal';
 import { Shot } from '../components/Shot';
 import { Window } from '../components/Window';
-import { EMAIL, LINKEDIN_URL, PROFILE_PHOTO_COLOR } from '../content/copy';
+import { EMAIL, LINKEDIN_URL, PROFILE_PHOTO } from '../content/copy';
 import { TESTIMONIALS } from '../data/testimonialsData';
 import { WorkProject } from '../data/worksData';
 import { copyText } from '../lib/clipboard';
@@ -83,7 +83,7 @@ export function Home({ works, onToast }: HomeProps) {
           <Reveal from="left">
             <Window title="estudio.jpg" bodyClassName="">
               <div style={{ aspectRatio: '1 / 1' }}>
-                <Photo src={PROFILE_PHOTO_COLOR} alt="Lorena Orlando" />
+                <Photo src={PROFILE_PHOTO} alt="Lorena Orlando" />
               </div>
             </Window>
           </Reveal>
@@ -142,10 +142,10 @@ export function Home({ works, onToast }: HomeProps) {
               </h2>
               <p style={{ fontSize: 18, color: '#d9c8f2' }}>{h.contactBody}</p>
               <div className="btn-row" style={{ marginTop: 30 }}>
-                <button className="chip" style={{ background: 'var(--crema)', color: 'var(--morado)', borderColor: 'var(--crema)' }} onClick={copyEmail}>
+                <button className="chip" style={{ background: 'var(--on-dark)', color: 'var(--morado)', borderColor: 'var(--on-dark)' }} onClick={copyEmail}>
                   {EMAIL}
                 </button>
-                <a className="chip" style={{ background: 'transparent', color: 'var(--crema)', borderColor: '#7a52c2' }} href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+                <a className="chip" style={{ background: 'transparent', color: 'var(--on-dark)', borderColor: '#7a52c2' }} href={LINKEDIN_URL} target="_blank" rel="noreferrer">
                   LinkedIn ↗
                 </a>
                 <span className="mono" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#3ddc6f', marginLeft: 6 }}>

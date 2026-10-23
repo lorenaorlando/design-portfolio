@@ -2,8 +2,7 @@ import { Language } from '../types';
 
 export const EMAIL = 'soylorenaorlando@gmail.com';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/lorenaorlando/';
-export const PROFILE_PHOTO = 'https://sandboxlandia.online/wp-content/uploads/2026/09/LORENA_ORLANDO_PROFILE.jpg';
-export const PROFILE_PHOTO_COLOR = 'https://sandboxlandia.online/wp-content/uploads/2026/08/PROFILE_COLOR.jpg';
+export const PROFILE_PHOTO = 'assets/profile/lorena.webp';
 
 export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
 
@@ -66,13 +65,12 @@ const es = {
   },
   caseStudy: {
     back: 'Volver',
-    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', details: 'Detalles visuales', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', details: 'Detalles visuales' },
     client: 'Cliente',
     year: 'Año',
     scope: 'Alcance',
     next: 'Siguiente',
     prev: 'Anterior',
-    videoCaption: 'Recorrido del sitio',
   },
   pricing: {
     kicker: 'Servicios',
@@ -187,13 +185,12 @@ const en: Copy = {
   },
   caseStudy: {
     back: 'Back',
-    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', details: 'Visual details', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', details: 'Visual details' },
     client: 'Client',
     year: 'Year',
     scope: 'Scope',
     next: 'Next',
     prev: 'Previous',
-    videoCaption: 'Site walkthrough',
   },
   pricing: {
     kicker: 'Services',
