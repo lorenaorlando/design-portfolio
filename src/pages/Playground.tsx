@@ -82,7 +82,7 @@ export function Playground() {
     <div className="page">
       <div className="kicker">{p.kicker}</div>
       <h1 className="pg-hero">{p.title}</h1>
-      <p style={{ fontSize: 20, color: '#555', marginTop: 16, maxWidth: 640 }}>{p.subtitle}</p>
+      <p style={{ fontSize: 20, color: 'var(--ink-2)', marginTop: 16, maxWidth: 640 }}>{p.subtitle}</p>
 
       <div className="pg-grid">
         {PLAYGROUND.map((item, i) => (

@@ -102,7 +102,7 @@ export function Desktop() {
   return (
     <section className="desktop">
       <div className="menubar">
-        <Logo size={15} />
+        <Logo size={15} mark />
         <span className="menubar-right">
           {somethingHidden && (
             <button className="menubar-btn" onClick={restore}>
