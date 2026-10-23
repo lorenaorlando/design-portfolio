@@ -378,6 +378,17 @@ button.light.min:not(:disabled):hover::after { content: '−'; }
 .tool { display: flex; align-items: center; gap: 10px; font-size: 14px; }
 .tool-mark { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; flex: none; box-shadow: 0 0 0 1px var(--line); }
 .tool-mark svg { width: 17px; height: 17px; }
+.tool-mark img { width: 20px; height: 20px; object-fit: contain; }
+.tool-mark.bleed { overflow: hidden; box-shadow: none; }
+.tool-mark.bleed img { width: 100%; height: 100%; }
+.chip.visit { height: 40px; padding: 0 18px; font-size: 12px; }
+.phone { position: relative; width: min(44%, 230px); padding: 9px; border-radius: 30px; background: #1b1b1f; box-shadow: inset 0 0 0 2px #3a3a40, 0 30px 50px -24px rgba(54, 1, 133, 0.45); }
+.phone img { display: block; width: 100%; height: auto; border-radius: 22px; }
+.phone-notch { position: absolute; left: 50%; top: 15px; translate: -50% 0; width: 28%; height: 10px; border-radius: 99px; background: #1b1b1f; z-index: 1; }
+.pg-cover:has(.phone) { display: grid; place-items: center; padding: 22px 0; }
+.pg-cover .phone { max-height: 100%; }
+.pg-hero-phone { display: grid; place-items: center; padding: 40px 20px; border-radius: 16px; margin-top: 28px; }
+.pg-hero-phone .phone { width: min(70%, 280px); }
 .tool-mono { color: #fff; font-family: var(--display); font-weight: 700; font-size: 11px; letter-spacing: -0.02em; }
 body.plain { background-image: none; background-color: #fff; }
 .cv-item { display: grid; grid-template-columns: 220px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--line); }

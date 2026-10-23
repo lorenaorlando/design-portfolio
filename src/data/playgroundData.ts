@@ -26,6 +26,9 @@ export interface PlaygroundItem {
   gallery: string[];
   /** Tall screenshots (phone), shown side by side. */
   phones?: string[];
+  /** Screenshot shown inside a phone frame on the cover and at the top of the page. */
+  mockup?: string;
+  mockupBg?: string;
 }
 
 const pics = (folder: string, count: number) =>
@@ -68,6 +71,8 @@ export const PLAYGROUND: PlaygroundItem[] = [
     tools: ['vibe', 'canva', 'figma'],
     gallery: pics('pragmagicka', 8).slice(6).reverse(),
     phones: pics('pragmagicka', 6),
+    mockup: 'assets/playground/pragmagicka/01.webp',
+    mockupBg: 'linear-gradient(160deg, #fff4d9, #f9d27e)',
   },
   {
     slug: 'lorenalandia',

@@ -11,8 +11,10 @@ export function ToolBadge({ id }: { id: ToolId }) {
   const tool = TOOLS_INFO[id];
   return (
     <span className="tool">
-      <span className="tool-mark" style={{ background: tool.path ? '#fff' : tool.color }}>
-        {tool.path ? (
+      <span className={`tool-mark ${tool.bleed ? 'bleed' : ''}`} style={{ background: tool.path || tool.logo ? '#fff' : tool.color }}>
+        {tool.logo ? (
+          <img src={tool.logo} alt="" />
+        ) : tool.path ? (
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d={tool.path} fill={tool.color} />
           </svg>
@@ -22,6 +24,16 @@ export function ToolBadge({ id }: { id: ToolId }) {
       </span>
       {tool.name[lang]}
     </span>
+  );
+}
+
+/** Phone frame that takes the screenshot's own proportions. */
+function PhoneMockup({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="phone">
+      <span className="phone-notch" aria-hidden="true" />
+      <img src={src} alt={alt} />
+    </div>
   );
 }
 
@@ -40,8 +52,8 @@ export function Playground() {
           <Reveal key={item.slug} from={i % 2 ? 'right' : 'left'} delay={(i % 2) * 0.06}>
             <a className="pg-card" href={PATHS.play(item.slug)}>
               <Window title={item.file} bodyClassName="">
-                <div className="pg-cover">
-                  <img src={item.gallery[0]} alt={item.title} loading="lazy" />
+                <div className="pg-cover" style={item.mockup ? { background: item.mockupBg } : undefined}>
+                  {item.mockup ? <PhoneMockup src={item.mockup} alt={item.title} /> : <img src={item.gallery[0]} alt={item.title} loading="lazy" />}
                 </div>
               </Window>
               <div className="pg-card-info">
@@ -126,7 +138,21 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
       <article>
         <div className="kicker">{item.kind[lang]}</div>
         <h1 className="pg-detail-title">{item.title}</h1>
+        {item.links && (
+          <div className="btn-row" style={{ marginTop: 0, marginBottom: 22 }}>
+            {item.links.map((link) => (
+              <a key={link.url} className="chip solid visit" href={link.url} target="_blank" rel="noreferrer">
+                {link.label[lang]} ↗
+              </a>
+            ))}
+          </div>
+        )}
         <p className="pg-lead">{item.summary[lang]}</p>
+        {item.mockup && (
+          <div className="pg-hero-phone" style={{ background: item.mockupBg }}>
+            <PhoneMockup src={item.mockup} alt={item.title} />
+          </div>
+        )}
 
         <section id="about" className="case-section" style={{ paddingTop: 36 }}>
           <div className="kicker">{p.sections.about}</div>

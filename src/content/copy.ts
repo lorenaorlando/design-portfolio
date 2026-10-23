@@ -58,7 +58,7 @@ const es = {
     seeCase: 'Ver caso',
     seeAll: 'Ver los 12 proyectos',
     aboutKicker: 'Sobre mí',
-    aboutTitle: 'Ojo de artista, entregas siempre a tiempo.',
+    aboutTitle: 'Mirada de artista + puntualidad de oficinista.',
     aboutBody:
       'Soy artista visual hace más de 20 años y diseño sitios web hace más de 10. Combino esa sensibilidad con una forma de trabajar rápida y organizada: cumplo los plazos, respondo a tiempo y pongo el 100% en cada proyecto. Trabajo sobre todo con artistas, proyectos creativos y causas con propósito, y convierto su esencia en interfaces e identidades visuales únicas.',
     aboutCta: 'Conóceme',
@@ -199,7 +199,7 @@ const en: Copy = {
     seeCase: 'See case study',
     seeAll: 'See all 12 projects',
     aboutKicker: 'About',
-    aboutTitle: 'An artist’s eye, always on time.',
+    aboutTitle: 'An artist’s eye + office-worker punctuality.',
     aboutBody:
       'I’ve been a visual artist for over 20 years and a web designer for over 10. I pair that sensibility with a fast, organized way of working: I meet deadlines, reply on time and give 100% to every project. I mostly work with artists, creative projects and purpose-driven causes, turning their essence into unique interfaces and visual identities.',
     aboutCta: 'Get to know me',
