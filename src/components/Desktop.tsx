@@ -1,17 +1,15 @@
 import { motion } from 'motion/react';
 import { CSSProperties, ReactNode, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { EMAIL, PROFILE_PHOTO } from '../content/copy';
+import { EMAIL } from '../content/copy';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
 import { playClick } from '../lib/sound';
 import { DesktopIcon, MailAppIcon } from './DesktopIcon';
 import { Logo } from './Logo';
-import { Photo } from './Photo';
-import { PhotoBooth } from './PhotoBooth';
 import { Selection } from './Selection';
 import { Window } from './Window';
 
-type WinId = 'hello' | 'profile' | 'currently' | 'photo';
+type WinId = 'hello' | 'profile' | 'currently';
 
 function useIsDesktop() {
   const query = '(min-width: 901px)';
@@ -107,28 +105,22 @@ export function Desktop() {
   const { zoom, height } = useFitToScreen(gridRef, isDesktop);
   const clock = useClock(lang);
   const [order, setOrder] = useState<WinId[]>(['currently', 'profile', 'hello']);
-  const [closed, setClosed] = useState<WinId[]>(['photo']);
+  const [closed, setClosed] = useState<WinId[]>([]);
   const [minimized, setMinimized] = useState<WinId[]>([]);
 
   const focus = (id: WinId) => setOrder((prev) => [...prev.filter((x) => x !== id), id]);
-  const open = (id: WinId) => {
-    playClick(1.3);
-    setClosed((prev) => prev.filter((x) => x !== id));
-    setMinimized((prev) => prev.filter((x) => x !== id));
-    focus(id);
-  };
   const close = (id: WinId) => () => setClosed((prev) => [...prev, id]);
   const toggleMin = (id: WinId) => () =>
     setMinimized((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   const restore = () => {
-    setClosed(['photo']);
+    setClosed([]);
     setMinimized([]);
   };
 
   const win = (id: WinId) => ({ id, layer: order.indexOf(id), onFocus: focus, draggable: isDesktop });
   const controls = (id: WinId) => ({ onClose: close(id), onMinimize: toggleMin(id), minimized: minimized.includes(id) });
   const isOpen = (id: WinId) => !closed.includes(id);
-  const somethingHidden = closed.some((id) => id !== 'photo') || minimized.length > 0;
+  const somethingHidden = closed.length > 0 || minimized.length > 0;
 
   return (
     <section className="desktop">
@@ -147,15 +139,6 @@ export function Desktop() {
       <div className="desk-grid-wrap" style={{ height: zoom < 1 ? height : undefined }}>
       <div className="desk-grid" ref={gridRef} style={{ transform: zoom < 1 ? `scale(${zoom})` : undefined }}>
       <div className="desk-icons">
-        <DesktopIcon
-          label={d.photoFile}
-          onClick={() => open('photo')}
-          icon={
-            <span className="file-thumb">
-              <Photo src={PROFILE_PHOTO} alt="" />
-            </span>
-          }
-        />
         <DesktopIcon label={d.mailIcon} href={`mailto:${EMAIL}`} onClick={() => playClick(1.2)} icon={<MailAppIcon />} />
       </div>
 
@@ -225,14 +208,6 @@ export function Desktop() {
                 </div>
               </div>
             ))}
-          </Window>
-        </DeskWindow>
-      )}
-
-      {isOpen('photo') && (
-        <DeskWindow {...win('photo')} className="desk-float">
-          <Window title={d.photoBooth} bodyClassName="" {...controls('photo')}>
-            <PhotoBooth />
           </Window>
         </DeskWindow>
       )}

@@ -1,6 +1,22 @@
-// Brand marks: Blender, Figma and Claude paths come from Simple Icons (CC0);
+// Brand marks: Blender, Figma, Claude, WordPress, Elementor, Squarespace and Framer
+// paths come from Simple Icons (CC0);
 // Canva, New Art City, oncyber and Tripo logos live in public/assets/logos.
-export type ToolId = 'blender' | 'figma' | 'claude' | 'canva' | 'newartcity' | 'oncyber' | 'tripo' | 'vibe' | 'photo';
+export type ToolId =
+  | 'blender'
+  | 'figma'
+  | 'claude'
+  | 'canva'
+  | 'newartcity'
+  | 'oncyber'
+  | 'tripo'
+  | 'vibe'
+  | 'photo'
+  | 'wordpress'
+  | 'elementor'
+  | 'squarespace'
+  | 'framer'
+  | 'divi'
+  | 'photoshop';
 
 export interface Tool {
   name: { es: string; en: string };
@@ -8,6 +24,8 @@ export interface Tool {
   /** 24×24 SVG path, or a short monogram when there is no simple mark. */
   path?: string;
   mono?: string;
+  /** Monogram text color (white by default). */
+  monoColor?: string;
   /** Logo image inside public/. */
   logo?: string;
   /** Logo fills the whole tile (it already has its own background). */
@@ -36,4 +54,10 @@ export const TOOLS_INFO: Record<ToolId, Tool> = {
   tripo: { name: { es: 'Tripo 3D', en: 'Tripo 3D' }, color: '#111111', logo: 'assets/logos/tripo.png', bleed: true },
   vibe: { name: { es: 'Vibe coding', en: 'Vibe coding' }, color: '#DE1A58', mono: '✦' },
   photo: { name: { es: 'Fotografía digital', en: 'Digital photography' }, color: '#360185', mono: '◉' },
+  wordpress: { name: { es: 'WordPress', en: 'WordPress' }, color: '#21759B', path: 'M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0' },
+  elementor: { name: { es: 'Elementor', en: 'Elementor' }, color: '#92003B', path: 'M12 0C5.372 0 0 5.372 0 12c0 6.626 5.372 12 12 12s12-5.372 12-12c0-6.626-5.372-12-12-12ZM9 17H7V7H9Zm8 0H11V15h6Zm0-4H11V11h6Zm0-4H11V7h6Z' },
+  squarespace: { name: { es: 'Squarespace', en: 'Squarespace' }, color: '#000000', path: 'M22.655 8.719c-1.802-1.801-4.726-1.801-6.564 0l-7.351 7.35c-.45.45-.45 1.2 0 1.65.45.449 1.2.449 1.65 0l7.351-7.351c.899-.899 2.362-.899 3.264 0 .9.9.9 2.364 0 3.264l-7.239 7.239c.9.899 2.362.899 3.263 0l5.589-5.589c1.836-1.838 1.836-4.763.037-6.563zm-2.475 2.437c-.451-.45-1.201-.45-1.65 0l-7.354 7.389c-.9.899-2.361.899-3.262 0-.45-.45-1.2-.45-1.65 0s-.45 1.2 0 1.649c1.801 1.801 4.726 1.801 6.564 0l7.351-7.35c.449-.487.449-1.239.001-1.688zm-2.439-7.35c-1.801-1.801-4.726-1.801-6.564 0l-7.351 7.351c-.45.449-.45 1.199 0 1.649s1.2.45 1.65 0l7.395-7.351c.9-.899 2.371-.899 3.27 0 .451.45 1.201.45 1.65 0 .421-.487.421-1.199-.029-1.649h-.021zm-2.475 2.437c-.45-.45-1.2-.45-1.65 0l-7.351 7.389c-.899.9-2.363.9-3.265 0-.9-.899-.9-2.363 0-3.264l7.239-7.239c-.9-.9-2.362-.9-3.263 0L1.35 8.719c-1.8 1.8-1.8 4.725 0 6.563 1.801 1.801 4.725 1.801 6.564 0l7.35-7.351c.451-.488.451-1.238 0-1.688h.002z' },
+  framer: { name: { es: 'Framer', en: 'Framer' }, color: '#0055FF', path: 'M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z' },
+  divi: { name: { es: 'Divi', en: 'Divi' }, color: '#8E3EFF', mono: 'D' },
+  photoshop: { name: { es: 'Photoshop', en: 'Photoshop' }, color: '#001E36', mono: 'Ps', monoColor: '#31A8FF' },
 };

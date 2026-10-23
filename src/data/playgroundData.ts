@@ -69,6 +69,7 @@ export const PLAYGROUND: PlaygroundItem[] = [
     ],
     did: DID_PRODUCT,
     tools: ['vibe', 'canva', 'figma'],
+    links: [{ label: { es: 'Visitar pragmagick.app', en: 'Visit pragmagick.app' }, url: 'https://pragmagick.app' }],
     gallery: pics('pragmagicka', 8).slice(6).reverse(),
     phones: pics('pragmagicka', 6),
     mockup: 'assets/playground/pragmagicka/01.webp',
@@ -154,6 +155,10 @@ export const PLAYGROUND: PlaygroundItem[] = [
     ],
     did: DID_PRODUCT,
     tools: ['tripo', 'claude', 'canva'],
+    links: [
+      { label: { es: 'Visitar lorenaorlando.com', en: 'Visit lorenaorlando.com' }, url: 'https://lorenaorlando.com' },
+      { label: { es: 'Ver manual de marca', en: 'See brand guidelines' }, url: 'https://lorenaorlando.com/marca-722e46dd/' },
+    ],
     gallery: pics('lorena-web', 12),
     phones: pics('lorena-web/mobile', 10),
   },

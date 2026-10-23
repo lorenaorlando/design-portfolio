@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Reveal } from '../components/Reveal';
 import { Shot } from '../components/Shot';
+import { ToolBadge } from '../components/ToolBadge';
 import { Window } from '../components/Window';
 import { TLDR } from '../data/tldrData';
 import { WorkProject } from '../data/worksData';
 import { useLang } from '../lib/i18n';
-import { mediaFor } from '../lib/media';
+import { mediaFor, toolsFor } from '../lib/media';
 import { PATHS } from '../lib/router';
 
 interface CaseStudyProps {
@@ -139,6 +140,12 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
         <div>{work.year}</div>
         <div className="k">{c.scope}</div>
         <div>{work.disciplines.map((d) => d.toLowerCase()).join(', ')}</div>
+        <div className="k">{t.playground.tools}</div>
+        <div className="tools-list">
+          {toolsFor(work).map((id) => (
+            <ToolBadge key={id} id={id} />
+          ))}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16 }}>
           <span className="folder" style={{ width: 34, height: 26, background: `${work.globeColor}d0` }} />
           <span className="mono muted" style={{ fontSize: 11 }}>

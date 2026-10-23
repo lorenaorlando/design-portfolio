@@ -1,31 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Reveal } from '../components/Reveal';
+import { ToolBadge } from '../components/ToolBadge';
 import { Window } from '../components/Window';
 import { PLAYGROUND, PlaygroundItem } from '../data/playgroundData';
-import { TOOLS_INFO, ToolId } from '../data/tools';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
-
-export function ToolBadge({ id }: { id: ToolId }) {
-  const { lang } = useLang();
-  const tool = TOOLS_INFO[id];
-  return (
-    <span className="tool">
-      <span className={`tool-mark ${tool.bleed ? 'bleed' : ''}`} style={{ background: tool.path || tool.logo ? '#fff' : tool.color }}>
-        {tool.logo ? (
-          <img src={tool.logo} alt="" />
-        ) : tool.path ? (
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d={tool.path} fill={tool.color} />
-          </svg>
-        ) : (
-          <span className="tool-mono">{tool.mono}</span>
-        )}
-      </span>
-      {tool.name[lang]}
-    </span>
-  );
-}
 
 /** Phone frame that takes the screenshot's own proportions. */
 function PhoneMockup({ src, alt }: { src: string; alt: string }) {
@@ -78,7 +57,8 @@ export function Playground() {
           <div className="pg-col" key={c}>
             {col.map(({ item, i }) => (
               <Reveal key={item.slug} from={c ? 'right' : 'left'} delay={(i % 2) * 0.06}>
-                <a className={`pg-card ${item.mockup ? 'is-phone' : ''}`} href={PATHS.play(item.slug)}>
+                <div className={`pg-card ${item.mockup ? 'is-phone' : ''}`}>
+                <a className="pg-card-link" href={PATHS.play(item.slug)}>
                   {item.mockup ? (
                     <PhoneWindow src={item.mockup} title={item.file} alt={item.title} />
                   ) : (
@@ -97,6 +77,16 @@ export function Playground() {
                   </div>
                   <p className="pg-card-summary">{item.summary[lang]}</p>
                 </a>
+                {item.links && (
+                  <div className="btn-row pg-card-links">
+                    {item.links.map((link) => (
+                      <a key={link.url} className="chip solid" href={link.url} target="_blank" rel="noreferrer">
+                        {link.label[lang]} ↗
+                      </a>
+                    ))}
+                  </div>
+                )}
+                </div>
               </Reveal>
             ))}
           </div>
@@ -155,7 +145,7 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
   };
 
   return (
-    <div className="case">
+    <div className="case pg-case">
       <aside className="case-side">
         <a className="back-btn" href={PATHS.playground}>
           ‹ {p.back}
