@@ -61,7 +61,7 @@ export const CV_DATA_EN: CvItem[] = [
     positions: [
       {
         role: 'Web designer in Wordpress',
-        period: 'February 2026 - April 2025',
+        period: 'February 2026 - April 2026',
         bullets: ['Website Redesign', 'Brand Identity Redesign'],
       },
     ],
@@ -267,7 +267,7 @@ export const CV_DATA_ES: CvItem[] = [
     positions: [
       {
         role: 'Diseñadora Web en Wordpress',
-        period: 'Febrero 2026 - Abril 2025',
+        period: 'Febrero 2026 - Abril 2026',
         bullets: ['Rediseño de sitio web', 'Rediseño de identidad de marca'],
       },
     ],
