@@ -34,7 +34,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
         <div>
           <div className="kicker">{p.kicker}</div>
           <h1 className="display page-title">{p.title}</h1>
-          <p style={{ fontSize: 18, color: '#555', marginTop: 14 }}>{p.subtitle}</p>
+          <p style={{ fontSize: 18, color: 'var(--ink-2)', marginTop: 14 }}>{p.subtitle}</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
         <div className="budget">
           <Window title={p.budget}>
             <div>
-              {picked.length === 0 && <p style={{ fontSize: 14, color: '#888', lineHeight: 1.5 }}>{p.empty}</p>}
+              {picked.length === 0 && <p style={{ fontSize: 14, color: 'var(--muted)', lineHeight: 1.5 }}>{p.empty}</p>}
               {picked.map((s) => (
                 <div className="budget-line" key={s.id}>
                   <span>{s.name[lang]}</span>

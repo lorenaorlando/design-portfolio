@@ -4,6 +4,7 @@ import { Shot } from '../components/Shot';
 import { Window } from '../components/Window';
 import { WorkProject } from '../data/worksData';
 import { useLang } from '../lib/i18n';
+import { mediaFor } from '../lib/media';
 import { PATHS } from '../lib/router';
 
 export function Works({ works }: { works: WorkProject[] }) {
@@ -44,7 +45,7 @@ export function Works({ works }: { works: WorkProject[] }) {
           <Reveal key={w.slug} from={i % 2 ? 'right' : 'left'} delay={(i % 3) * 0.06}>
             <a className="work-card" href={PATHS.case(w.slug)}>
               <Window title={w.title.toLowerCase()} bodyClassName="">
-                <Shot color={w.globeColor} image={w.imageUrl} video={w.videoUrl} alt={w.title} seed={i} />
+                <Shot color={w.globeColor} video={mediaFor(w).video} alt={w.title} seed={i} square />
               </Window>
               <div className="work-card-info">
                 <div>

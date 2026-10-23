@@ -1,7 +1,6 @@
-import { Photo } from '../components/Photo';
+import { PhotoBooth } from '../components/PhotoBooth';
 import { Reveal } from '../components/Reveal';
 import { Window } from '../components/Window';
-import { PROFILE_PHOTO } from '../content/copy';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
 
@@ -17,10 +16,8 @@ export function About() {
       <div className="about-grid">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <Reveal from="left">
-            <Window title={t.desktop.photoFile} bodyClassName="">
-              <div style={{ aspectRatio: '4 / 5' }}>
-                <Photo src={PROFILE_PHOTO} alt="Lorena Orlando" />
-              </div>
+            <Window title={t.desktop.photoBooth} bodyClassName="">
+              <PhotoBooth />
             </Window>
           </Reveal>
           <Reveal from="left" delay={0.1}>

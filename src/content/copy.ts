@@ -2,8 +2,11 @@ import { Language } from '../types';
 
 export const EMAIL = 'soylorenaorlando@gmail.com';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/lorenaorlando/';
-export const PROFILE_PHOTO = 'https://sandboxlandia.online/wp-content/uploads/2026/09/LORENA_ORLANDO_PROFILE.jpg';
-export const PROFILE_PHOTO_COLOR = 'https://sandboxlandia.online/wp-content/uploads/2026/08/PROFILE_COLOR.jpg';
+export const PROFILE_PHOTO = 'assets/profile/lorena.webp';
+/** Photos in the Photo Booth gallery, in order. */
+export const PROFILE_PHOTOS = [PROFILE_PHOTO];
+/** Photo printed on the downloadable CV. */
+export const CV_PHOTO = PROFILE_PHOTO;
 
 export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
 
@@ -12,8 +15,8 @@ const es = {
   bar: { language: 'Idioma', contact: 'Contacto', available: 'Disponible', emailCopied: 'Email copiado', email: 'Email' },
   desktop: {
     hello: '> hola! soy',
-    shapeBefore: 'y estoy acá para darle forma y',
-    shapeWord: 'sentido',
+    shapeBefore: 'y estoy acá para darle',
+    shapeWord: 'forma y sentido',
     shapeAfter: 'a tu proyecto en la web.',
     editing: 'Lorena · editando',
     seeWorks: 'Ver proyectos',
@@ -24,6 +27,10 @@ const es = {
     currentlyTitle: 'Currently working @',
     contactFile: 'contacto',
     photoFile: 'lorena.jpg',
+    photoBooth: 'Photo Booth',
+    effects: ['Normal', 'B&N', 'Sepia', 'Pop'],
+    effectsLabel: 'Efectos',
+    shutter: 'Tomar foto',
     helloFile: 'hola.txt',
     mailIcon: 'trabajemos junt@s!',
     restore: 'Restaurar ventanas',
@@ -58,9 +65,6 @@ const es = {
     contactBody: 'Escríbeme y conversemos.',
     testimonialsKicker: 'Testimonios',
     testimonialsTitle: 'Lo que dicen',
-    testimonialPlaceholder: 'Aquí va el testimonio de un cliente. Pronto lo agregamos.',
-    testimonialName: 'Nombre del cliente',
-    testimonialRole: 'Proyecto',
   },
   works: {
     kicker: 'Archivo',
@@ -69,13 +73,12 @@ const es = {
   },
   caseStudy: {
     back: 'Volver',
-    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', details: 'Detalles visuales' },
     client: 'Cliente',
     year: 'Año',
     scope: 'Alcance',
     next: 'Siguiente',
     prev: 'Anterior',
-    videoCaption: 'Recorrido del sitio',
   },
   pricing: {
     kicker: 'Servicios',
@@ -136,8 +139,8 @@ const en: Copy = {
   bar: { language: 'Language', contact: 'Contact', available: 'Available', emailCopied: 'Email copied', email: 'Email' },
   desktop: {
     hello: '> hi! I’m',
-    shapeBefore: 'and I’m here to give shape and',
-    shapeWord: 'meaning',
+    shapeBefore: 'and I’m here to give',
+    shapeWord: 'shape and meaning',
     shapeAfter: 'to your project on the web.',
     editing: 'Lorena · editing',
     seeWorks: 'See works',
@@ -148,6 +151,10 @@ const en: Copy = {
     currentlyTitle: 'Currently working @',
     contactFile: 'contact',
     photoFile: 'lorena.jpg',
+    photoBooth: 'Photo Booth',
+    effects: ['Normal', 'B&W', 'Sepia', 'Pop'],
+    effectsLabel: 'Effects',
+    shutter: 'Take photo',
     helloFile: 'hello.txt',
     mailIcon: 'let’s work together!',
     restore: 'Restore windows',
@@ -182,9 +189,6 @@ const en: Copy = {
     contactBody: 'Write to me and let’s talk.',
     testimonialsKicker: 'Testimonials',
     testimonialsTitle: 'Kind words',
-    testimonialPlaceholder: 'A client testimonial goes here. Coming soon.',
-    testimonialName: 'Client name',
-    testimonialRole: 'Project',
   },
   works: {
     kicker: 'Archive',
@@ -193,13 +197,12 @@ const en: Copy = {
   },
   caseStudy: {
     back: 'Back',
-    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', details: 'Visual details' },
     client: 'Client',
     year: 'Year',
     scope: 'Scope',
     next: 'Next',
     prev: 'Previous',
-    videoCaption: 'Site walkthrough',
   },
   pricing: {
     kicker: 'Services',
