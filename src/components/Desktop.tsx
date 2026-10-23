@@ -7,6 +7,7 @@ import { playClick } from '../lib/sound';
 import { DesktopIcon, MailAppIcon } from './DesktopIcon';
 import { Logo } from './Logo';
 import { Photo } from './Photo';
+import { PhotoBooth } from './PhotoBooth';
 import { Selection } from './Selection';
 import { Window } from './Window';
 
@@ -199,10 +200,8 @@ export function Desktop() {
 
       {isOpen('photo') && (
         <DeskWindow {...win('photo')} className="desk-float">
-          <Window title={d.photoFile} bodyClassName="" {...controls('photo')}>
-            <div style={{ aspectRatio: '4 / 5' }}>
-              <Photo src={PROFILE_PHOTO} alt="Lorena Orlando" />
-            </div>
+          <Window title={d.photoBooth} bodyClassName="" {...controls('photo')}>
+            <PhotoBooth />
           </Window>
         </DeskWindow>
       )}

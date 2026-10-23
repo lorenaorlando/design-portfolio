@@ -33,7 +33,7 @@ export function SideBar({ route, onToast }: SideBarProps) {
   return (
     <aside className="bar" aria-label="Menu">
       <a className="bar-logo" href={PATHS.home} onClick={click} aria-label="Lorena Orlando">
-        <LogoMark size={46} />
+        <LogoMark size={38} />
         <span className="logo bar-wordmark">
           <span className="logo-lo">lo</span>
           <span className="logo-os">OS</span>

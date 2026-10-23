@@ -3,6 +3,10 @@ import { Language } from '../types';
 export const EMAIL = 'soylorenaorlando@gmail.com';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/lorenaorlando/';
 export const PROFILE_PHOTO = 'assets/profile/lorena.webp';
+/** Photos in the Photo Booth gallery, in order. */
+export const PROFILE_PHOTOS = [PROFILE_PHOTO];
+/** Photo printed on the downloadable CV. */
+export const CV_PHOTO = PROFILE_PHOTO;
 
 export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
 
@@ -23,6 +27,10 @@ const es = {
     currentlyTitle: 'Currently working @',
     contactFile: 'contacto',
     photoFile: 'lorena.jpg',
+    photoBooth: 'Photo Booth',
+    effects: ['Normal', 'B&N', 'Sepia', 'Pop'],
+    effectsLabel: 'Efectos',
+    shutter: 'Tomar foto',
     helloFile: 'hola.txt',
     mailIcon: 'trabajemos junt@s!',
     restore: 'Restaurar ventanas',
@@ -143,6 +151,10 @@ const en: Copy = {
     currentlyTitle: 'Currently working @',
     contactFile: 'contact',
     photoFile: 'lorena.jpg',
+    photoBooth: 'Photo Booth',
+    effects: ['Normal', 'B&W', 'Sepia', 'Pop'],
+    effectsLabel: 'Effects',
+    shutter: 'Take photo',
     helloFile: 'hello.txt',
     mailIcon: 'let’s work together!',
     restore: 'Restore windows',
