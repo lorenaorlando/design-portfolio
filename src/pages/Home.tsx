@@ -93,7 +93,7 @@ export function Home({ works, onToast }: HomeProps) {
               {h.aboutTitle}
             </h2>
             <div className="prose">
-              <p>{t.about.background[0]}</p>
+              <p>{h.aboutBody}</p>
             </div>
             <a className="link-arrow" href={PATHS.about}>
               {h.aboutCta} →
