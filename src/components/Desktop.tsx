@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CSSProperties, ReactNode, useEffect, useState } from 'react';
+import { CSSProperties, ReactNode, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { EMAIL, PROFILE_PHOTO } from '../content/copy';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
@@ -23,6 +23,34 @@ function useIsDesktop() {
     return () => mql.removeEventListener('change', onChange);
   }, []);
   return match;
+}
+
+/** Scales the desktop grid down so every window fits in the first screen. */
+function useFitToScreen(ref: RefObject<HTMLDivElement | null>, enabled: boolean) {
+  const [fit, setFit] = useState({ zoom: 1, height: 0 });
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || !enabled) {
+      setFit({ zoom: 1, height: 0 });
+      return;
+    }
+    const measure = () => {
+      // offsetHeight ignores the transform, so this is the unscaled height.
+      const natural = el.offsetHeight;
+      const available = window.innerHeight - 34 - 96; // menubar, bottom hint and breathing room
+      const zoom = Math.max(0.6, Math.min(1, available / natural));
+      setFit({ zoom, height: natural * zoom });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [ref, enabled]);
+  return fit;
 }
 
 function useClock(lang: string) {
@@ -75,6 +103,8 @@ export function Desktop() {
   const { t, lang } = useLang();
   const d = t.desktop;
   const isDesktop = useIsDesktop();
+  const gridRef = useRef<HTMLDivElement>(null);
+  const { zoom, height } = useFitToScreen(gridRef, isDesktop);
   const clock = useClock(lang);
   const [order, setOrder] = useState<WinId[]>(['currently', 'profile', 'hello']);
   const [closed, setClosed] = useState<WinId[]>(['photo']);
@@ -114,7 +144,8 @@ export function Desktop() {
         </span>
       </div>
 
-      <div className="desk-grid">
+      <div className="desk-grid-wrap" style={{ height: zoom < 1 ? height : undefined }}>
+      <div className="desk-grid" ref={gridRef} style={{ transform: zoom < 1 ? `scale(${zoom})` : undefined }}>
       <div className="desk-icons">
         <DesktopIcon
           label={d.photoFile}
@@ -206,6 +237,7 @@ export function Desktop() {
         </DeskWindow>
       )}
 
+      </div>
       </div>
 
       <div className="desk-hint">

@@ -8,7 +8,7 @@ export const PROFILE_PHOTOS = [PROFILE_PHOTO, 'assets/profile/lorena-2.webp', 'a
 /** Photo printed on the downloadable CV. */
 export const CV_PHOTO = PROFILE_PHOTO;
 
-export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce'];
+export const TOOLS = ['WordPress', 'Squarespace', 'Webflow', 'Framer', 'Figma', 'Photoshop', 'Canva', 'WooCommerce', 'Vibe coding'];
 
 const es = {
   nav: { home: 'Inicio', works: 'Proyectos', playground: 'Playground', pricing: 'Precios', about: 'Sobre mí', cv: 'CV' },
@@ -138,8 +138,13 @@ const es = {
     title: 'Jugar también es diseñar.',
     subtitle: 'Proyectos personales, apps y experimentos que hago por pura curiosidad.',
     tools: 'Herramientas',
-    soon: 'Pronto',
-    placeholder: 'Aquí va la descripción de este proyecto personal: qué es, por qué lo hice y qué aprendí.',
+    open: 'Abrir',
+    back: 'Volver',
+    sections: { about: 'Sobre el proyecto', video: 'Recorrido', gallery: 'Galería', mobile: 'En el celular' },
+    did: 'Lo que hice',
+    type: 'Tipo',
+    next: 'Siguiente',
+    prev: 'Anterior',
   },
   footer: 'Diseñado y construido por Lorena Orlando',
 };
@@ -274,8 +279,13 @@ const en: Copy = {
     title: 'Playing is designing too.',
     subtitle: 'Personal projects, apps and experiments I make out of pure curiosity.',
     tools: 'Tools',
-    soon: 'Soon',
-    placeholder: 'This is where the description of this personal project goes: what it is, why I made it and what I learned.',
+    open: 'Open',
+    back: 'Back',
+    sections: { about: 'About the project', video: 'Walkthrough', gallery: 'Gallery', mobile: 'On mobile' },
+    did: 'What I did',
+    type: 'Type',
+    next: 'Next',
+    prev: 'Previous',
   },
   footer: 'Designed and built by Lorena Orlando',
 };

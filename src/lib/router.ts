@@ -4,6 +4,7 @@ export type Route =
   | { page: 'home' }
   | { page: 'works' }
   | { page: 'playground' }
+  | { page: 'play'; slug: string }
   | { page: 'case'; slug: string }
   | { page: 'pricing' }
   | { page: 'about' }
@@ -17,6 +18,7 @@ export const PATHS = {
   about: '#/sobre-mi',
   cv: '#/cv',
   case: (slug: string) => `#/proyectos/${slug}`,
+  play: (slug: string) => `#/playground/${slug}`,
 };
 
 function parse(hash: string): Route {
@@ -25,7 +27,7 @@ function parse(hash: string): Route {
     case 'proyectos':
       return parts[1] ? { page: 'case', slug: parts[1] } : { page: 'works' };
     case 'playground':
-      return { page: 'playground' };
+      return parts[1] ? { page: 'play', slug: parts[1] } : { page: 'playground' };
     case 'precios':
       return { page: 'pricing' };
     case 'sobre-mi':
