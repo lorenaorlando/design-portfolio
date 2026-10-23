@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { Desktop } from '../components/Desktop';
 import { Photo } from '../components/Photo';
 import { Reveal } from '../components/Reveal';
 import { Shot } from '../components/Shot';
 import { Window } from '../components/Window';
 import { EMAIL, LINKEDIN_URL, PROFILE_PHOTO_COLOR } from '../content/copy';
+import { TESTIMONIALS } from '../data/testimonialsData';
 import { WorkProject } from '../data/worksData';
 import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
+import { mediaFor } from '../lib/media';
 import { PATHS } from '../lib/router';
 
 interface HomeProps {
@@ -17,7 +20,7 @@ interface HomeProps {
 const FEATURED = 6;
 
 export function Home({ works, onToast }: HomeProps) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const h = t.home;
 
   const copyEmail = async () => {
@@ -43,7 +46,7 @@ export function Home({ works, onToast }: HomeProps) {
               <Reveal from={flip ? 'right' : 'left'} className="work-media">
                 <a href={PATHS.case(w.slug)}>
                   <Window title={w.title.toLowerCase()} bodyClassName="">
-                    <Shot color={w.globeColor} image={w.imageUrl} video={w.videoUrl} alt={w.title} seed={i} />
+                    <Shot color={w.globeColor} video={mediaFor(w).video} alt={w.title} seed={i} square />
                   </Window>
                 </a>
               </Reveal>
@@ -52,7 +55,7 @@ export function Home({ works, onToast }: HomeProps) {
                   {String(i + 1).padStart(2, '0')} — {w.year}
                 </div>
                 <h3 className="display work-title">{w.title}</h3>
-                <div style={{ fontSize: 17, color: '#555' }}>{w.typeOfProject}</div>
+                <div style={{ fontSize: 17, color: 'var(--ink-2)' }}>{w.typeOfProject}</div>
                 <div className="work-meta">
                   {w.disciplines.map((x) => (
                     <span className="chip small" key={x}>
@@ -107,17 +110,17 @@ export function Home({ works, onToast }: HomeProps) {
           </h2>
         </Reveal>
         <div className="testimonials">
-          {[0, 1, 2].map((i) => (
-            <Reveal key={i} from={i === 0 ? 'left' : i === 2 ? 'right' : 'bottom'} delay={i * 0.08}>
-              <Window title={`testimonio_0${i + 1}.txt`}>
+          {TESTIMONIALS.map((item, i) => (
+            <Reveal key={item.name} from={i % 2 ? 'right' : 'left'} delay={(i % 2) * 0.08}>
+              <Window title={`${item.name.split(' ')[0].toLowerCase()}.txt`}>
                 <blockquote className="testimonial">
                   <span className="quote-mark" aria-hidden="true">“</span>
-                  <p>{h.testimonialPlaceholder}</p>
+                  <p>{item.quote[lang]}</p>
                   <footer>
-                    <span className="avatar" aria-hidden="true" />
+                    <Avatar name={item.name} photo={item.photo} />
                     <span>
-                      <strong>{h.testimonialName}</strong>
-                      <span className="muted"> — {h.testimonialRole}</span>
+                      <strong>{item.name}</strong>
+                      {item.project && <span className="muted"> — {item.project}</span>}
                     </span>
                   </footer>
                 </blockquote>
@@ -131,18 +134,18 @@ export function Home({ works, onToast }: HomeProps) {
         <Reveal className="contact-card">
           <Window title={t.desktop.contactFile} dark>
             <div style={{ padding: 'clamp(12px, 3vw, 36px)' }}>
-              <div className="kicker" style={{ color: '#9db2ff' }}>
+              <div className="kicker" style={{ color: 'var(--mostaza)' }}>
                 {h.contactKicker}
               </div>
               <h2 className="display contact-title" style={{ margin: '14px 0 18px' }}>
                 {h.contactTitle}
               </h2>
-              <p style={{ fontSize: 18, color: '#bbb' }}>{h.contactBody}</p>
+              <p style={{ fontSize: 18, color: '#d9c8f2' }}>{h.contactBody}</p>
               <div className="btn-row" style={{ marginTop: 30 }}>
-                <button className="chip" style={{ background: '#fff', color: '#111' }} onClick={copyEmail}>
+                <button className="chip" style={{ background: 'var(--crema)', color: 'var(--morado)', borderColor: 'var(--crema)' }} onClick={copyEmail}>
                   {EMAIL}
                 </button>
-                <a className="chip" style={{ background: 'transparent', color: '#fff', borderColor: '#555' }} href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+                <a className="chip" style={{ background: 'transparent', color: 'var(--crema)', borderColor: '#7a52c2' }} href={LINKEDIN_URL} target="_blank" rel="noreferrer">
                   LinkedIn ↗
                 </a>
                 <span className="mono" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#3ddc6f', marginLeft: 6 }}>
@@ -154,5 +157,19 @@ export function Home({ works, onToast }: HomeProps) {
         </Reveal>
       </section>
     </>
+  );
+}
+
+function Avatar({ name, photo }: { name: string; photo?: string }) {
+  const [ok, setOk] = useState(Boolean(photo));
+  const initials = name
+    .split(' ')
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('');
+  return (
+    <span className="avatar" aria-hidden="true">
+      {ok && photo ? <img src={photo} alt="" onError={() => setOk(false)} /> : initials}
+    </span>
   );
 }

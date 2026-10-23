@@ -29,8 +29,8 @@ export function MailAppIcon() {
   return (
     <span className="mail-app">
       <svg viewBox="0 0 48 48" aria-hidden="true">
-        <rect x="7" y="13" width="34" height="23" rx="3" fill="#fff" />
-        <path d="M8 15l16 12 16-12" fill="none" stroke="#9ab8d8" strokeWidth="2.2" strokeLinejoin="round" />
+        <rect x="7" y="13" width="34" height="23" rx="3" fill="#fff0d6" />
+        <path d="M8 15l16 12 16-12" fill="none" stroke="#c99ad0" strokeWidth="2.2" strokeLinejoin="round" />
       </svg>
     </span>
   );

@@ -40,7 +40,7 @@ export function Cv() {
               <Download size={14} /> {busy ? cv.preparing : cv.download}
             </button>
           </div>
-          <p style={{ fontSize: 16.5, lineHeight: 1.65, color: '#555', marginTop: 20, maxWidth: 680 }}>{cv.summary}</p>
+          <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 20, maxWidth: 680 }}>{cv.summary}</p>
 
           <div className="kicker" style={{ margin: '40px 0 12px' }}>
             {cv.experience}

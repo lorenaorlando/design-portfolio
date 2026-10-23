@@ -58,9 +58,6 @@ const es = {
     contactBody: 'Escríbeme y conversemos.',
     testimonialsKicker: 'Testimonios',
     testimonialsTitle: 'Lo que dicen',
-    testimonialPlaceholder: 'Aquí va el testimonio de un cliente. Pronto lo agregamos.',
-    testimonialName: 'Nombre del cliente',
-    testimonialRole: 'Proyecto',
   },
   works: {
     kicker: 'Archivo',
@@ -69,7 +66,7 @@ const es = {
   },
   caseStudy: {
     back: 'Volver',
-    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'Sobre el proyecto', process: 'Proceso', result: 'Resultado', details: 'Detalles visuales', video: 'Video' },
     client: 'Cliente',
     year: 'Año',
     scope: 'Alcance',
@@ -182,9 +179,6 @@ const en: Copy = {
     contactBody: 'Write to me and let’s talk.',
     testimonialsKicker: 'Testimonials',
     testimonialsTitle: 'Kind words',
-    testimonialPlaceholder: 'A client testimonial goes here. Coming soon.',
-    testimonialName: 'Client name',
-    testimonialRole: 'Project',
   },
   works: {
     kicker: 'Archive',
@@ -193,7 +187,7 @@ const en: Copy = {
   },
   caseStudy: {
     back: 'Back',
-    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', video: 'Video' },
+    sections: { tldr: 'TL;DR', about: 'About the project', process: 'Process', result: 'Result', details: 'Visual details', video: 'Video' },
     client: 'Client',
     year: 'Year',
     scope: 'Scope',

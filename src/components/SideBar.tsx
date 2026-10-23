@@ -4,7 +4,7 @@ import { copyText } from '../lib/clipboard';
 import { useLang } from '../lib/i18n';
 import { PATHS, Route } from '../lib/router';
 import { playClick } from '../lib/sound';
-import { Logo } from './Logo';
+import { LogoMark } from './Logo';
 
 interface SideBarProps {
   route: Route;
@@ -33,7 +33,11 @@ export function SideBar({ route, onToast }: SideBarProps) {
   return (
     <aside className="bar" aria-label="Menu">
       <a className="bar-logo" href={PATHS.home} onClick={click} aria-label="Lorena Orlando">
-        <Logo size={21} />
+        <LogoMark size={46} />
+        <span className="logo bar-wordmark">
+          <span className="logo-lo">lo</span>
+          <span className="logo-os">OS</span>
+        </span>
       </a>
 
       <div className="bar-group">
@@ -110,7 +114,7 @@ function LinkedInGlyph() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <rect x="2.5" y="2.5" width="19" height="19" rx="4.5" fill="currentColor" />
-      <path d="M7.6 10.2v6.3M7.6 7.4v.01M11.2 16.5v-6.3M11.2 13.1c0-1.7 1-2.9 2.5-2.9s2.4 1 2.4 2.8v3.5" stroke="#f4f4f2" strokeWidth="1.9" strokeLinecap="round" fill="none" />
+      <path d="M7.6 10.2v6.3M7.6 7.4v.01M11.2 16.5v-6.3M11.2 13.1c0-1.7 1-2.9 2.5-2.9s2.4 1 2.4 2.8v3.5" stroke="#fffbf2" strokeWidth="1.9" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
