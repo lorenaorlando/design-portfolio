@@ -45,7 +45,7 @@ const DID_PRODUCT: Text[] = [
 export const PLAYGROUND: PlaygroundItem[] = [
   {
     slug: 'pragmagicka',
-    file: 'pragmagicka.app',
+    file: 'pragmagick.app',
     title: 'Pragmagicka',
     kind: { es: 'Apps esotéricas', en: 'Esoteric apps' },
     color: '#F4B342',

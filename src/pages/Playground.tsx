@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Reveal } from '../components/Reveal';
 import { Window } from '../components/Window';
-import { PLAYGROUND } from '../data/playgroundData';
+import { PLAYGROUND, PlaygroundItem } from '../data/playgroundData';
 import { TOOLS_INFO, ToolId } from '../data/tools';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
@@ -37,9 +37,35 @@ function PhoneMockup({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+/** A whole window shaped like a phone: bezel, title bar and the screenshot. */
+function PhoneWindow({ src, title, alt }: { src: string; title: string; alt: string }) {
+  return (
+    <div className="phone-window">
+      <div className="win-bar">
+        <span className="dots">
+          <span className="light close" />
+          <span className="light min" />
+          <span className="light max" />
+        </span>
+        <span className="title">{title}</span>
+      </div>
+      <img src={src} alt={alt} loading="lazy" />
+    </div>
+  );
+}
+
 export function Playground() {
   const { t, lang } = useLang();
   const p = t.playground;
+
+  // Masonry: phone cards count as two rows; each card goes to the shorter column.
+  const columns: { item: PlaygroundItem; i: number }[][] = [[], []];
+  const heights = [0, 0];
+  PLAYGROUND.forEach((item, i) => {
+    const c = heights[0] <= heights[1] ? 0 : 1;
+    columns[c].push({ item, i });
+    heights[c] += item.mockup ? 2 : 1;
+  });
 
   return (
     <div className="page">
@@ -47,25 +73,33 @@ export function Playground() {
       <h1 className="pg-hero">{p.title}</h1>
       <p style={{ fontSize: 20, color: 'var(--ink-2)', marginTop: 16, maxWidth: 640 }}>{p.subtitle}</p>
 
-      <div className="pg-grid">
-        {PLAYGROUND.map((item, i) => (
-          <Reveal key={item.slug} from={i % 2 ? 'right' : 'left'} delay={(i % 2) * 0.06}>
-            <a className="pg-card" href={PATHS.play(item.slug)}>
-              <Window title={item.file} bodyClassName="">
-                <div className="pg-cover" style={item.mockup ? { background: item.mockupBg } : undefined}>
-                  {item.mockup ? <PhoneMockup src={item.mockup} alt={item.title} /> : <img src={item.gallery[0]} alt={item.title} loading="lazy" />}
-                </div>
-              </Window>
-              <div className="pg-card-info">
-                <div>
-                  <div className="pg-title">{item.title}</div>
-                  <div className="type">{item.kind[lang]}</div>
-                </div>
-                <span className="chip small">{p.open} →</span>
-              </div>
-              <p className="pg-card-summary">{item.summary[lang]}</p>
-            </a>
-          </Reveal>
+      <div className="pg-masonry">
+        {columns.map((col, c) => (
+          <div className="pg-col" key={c}>
+            {col.map(({ item, i }) => (
+              <Reveal key={item.slug} from={c ? 'right' : 'left'} delay={(i % 2) * 0.06}>
+                <a className={`pg-card ${item.mockup ? 'is-phone' : ''}`} href={PATHS.play(item.slug)}>
+                  {item.mockup ? (
+                    <PhoneWindow src={item.mockup} title={item.file} alt={item.title} />
+                  ) : (
+                    <Window title={item.file} bodyClassName="">
+                      <div className="pg-cover">
+                        <img src={item.gallery[0]} alt={item.title} loading="lazy" />
+                      </div>
+                    </Window>
+                  )}
+                  <div className="pg-card-info">
+                    <div>
+                      <div className="pg-title">{item.title}</div>
+                      <div className="type">{item.kind[lang]}</div>
+                    </div>
+                    <span className="chip small">{p.open} →</span>
+                  </div>
+                  <p className="pg-card-summary">{item.summary[lang]}</p>
+                </a>
+              </Reveal>
+            ))}
+          </div>
         ))}
       </div>
     </div>
