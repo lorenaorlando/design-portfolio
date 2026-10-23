@@ -13,7 +13,7 @@ interface SideBarProps {
 
 export function SideBar({ route, onToast }: SideBarProps) {
   const { t, lang, setLang } = useLang();
-  const active = route.page === 'case' ? 'works' : route.page;
+  const active = route.page === 'case' ? 'works' : route.page === 'play' ? 'playground' : route.page;
   const items = [
     { id: 'home', label: t.nav.home, href: PATHS.home },
     { id: 'works', label: t.nav.works, href: PATHS.works },

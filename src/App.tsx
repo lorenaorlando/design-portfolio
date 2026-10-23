@@ -8,7 +8,7 @@ import { About } from './pages/About';
 import { CaseStudy } from './pages/CaseStudy';
 import { Cv } from './pages/Cv';
 import { Home } from './pages/Home';
-import { Playground } from './pages/Playground';
+import { Playground, PlaygroundDetail } from './pages/Playground';
 import { Pricing } from './pages/Pricing';
 import { Works } from './pages/Works';
 import { Language } from './types';
@@ -35,6 +35,11 @@ export default function App() {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  // Playground pages sit on plain white so screenshots with white edges blend in.
+  useEffect(() => {
+    document.body.classList.toggle('plain', route.page === 'playground' || route.page === 'play');
+  }, [route.page]);
+
   const setLang = (next: Language) => {
     saveLanguagePreference(next);
     setLangState(next);
@@ -55,6 +60,9 @@ export default function App() {
       break;
     case 'playground':
       page = <Playground />;
+      break;
+    case 'play':
+      page = <PlaygroundDetail slug={route.slug} />;
       break;
     case 'case':
       page = <CaseStudy works={works} slug={route.slug} />;
