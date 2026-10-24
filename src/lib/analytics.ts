@@ -3,7 +3,7 @@
  * (Admin → Data streams → lorenaorlando.click → "G-XXXXXXXXXX") here.
  * While it is empty, nothing is loaded.
  */
-export const GA_MEASUREMENT_ID = '';
+export const GA_MEASUREMENT_ID = 'G-9C1J96E9CB';
 
 type Gtag = (...args: unknown[]) => void;
 declare global {
