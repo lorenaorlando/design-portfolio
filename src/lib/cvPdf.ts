@@ -1,6 +1,8 @@
 import type { jsPDF as JsPDF } from 'jspdf';
 import { Copy, CV_PHOTO, EMAIL, LINKEDIN_URL, TOOLS } from '../content/copy';
 import { CvItem } from '../data/cvData';
+import { PERSONAL_PROJECTS } from '../data/personalProjects';
+import { Language } from '../types';
 
 type RGB = [number, number, number];
 
@@ -75,7 +77,7 @@ function dotField(doc: JsPDF, x: number, y: number, w: number, h: number) {
 }
 
 /** Builds the branded CV PDF and triggers the download. */
-export async function downloadCvPdf(cv: CvItem[], t: Copy) {
+export async function downloadCvPdf(cv: CvItem[], t: Copy, lang: Language) {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
@@ -149,11 +151,46 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy) {
   doc.text(summary, M, y, { lineHeightFactor: 1.55 });
   y += summary.length * 5.5 + 7;
 
+  // Personal projects: a highlighted box with three columns
+  {
+    const boxH = 44;
+    const colW = (PAGE_W - M * 2 - 10 - 8) / 3;
+    doc.setFillColor(251, 247, 253);
+    doc.setDrawColor(...VIOLETA);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(M, y, PAGE_W - M * 2, boxH, 3, 3, 'FD');
+    font('Pixelify', 'normal', 13, VIOLETA);
+    doc.text(t.cv.personal, M + 5, y + 8);
+    font('DMSans', 'normal', 7.5, MUTED);
+    doc.text(t.cv.personalNote.toUpperCase(), PAGE_W - M - 5, y + 8, { align: 'right' });
+    PERSONAL_PROJECTS.forEach((pp, i) => {
+      const x = M + 5 + i * (colW + 4);
+      const top = y + 15;
+      font('Bricolage', 'bold', 10.5, MORADO);
+      doc.textWithLink(pp.name, x, top, { url: pp.url });
+      font('DMSans', 'bold', 7.2, MAGENTA);
+      doc.text(pp.kind[lang].toUpperCase(), x, top + 4.6, { charSpace: 0.2 });
+      font('DMSans', 'normal', 8.2, INK_2);
+      const lines = doc.splitTextToSize(pp.description[lang], colW);
+      doc.text(lines.slice(0, 5), x, top + 10, { lineHeightFactor: 1.35 });
+    });
+    y += boxH + 10;
+  }
+
   // Experience
   label(t.cv.experience);
+  // Estimated height of one company block, so it starts on a page where it fits.
+  const blockHeight = (item: CvItem) =>
+    item.positions.reduce((h, pos) => {
+      font('DMSans', 'normal', 9, INK_2);
+      const bullets = (pos.bullets ?? []).reduce((b, text) => b + doc.splitTextToSize(text, PAGE_W - M - COL - 5).length * 4 + 0.4, 0);
+      return h + 8.6 + bullets + 1.6;
+    }, 0) + 3;
+
   for (const item of cv) {
-    ensure(13);
+    ensure(Math.min(blockHeight(item), PAGE_H - M * 2 - FOOTER));
     const top = y;
+    const startPage = doc.getNumberOfPages();
     font('Bricolage', 'bold', 11, MORADO);
     doc.text(doc.splitTextToSize(item.company, COL - M - 5), M, y);
 
@@ -176,7 +213,7 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy) {
       }
       y += 1.6;
     }
-    y = Math.max(y, top + 7) + 0.6;
+    y = (doc.getNumberOfPages() === startPage ? Math.max(y, top + 7) : y) + 0.6;
     doc.setDrawColor(...LINE);
     doc.setLineWidth(0.2);
     doc.line(M, y - 2.6, PAGE_W - M, y - 2.6);

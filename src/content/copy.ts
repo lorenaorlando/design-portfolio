@@ -127,6 +127,8 @@ const es = {
     summary:
       'Diseñadora digital con más de 10 años de experiencia en diseño web, branding y dirección visual. Actualmente trabajo como webmaster en Puentes y Las Escuchadoras. Me enfoco en transformar estructura e identidad en experiencias digitales atractivas, basadas en la visión y las metas de cada proyecto.',
     experience: 'Experiencia',
+    personal: 'Proyectos personales',
+    personalNote: 'Diseño, desarrollo y lanzamiento propios',
     tools: 'Herramientas',
     download: 'Descargar PDF',
     preparing: 'Preparando…',
@@ -267,6 +269,8 @@ const en: Copy = {
     summary:
       'Digital designer with over 10 years of experience across web design, branding and visual direction. Currently working as a webmaster at Puentes and Las Escuchadoras. Focused on shaping structure and identity into engaging digital experiences based on the vision and goals of every project.',
     experience: 'Experience',
+    personal: 'Personal projects',
+    personalNote: 'Designed, built and launched on my own',
     tools: 'Tools',
     download: 'Download PDF',
     preparing: 'Preparing…',

@@ -134,6 +134,44 @@ export const PLAYGROUND: PlaygroundItem[] = [
     gallery: pics('indivirtual', 3),
   },
   {
+    slug: 'funscroll',
+    file: 'funscroll.life',
+    title: 'Funscroll',
+    kind: { es: 'Web manifiesto', en: 'Manifesto site' },
+    color: '#DE1A58',
+    summary: {
+      es: 'Un internet que no quiere retenerte: webs para jugar con el scroll en lugar del doomscroll.',
+      en: 'An internet that doesn’t want to keep you: websites that play with scrolling instead of doomscrolling.',
+    },
+    about: [
+      {
+        es: 'Funscroll es mi respuesta al doomscroll, la forma más común en que usamos internet hoy: horas de pulgar arriba en un feed que elige por nosotros, solo deja cuatro formas de interactuar y castiga los links hacia afuera.',
+        en: 'Funscroll is my answer to doomscrolling, the most common way we use the internet today: hours of thumb-scrolling a feed that chooses for us, allows only four ways to interact and punishes links that lead elsewhere.',
+      },
+      {
+        es: 'Propone otra forma de hacer webs: que se mueven en todas las direcciones, que tienen final y que te invitan a irte. Sin objetivos ni métricas, más cerca del arte que de un feed. La web presenta un glosario de nuevas formas de scrollear (dancescroll, slowscroll, smartscroll, tiltscroll) que se pueden probar ahí mismo.',
+        en: 'It proposes another way of making websites: ones that move in every direction, have an ending and invite you to leave. No goals or metrics, closer to art than to a feed. The site presents a glossary of new ways to scroll (dancescroll, slowscroll, smartscroll, tiltscroll) that you can try right there.',
+      },
+      {
+        es: 'El proyecto incluye un manifiesto que se desenrolla como un pergamino, una galería de funscrollers (webs que inspiraron el proyecto, con una puerta que te lleva a una al azar y un webring) y un kit gratuito de efectos para que cualquiera haga su propia web divertida de scrollear, con una guía para crearla con vibe coding aunque no sepa programar. Está en español e inglés.',
+        en: 'The project includes a manifesto that unrolls like a scroll, a gallery of funscrollers (sites that inspired the project, with a door that takes you to a random one and a webring) and a free effects kit so anyone can make their own fun-to-scroll website, with a guide to building it through vibe coding even without knowing how to code. It’s in Spanish and English.',
+      },
+    ],
+    did: [
+      { es: 'Concepto y manifiesto', en: 'Concept and manifesto' },
+      { es: 'Dirección visual', en: 'Visual direction' },
+      { es: 'UX/UI e interacción', en: 'UX/UI and interaction' },
+      { es: 'Kit de efectos open source', en: 'Open-source effects kit' },
+      { es: 'Redacción de contenido', en: 'Content writing' },
+    ],
+    tools: ['claude', 'vibe'],
+    links: [
+      { label: { es: 'Visitar funscroll.life', en: 'Visit funscroll.life' }, url: 'https://funscroll.life' },
+      { label: { es: 'Leer el manifiesto', en: 'Read the manifesto' }, url: 'https://funscroll.life/manifiesto.html' },
+    ],
+    gallery: [],
+  },
+  {
     slug: 'lorena-web',
     file: 'lorena.web',
     title: 'Lorena Orlando',

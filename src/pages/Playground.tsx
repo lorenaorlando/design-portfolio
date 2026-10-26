@@ -64,7 +64,13 @@ export function Playground() {
                   ) : (
                     <Window title={item.file} bodyClassName="">
                       <div className="pg-cover">
-                        <img src={item.gallery[0]} alt={item.title} loading="lazy" />
+                        {item.gallery[0] ? (
+                          <img src={item.gallery[0]} alt={item.title} loading="lazy" />
+                        ) : (
+                          <div className="pg-cover-text" style={{ ['--c' as string]: item.color }}>
+                            <span>{item.title}</span>
+                          </div>
+                        )}
                       </div>
                     </Window>
                   )}
