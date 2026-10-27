@@ -1,4 +1,5 @@
 import { Language } from '../types';
+import { FUNSCROLL_SECTIONS, PRAGMAGICKA_SECTIONS } from './playgroundSections';
 import { ToolId } from './tools';
 
 type Text = Record<Language, string>;
@@ -6,6 +7,20 @@ type Text = Record<Language, string>;
 export interface PlaygroundLink {
   label: Text;
   url: string;
+}
+
+export interface PlaygroundSection {
+  id: string;
+  label: Text;
+  title: Text;
+  paras: Text[];
+  /** Brand colors with what each one does. */
+  swatches?: { name: string; hex: string; role: Text }[];
+  /** Term + definition cards (method steps, glossary, ecosystem). */
+  terms?: { term: string; def: Text; color?: string }[];
+  /** Single words shown as large chips. */
+  words?: string[];
+  quote?: Text;
 }
 
 export interface PlaygroundItem {
@@ -17,6 +32,8 @@ export interface PlaygroundItem {
   color: string;
   summary: Text;
   about: Text[];
+  /** Extra case-study sections after the intro. */
+  sections?: PlaygroundSection[];
   /** What I did, as short tags. */
   did: Text[];
   tools: ToolId[];
@@ -50,24 +67,28 @@ export const PLAYGROUND: PlaygroundItem[] = [
     kind: { es: 'Apps esotéricas', en: 'Esoteric apps' },
     color: '#F4B342',
     summary: {
-      es: 'Apps de tarot donde se unen mis dos mundos: el diseño y mi lado brujístico.',
-      en: 'Tarot apps where my two worlds meet: design and my witchy side.',
+      es: 'Esoterismo pragmático: tarot que cambia la predicción por la acción. Una app, un oráculo de stickers, lecturas y un curso bajo una misma marca.',
+      en: 'Pragmatic esotericism: tarot that swaps prediction for action. An app, a sticker oracle, readings and a course under one brand.',
     },
     about: [
       {
-        es: 'Además de diseñadora, tengo un lado brujístico, y quise unir ambos mundos en herramientas esotéricas para el presente digital. Así nació Pragmagicka: apps para hacer lecturas de tarot desde el celular.',
-        en: 'Besides being a designer, I have a witchy side, and I wanted to bring both worlds together in esoteric tools for the digital present. That’s how Pragmagicka was born: apps for tarot readings right from your phone.',
+        es: 'Además de diseñadora, tengo un lado brujístico, y quise unir ambos mundos. Pragmagicka es un proyecto de tarot que no adivina el futuro: usa las cartas para mirar una situación desde otro ángulo, desenredar lo mental y elegir un próximo paso concreto. Lo llamo esoterismo pragmático.',
+        en: 'Besides being a designer, I have a witchy side, and I wanted to bring both worlds together. Pragmagicka is a tarot project that doesn’t predict the future: it uses the cards to look at a situation from another angle, untangle your thoughts and choose a concrete next step. I call it pragmatic esotericism.',
       },
       {
-        es: 'El branding está inspirado en las cartas del tarot, y el logo es una luna con una varita mágica. Escribí a mano la interpretación de cada carta, una por una, para que cada lectura tenga mi propia voz.',
-        en: 'The branding is inspired by tarot cards, and the logo is a moon with a magic wand. I wrote every card’s interpretation by hand, one by one, so each reading carries my own voice.',
-      },
-      {
-        es: 'Ahora mismo estoy trabajando en una nueva app, esta vez de astrología.',
-        en: 'Right now I’m working on a new app, this time about astrology.',
+        es: 'La puerta de entrada es pragmagick.app, una app gratuita de lecturas breves donde escribí a mano la interpretación de cada carta, una por una, para que cada lectura tenga mi propia voz. Ahora mismo estoy trabajando en una nueva app, esta vez de astrología.',
+        en: 'The way in is pragmagick.app, a free app for short readings where I wrote every card’s meaning by hand, one by one, so each reading carries my own voice. Right now I’m working on a new app, this time about astrology.',
       },
     ],
-    did: DID_PRODUCT,
+    sections: PRAGMAGICKA_SECTIONS,
+    did: [
+      { es: 'Branding', en: 'Branding' },
+      { es: 'Manual de marca', en: 'Brand guidelines' },
+      { es: 'Dirección visual', en: 'Visual direction' },
+      { es: 'UX/UI', en: 'UX/UI' },
+      { es: 'Diseño de producto', en: 'Product design' },
+      { es: 'Redacción de contenido', en: 'Content writing' },
+    ],
     tools: ['vibe', 'canva', 'figma'],
     links: [{ label: { es: 'Visitar pragmagick.app', en: 'Visit pragmagick.app' }, url: 'https://pragmagick.app' }],
     gallery: pics('pragmagicka', 8).slice(6).reverse(),
@@ -145,31 +166,29 @@ export const PLAYGROUND: PlaygroundItem[] = [
     },
     about: [
       {
-        es: 'Funscroll es mi respuesta al doomscroll, la forma más común en que usamos internet hoy: horas de pulgar arriba en un feed que elige por nosotros, solo deja cuatro formas de interactuar y castiga los links hacia afuera.',
-        en: 'Funscroll is my answer to doomscrolling, the most common way we use the internet today: hours of thumb-scrolling a feed that chooses for us, allows only four ways to interact and punishes links that lead elsewhere.',
+        es: 'Funscroll es una propuesta y un ensayo que escribí como respuesta al doomscroll: una forma de hacer webs que se mueven en todas las direcciones, que tienen final y que te invitan a irte. Sin objetivos, sin métricas, más cerca del arte que de un feed.',
+        en: 'Funscroll is a proposal and an essay I wrote in response to doomscrolling: a way of making websites that move in every direction, have an ending and invite you to leave. No goals, no metrics, closer to art than to a feed.',
       },
       {
-        es: 'Propone otra forma de hacer webs: que se mueven en todas las direcciones, que tienen final y que te invitan a irte. Sin objetivos ni métricas, más cerca del arte que de un feed. La web presenta un glosario de nuevas formas de scrollear (dancescroll, slowscroll, smartscroll, tiltscroll) que se pueden probar ahí mismo.',
-        en: 'It proposes another way of making websites: ones that move in every direction, have an ending and invite you to leave. No goals or metrics, closer to art than to a feed. The site presents a glossary of new ways to scroll (dancescroll, slowscroll, smartscroll, tiltscroll) that you can try right there.',
-      },
-      {
-        es: 'El proyecto incluye un manifiesto que se desenrolla como un pergamino, una galería de funscrollers (webs que inspiraron el proyecto, con una puerta que te lleva a una al azar y un webring) y un kit gratuito de efectos para que cualquiera haga su propia web divertida de scrollear, con una guía para crearla con vibe coding aunque no sepa programar. Está en español e inglés.',
-        en: 'The project includes a manifesto that unrolls like a scroll, a gallery of funscrollers (sites that inspired the project, with a door that takes you to a random one and a webring) and a free effects kit so anyone can make their own fun-to-scroll website, with a guide to building it through vibe coding even without knowing how to code. It’s in Spanish and English.',
+        es: 'La web funscroll.life es el proyecto hecho realidad: un recorrido que se vive scrolleando, un manifiesto que se desenrolla como un pergamino, una galería de funscrollers (webs que inspiraron el proyecto, con una puerta que te lleva a una al azar y un webring) y un kit gratuito de efectos para que cualquiera haga su propia web, con una guía para crearla con vibe coding aunque no sepa programar. Está en español e inglés.',
+        en: 'The site funscroll.life is the idea made real: a journey you experience by scrolling, a manifesto that unrolls like a scroll, a gallery of funscrollers (sites that inspired the project, with a door to a random one and a webring) and a free effects kit so anyone can make their own site, with a guide to building it through vibe coding even without knowing how to code. It’s in Spanish and English.',
       },
     ],
+    sections: FUNSCROLL_SECTIONS,
     did: [
-      { es: 'Concepto y manifiesto', en: 'Concept and manifesto' },
+      { es: 'Concepto y ensayo', en: 'Concept and essay' },
       { es: 'Dirección visual', en: 'Visual direction' },
       { es: 'UX/UI e interacción', en: 'UX/UI and interaction' },
       { es: 'Kit de efectos open source', en: 'Open-source effects kit' },
       { es: 'Redacción de contenido', en: 'Content writing' },
     ],
-    tools: ['claude', 'vibe'],
+    tools: ['vibe'],
     links: [
       { label: { es: 'Visitar funscroll.life', en: 'Visit funscroll.life' }, url: 'https://funscroll.life' },
       { label: { es: 'Leer el manifiesto', en: 'Read the manifesto' }, url: 'https://funscroll.life/manifiesto.html' },
     ],
     gallery: [],
+    // Assets go in public/assets/playground/funscroll/ (01.webp, 02.webp…)
   },
   {
     slug: 'lorena-web',

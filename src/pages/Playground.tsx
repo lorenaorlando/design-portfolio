@@ -112,6 +112,7 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
   const sections = item
     ? [
         { id: 'about', label: p.sections.about },
+        ...(item.sections ?? []).map((s) => ({ id: s.id, label: s.label[lang] })),
         ...(item.youtube ? [{ id: 'video', label: p.sections.video }] : []),
         ...(item.phones ? [{ id: 'mobile', label: p.sections.mobile }] : []),
         ...(item.gallery.length ? [{ id: 'gallery', label: p.sections.gallery }] : []),
@@ -131,7 +132,7 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, [slug]);
+  }, [slug, lang]);
 
   if (!item) {
     return (
@@ -202,6 +203,55 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
             </div>
           </div>
         </section>
+
+        {item.sections?.map((s, i) => (
+          <section key={s.id} id={s.id} className="case-section">
+            <div className="kicker">{s.label[lang]}</div>
+            <div className="pg-sec">
+              <div className="case-num">0{i + 1}</div>
+              <div>
+                <h2 className="pg-sec-title">{s.title[lang]}</h2>
+                <div className="rich">
+                  {s.paras.map((para) => (
+                    <p key={para.es}>{para[lang]}</p>
+                  ))}
+                </div>
+                {s.swatches && (
+                  <div className="pg-swatches">
+                    {s.swatches.map((sw) => (
+                      <div key={sw.hex} className="pg-swatch">
+                        <span style={{ background: sw.hex }} />
+                        <b>{sw.name}</b>
+                        <small className="mono">{sw.hex}</small>
+                        <small>{sw.role[lang]}</small>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {s.terms && (
+                  <div className="pg-terms">
+                    {s.terms.map((term) => (
+                      <div key={term.term} className="pg-term" style={term.color ? { background: term.color, boxShadow: 'inset 0 0 0 1.5px #111' } : undefined}>
+                        <div className="term">{term.term}</div>
+                        <p>{term.def[lang]}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {s.words && (
+                  <div className="pg-words">
+                    {s.words.map((w, wi) => (
+                      <span key={w} style={{ rotate: `${((wi % 3) - 1) * 2}deg` }}>
+                        {w}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {s.quote && <blockquote className="pg-quote">{s.quote[lang]}</blockquote>}
+              </div>
+            </div>
+          </section>
+        ))}
 
         {item.youtube && (
           <section id="video" className="case-section">
