@@ -138,8 +138,8 @@ export const FUNSCROLL_SECTIONS: PlaygroundSection[] = [
     title: { es: 'Funscroll en lorenaorlando.com', en: 'Funscroll on lorenaorlando.com' },
     paras: [
       {
-        es: 'Llevé estas ideas a mi web personal, construida en Framer con wireframes mínimos y fragmentos de código puntuales. Partí de una colección de más de 100 elementos gráficos e imágenes de mi archivo (fotos familiares, series fotográficas, portadas de discos y memes propios), elegidos de forma intencionalmente azarosa.',
-        en: 'I brought these ideas to my personal site, built in Framer with minimal wireframes and a few bits of code. I started from a collection of over 100 graphic elements and images from my archive (family photos, photo series, album covers and my own memes), chosen at random on purpose.',
+        es: 'Llevé estas ideas a mi web personal. Partí de una colección de más de 100 elementos gráficos e imágenes de mi archivo (fotos familiares, series fotográficas, portadas de discos y memes propios), elegidos de forma intencionalmente azarosa.',
+        en: 'I brought these ideas to my personal site. I started from a collection of over 100 graphic elements and images from my archive (family photos, photo series, album covers and my own memes), chosen at random on purpose.',
       },
       {
         es: 'La web comunica lo máximo con la menor cantidad de palabras: un idioma de símbolos, metáforas, imágenes y movimiento. El timeline de mi carrera está contado con emojis, y el menú es una bola de disco giratoria acompañada por una isla flotante con mi cabeza asomándose. Sin corazones, lupas ni menús hamburguesa, el usuario tiene que aprender el idioma de un país nuevo.',
