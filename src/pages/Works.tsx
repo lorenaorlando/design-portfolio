@@ -12,7 +12,6 @@ export function Works({ works }: { works: WorkProject[] }) {
     <div className="page">
       <div className="page-head">
         <div>
-          <div className="kicker">{t.works.kicker}</div>
           <h1 className="display page-title">
             {t.works.title} <sup className="mono muted" style={{ fontSize: 16, letterSpacing: 0 }}>({works.length})</sup>
           </h1>

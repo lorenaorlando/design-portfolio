@@ -48,7 +48,6 @@ export function Playground() {
 
   return (
     <div className="page">
-      <div className="kicker">{p.kicker}</div>
       <h1 className="pg-hero">{p.title}</h1>
       <p style={{ fontSize: 20, color: 'var(--ink-2)', marginTop: 16, maxWidth: 640 }}>{p.subtitle}</p>
 
@@ -167,7 +166,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
       </aside>
 
       <article>
-        <div className="kicker">{item.kind[lang]}</div>
         <h1 className="pg-detail-title">{item.title}</h1>
         {item.links && (
           <div className="btn-row" style={{ marginTop: 0, marginBottom: 22 }}>
@@ -186,7 +184,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
         )}
 
         <section id="about" className="case-section" style={{ paddingTop: 36 }}>
-          <div className="kicker">{p.sections.about}</div>
           <div className="rich" style={{ marginTop: 14 }}>
             {item.about.map((para) => (
               <p key={para.es}>{para[lang]}</p>
@@ -206,7 +203,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
 
         {item.sections?.map((s, i) => (
           <section key={s.id} id={s.id} className="case-section">
-            <div className="kicker">{s.label[lang]}</div>
             <div className="pg-sec">
               <div className="case-num">0{i + 1}</div>
               <div>
@@ -255,7 +251,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
 
         {item.youtube && (
           <section id="video" className="case-section">
-            <div className="kicker">{p.sections.video}</div>
             <div className="video-embed">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${item.youtube}?rel=0`}
@@ -270,7 +265,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
 
         {item.phones && (
           <section id="mobile" className="case-section">
-            <div className="kicker">{p.sections.mobile}</div>
             <div className="phones">
               {item.phones.map((src, i) => (
                 <Reveal key={src} from="bottom" delay={(i % 4) * 0.05}>
@@ -283,7 +277,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
 
         {item.gallery.length > 0 && (
           <section id="gallery" className="case-section">
-            <div className="kicker">{p.sections.gallery}</div>
             <div className="pg-gallery">
               {item.gallery.map((src, i) => (
                 <Reveal key={src} from="bottom">

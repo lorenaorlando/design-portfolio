@@ -9,7 +9,6 @@ export function About() {
   const a = t.about;
   return (
     <div className="page">
-      <div className="kicker">{a.kicker}</div>
       <h1 className="display page-title" style={{ marginBottom: 48 }}>
         {a.title}
       </h1>

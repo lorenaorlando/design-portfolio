@@ -32,7 +32,6 @@ export function Pricing({ onToast }: { onToast: (message: string) => void }) {
     <div className="page">
       <div className="page-head">
         <div>
-          <div className="kicker">{p.kicker}</div>
           <h1 className="display page-title">{p.title}</h1>
           <p style={{ fontSize: 18, color: 'var(--ink-2)', marginTop: 14 }}>{p.subtitle}</p>
         </div>

@@ -47,19 +47,15 @@ const es = {
     selectedTitle: 'Trabajos seleccionados',
     seeCase: 'Ver caso',
     seeAll: 'Ver los 12 proyectos',
-    aboutKicker: 'Sobre mí',
     aboutTitle: 'Mirada de artista + puntualidad de oficinista.',
     aboutBody:
       'Soy artista visual hace más de 20 años y diseño sitios web hace más de 10. Combino esa sensibilidad con una forma de trabajar rápida y organizada: cumplo los plazos, respondo a tiempo y pongo el 100% en cada proyecto. Trabajo sobre todo con artistas, proyectos creativos y causas con propósito, y convierto su esencia en interfaces e identidades visuales únicas.',
     aboutCta: 'Conóceme',
-    contactKicker: 'Contacto',
     contactTitle: '¿Tienes un proyecto en mente?',
     contactBody: 'Escríbeme y conversemos.',
-    testimonialsKicker: 'Testimonios',
     testimonialsTitle: 'Lo que dicen',
   },
   works: {
-    kicker: 'Archivo',
     title: 'Proyectos',
     all: 'Todos',
   },
@@ -73,7 +69,6 @@ const es = {
     prev: 'Anterior',
   },
   pricing: {
-    kicker: 'Servicios',
     title: 'Precios',
     subtitle: 'Elige servicios para armar un presupuesto estimado en tiempo real.',
     all: 'Todos',
@@ -89,7 +84,6 @@ const es = {
     mailSubject: 'Presupuesto — portafolio',
   },
   about: {
-    kicker: 'Sobre mí',
     title: 'Hola, soy Lorena.',
     sections: [
       {
@@ -112,7 +106,6 @@ const es = {
     cvCta: 'Ver CV',
   },
   cv: {
-    kicker: 'Documento',
     title: 'CV',
     role: 'Diseñadora web y visual',
     summary:
@@ -124,7 +117,6 @@ const es = {
     contact: 'Contacto',
   },
   playground: {
-    kicker: 'Playground',
     title: 'Jugar también es diseñar.',
     subtitle: 'Proyectos personales, apps y experimentos que hago por amor al diseño y las computadoras.',
     tools: 'Herramientas',
@@ -178,19 +170,15 @@ const en: Copy = {
     selectedTitle: 'Selected works',
     seeCase: 'See case study',
     seeAll: 'See all 12 projects',
-    aboutKicker: 'About',
     aboutTitle: 'An artist’s eye + office-worker punctuality.',
     aboutBody:
       'I’ve been a visual artist for over 20 years and a web designer for over 10. I pair that sensibility with a fast, organized way of working: I meet deadlines, reply on time and give 100% to every project. I mostly work with artists, creative projects and purpose-driven causes, turning their essence into unique interfaces and visual identities.',
     aboutCta: 'Get to know me',
-    contactKicker: 'Contact',
     contactTitle: 'Have a project in mind?',
     contactBody: 'Write to me and let’s talk.',
-    testimonialsKicker: 'Testimonials',
     testimonialsTitle: 'Kind words',
   },
   works: {
-    kicker: 'Archive',
     title: 'Works',
     all: 'All',
   },
@@ -204,7 +192,6 @@ const en: Copy = {
     prev: 'Previous',
   },
   pricing: {
-    kicker: 'Services',
     title: 'Pricing',
     subtitle: 'Pick services to build an estimated budget in real time.',
     all: 'All',
@@ -220,7 +207,6 @@ const en: Copy = {
     mailSubject: 'Budget — portfolio',
   },
   about: {
-    kicker: 'About',
     title: 'Hi, I’m Lorena.',
     sections: [
       {
@@ -243,7 +229,6 @@ const en: Copy = {
     cvCta: 'See CV',
   },
   cv: {
-    kicker: 'Document',
     title: 'CV',
     role: 'Web & visual designer',
     summary:
@@ -255,7 +240,6 @@ const en: Copy = {
     contact: 'Contact',
   },
   playground: {
-    kicker: 'Playground',
     title: 'Playing is designing too.',
     subtitle: 'Personal projects, apps and experiments I make out of love for design and computers.',
     tools: 'Tools',

@@ -21,7 +21,6 @@ export function Cv() {
   };
   return (
     <div className="page">
-      <div className="kicker">{cv.kicker}</div>
       <h1 className="display page-title" style={{ marginBottom: 40 }}>
         {cv.title}
       </h1>
@@ -40,7 +39,7 @@ export function Cv() {
               <Download size={14} /> {busy ? cv.preparing : cv.download}
             </button>
           </div>
-          <div className="kicker" style={{ margin: '28px 0 12px' }}>
+          <div className="sub-title" style={{ margin: '28px 0 12px' }}>
             {cv.tools}
           </div>
           <div className="filters">
@@ -52,7 +51,7 @@ export function Cv() {
           </div>
           <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 28, maxWidth: 680 }}>{cv.summary}</p>
 
-          <div className="kicker" style={{ margin: '40px 0 12px' }}>
+          <div className="sub-title" style={{ margin: '40px 0 12px' }}>
             {cv.experience}
           </div>
           {getCvData(lang).map((item) => (

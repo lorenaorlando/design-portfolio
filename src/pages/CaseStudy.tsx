@@ -61,7 +61,6 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
 
   const renderText = (s: { id: string; label: string; html?: string }, i: number) => (
     <section key={s.id} id={s.id} className="case-section">
-      <div className="kicker">{s.label}</div>
       <div style={{ display: 'grid', gridTemplateColumns: '70px 1fr', marginTop: 18 }}>
         <div className="case-num">0{i + 1}</div>
         <div className="rich" dangerouslySetInnerHTML={{ __html: s.html ?? '' }} />
@@ -90,12 +89,9 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
       </aside>
 
       <article>
-        <div className="kicker">
-          {work.typeOfProject} — {work.year}
-        </div>
         <h1 className="display case-title">{work.title}</h1>
         <section id="tldr" className="tldr">
-          <div className="kicker">{c.sections.tldr}</div>
+          <div className="sub-title">{c.sections.tldr}</div>
           <p>{TLDR[work.slug]?.[lang]}</p>
         </section>
         <Reveal className="case-video">
@@ -108,7 +104,6 @@ export function CaseStudy({ works, slug }: CaseStudyProps) {
 
         {media.details.length > 0 && (
           <section id="details" className="case-section">
-            <div className="kicker">{c.sections.details}</div>
             <div className="details">
               {media.details.map((src, i) => (
                 <Reveal key={src} from={i % 2 ? 'right' : 'left'} delay={0.05}>

@@ -65,14 +65,14 @@ img, video { display: block; max-width: 100%; }
 .display { font-family: var(--display); font-weight: 600; letter-spacing: -0.045em; line-height: 0.95; color: var(--morado); }
 .win.dark .display { color: var(--on-dark); }
 .muted { color: var(--muted); }
-.kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
 
 /* ---------------- Layout ---------------- */
 .app-main { margin-left: var(--bar-w); min-height: 100vh; overflow-x: clip; }
 .section { padding: 120px clamp(24px, 5vw, 72px); }
 .page { padding: 64px clamp(24px, 5vw, 72px) 120px; min-height: 100vh; }
 .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
-.page-title { font-size: clamp(56px, 8vw, 104px); margin-top: 10px; }
+.page-title { font-size: clamp(56px, 8vw, 104px); }
+.sub-title { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--morado); }
 
 /* ---------------- Side bar (hardware strip) ---------------- */
 .bar {

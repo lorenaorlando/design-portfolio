@@ -77,7 +77,6 @@ export function Home({ works, onToast }: HomeProps) {
             </Window>
           </Reveal>
           <Reveal from="right" delay={0.1}>
-            <div className="kicker">{h.aboutKicker}</div>
             <h2 className="display" style={{ fontSize: 'clamp(40px, 4.6vw, 64px)', margin: '14px 0 20px' }}>
               {h.aboutTitle}
             </h2>
@@ -93,7 +92,6 @@ export function Home({ works, onToast }: HomeProps) {
 
       <section className="section">
         <Reveal>
-          <div className="kicker">{h.testimonialsKicker}</div>
           <h2 className="display page-title" style={{ marginBottom: 48 }}>
             {h.testimonialsTitle}
           </h2>
@@ -123,9 +121,6 @@ export function Home({ works, onToast }: HomeProps) {
         <Reveal className="contact-card">
           <Window title={t.desktop.contactFile} dark>
             <div style={{ padding: 'clamp(12px, 3vw, 36px)' }}>
-              <div className="kicker" style={{ color: 'var(--mostaza)' }}>
-                {h.contactKicker}
-              </div>
               <h2 className="display contact-title" style={{ margin: '14px 0 18px' }}>
                 {h.contactTitle}
               </h2>
