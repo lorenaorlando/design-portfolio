@@ -32,19 +32,6 @@ export function About() {
               </div>
             </Window>
           </Reveal>
-          <Reveal from="left" delay={0.2}>
-            <Window title={t.desktop.disciplinesFile}>
-              {t.disciplines.map((x, i) => (
-                <div className="discipline" key={x.title}>
-                  <span className="n">0{i + 1}</span>
-                  <div>
-                    <div className="t">{x.title}</div>
-                    <div className="s">{x.sub}</div>
-                  </div>
-                </div>
-              ))}
-            </Window>
-          </Reveal>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <Reveal from="right">

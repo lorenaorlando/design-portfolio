@@ -1,8 +1,6 @@
 import type { jsPDF as JsPDF } from 'jspdf';
 import { Copy, CV_PHOTO, EMAIL, LINKEDIN_URL, TOOLS } from '../content/copy';
 import { CvItem } from '../data/cvData';
-import { PERSONAL_PROJECTS } from '../data/personalProjects';
-import { Language } from '../types';
 
 type RGB = [number, number, number];
 
@@ -24,7 +22,7 @@ const DOT: RGB = [226, 224, 230];
 const FONTS = [
   ['DMSans-Regular.ttf', 'DMSans', 'normal'],
   ['DMSans-SemiBold.ttf', 'DMSans', 'bold'],
-  ['Bricolage-Bold.ttf', 'Bricolage', 'bold'],
+  ['FunnelDisplay-Bold.ttf', 'Funnel', 'bold'],
   ['PixelifySans-Medium.ttf', 'Pixelify', 'normal'],
 ] as const;
 
@@ -77,7 +75,7 @@ function dotField(doc: JsPDF, x: number, y: number, w: number, h: number) {
 }
 
 /** Builds the branded CV PDF and triggers the download. */
-export async function downloadCvPdf(cv: CvItem[], t: Copy, lang: Language) {
+export async function downloadCvPdf(cv: CvItem[], t: Copy) {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
@@ -118,7 +116,7 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy, lang: Language) {
   dotField(doc, 0, 0, PAGE_W, 64);
   if (photo) doc.addImage(photo, 'JPEG', M, 16, 36, 36);
   const textX = photo ? M + 44 : M;
-  font('Bricolage', 'bold', 30, MORADO);
+  font('Funnel', 'bold', 30, MORADO);
   doc.text('Lorena Orlando', textX, 30);
   font('Pixelify', 'normal', 13, MAGENTA);
   doc.text(t.cv.role, textX, 38.5);
@@ -151,32 +149,6 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy, lang: Language) {
   doc.text(summary, M, y, { lineHeightFactor: 1.55 });
   y += summary.length * 5.5 + 7;
 
-  // Personal projects: a highlighted box with three columns
-  {
-    const boxH = 44;
-    const colW = (PAGE_W - M * 2 - 10 - 8) / 3;
-    doc.setFillColor(251, 247, 253);
-    doc.setDrawColor(...VIOLETA);
-    doc.setLineWidth(0.5);
-    doc.roundedRect(M, y, PAGE_W - M * 2, boxH, 3, 3, 'FD');
-    font('Pixelify', 'normal', 13, VIOLETA);
-    doc.text(t.cv.personal, M + 5, y + 8);
-    font('DMSans', 'normal', 7.5, MUTED);
-    doc.text(t.cv.personalNote.toUpperCase(), PAGE_W - M - 5, y + 8, { align: 'right' });
-    PERSONAL_PROJECTS.forEach((pp, i) => {
-      const x = M + 5 + i * (colW + 4);
-      const top = y + 15;
-      font('Bricolage', 'bold', 10.5, MORADO);
-      doc.textWithLink(pp.name, x, top, { url: pp.url });
-      font('DMSans', 'bold', 7.2, MAGENTA);
-      doc.text(pp.kind[lang].toUpperCase(), x, top + 4.6, { charSpace: 0.2 });
-      font('DMSans', 'normal', 8.2, INK_2);
-      const lines = doc.splitTextToSize(pp.description[lang], colW);
-      doc.text(lines.slice(0, 5), x, top + 10, { lineHeightFactor: 1.35 });
-    });
-    y += boxH + 10;
-  }
-
   // Experience
   label(t.cv.experience);
   // Estimated height of one company block, so it starts on a page where it fits.
@@ -191,7 +163,7 @@ export async function downloadCvPdf(cv: CvItem[], t: Copy, lang: Language) {
     ensure(Math.min(blockHeight(item), PAGE_H - M * 2 - FOOTER));
     const top = y;
     const startPage = doc.getNumberOfPages();
-    font('Bricolage', 'bold', 11, MORADO);
+    font('Funnel', 'bold', 11, MORADO);
     doc.text(doc.splitTextToSize(item.company, COL - M - 5), M, y);
 
     for (const pos of item.positions) {

@@ -2,14 +2,12 @@ import { motion } from 'motion/react';
 import { CSSProperties, ReactNode, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { EMAIL } from '../content/copy';
 import { useLang } from '../lib/i18n';
-import { PATHS } from '../lib/router';
 import { playClick } from '../lib/sound';
-import { DesktopIcon, MailAppIcon } from './DesktopIcon';
 import { Logo } from './Logo';
 import { Selection } from './Selection';
 import { Window } from './Window';
 
-type WinId = 'hello' | 'profile' | 'currently';
+type WinId = 'hello' | 'currently';
 
 function useIsDesktop() {
   const query = '(min-width: 901px)';
@@ -104,7 +102,7 @@ export function Desktop() {
   const gridRef = useRef<HTMLDivElement>(null);
   const { zoom, height } = useFitToScreen(gridRef, isDesktop);
   const clock = useClock(lang);
-  const [order, setOrder] = useState<WinId[]>(['currently', 'profile', 'hello']);
+  const [order, setOrder] = useState<WinId[]>(['currently', 'hello']);
   const [closed, setClosed] = useState<WinId[]>([]);
   const [minimized, setMinimized] = useState<WinId[]>([]);
 
@@ -138,9 +136,6 @@ export function Desktop() {
 
       <div className="desk-grid-wrap" style={{ height: zoom < 1 ? height : undefined }}>
       <div className="desk-grid" ref={gridRef} style={{ transform: zoom < 1 ? `scale(${zoom})` : undefined }}>
-      <div className="desk-icons">
-        <DesktopIcon label={d.mailIcon} href={`mailto:${EMAIL}`} onClick={() => playClick(1.2)} icon={<MailAppIcon />} />
-      </div>
 
       {isOpen('hello') && (
         <DeskWindow {...win('hello')} className="area-hello">
@@ -158,34 +153,10 @@ export function Desktop() {
                 {d.shapeAfter}
               </p>
               <div className="btn-row" style={{ marginTop: 34 }}>
-                <a className="chip solid" href={PATHS.works} onClick={() => playClick(1.1)}>
-                  {d.seeWorks} →
+                <a className="chip solid" href={`mailto:${EMAIL}`} onClick={() => playClick(1.1)}>
+                  {d.workTogether} →
                 </a>
               </div>
-            </div>
-          </Window>
-        </DeskWindow>
-      )}
-
-      {isOpen('profile') && (
-        <DeskWindow {...win('profile')} className="area-profile">
-          <Window title={d.profileFile} {...controls('profile')}>
-            {t.disciplines.map((x, i) => (
-              <div className="discipline" key={x.title}>
-                <span className="n">0{i + 1}</span>
-                <div>
-                  <div className="t">{x.title}</div>
-                  <div className="s">{x.sub}</div>
-                </div>
-              </div>
-            ))}
-            <div className="stats stats-row">
-              {t.stats.map((s) => (
-                <div className="stat" key={s.l}>
-                  <div className="n">{s.n}</div>
-                  <div className="l">{s.l}</div>
-                </div>
-              ))}
             </div>
           </Window>
         </DeskWindow>

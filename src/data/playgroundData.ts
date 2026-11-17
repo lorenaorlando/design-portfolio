@@ -185,7 +185,6 @@ export const PLAYGROUND: PlaygroundItem[] = [
     tools: ['vibe'],
     links: [
       { label: { es: 'Visitar funscroll.life', en: 'Visit funscroll.life' }, url: 'https://funscroll.life' },
-      { label: { es: 'Leer el manifiesto', en: 'Read the manifesto' }, url: 'https://funscroll.life/manifiesto.html' },
     ],
     gallery: [],
     // Assets go in public/assets/playground/funscroll/ (01.webp, 02.webp…)
@@ -214,7 +213,6 @@ export const PLAYGROUND: PlaygroundItem[] = [
     tools: ['tripo', 'claude', 'canva'],
     links: [
       { label: { es: 'Visitar lorenaorlando.com', en: 'Visit lorenaorlando.com' }, url: 'https://lorenaorlando.com' },
-      { label: { es: 'Ver manual de marca', en: 'See brand guidelines' }, url: 'https://lorenaorlando.com/marca-722e46dd/' },
     ],
     gallery: pics('lorena-web', 12),
     phones: pics('lorena-web/mobile', 10),

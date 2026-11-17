@@ -33,7 +33,6 @@ export function Home({ works, onToast }: HomeProps) {
 
       <section className="section" id="proyectos">
         <Reveal>
-          <div className="kicker">{h.selectedKicker}</div>
           <h2 className="display page-title" style={{ marginBottom: 80 }}>
             {h.selectedTitle}
           </h2>
@@ -51,18 +50,8 @@ export function Home({ works, onToast }: HomeProps) {
                 </a>
               </Reveal>
               <Reveal from={flip ? 'left' : 'right'} delay={0.1}>
-                <div className="mono muted" style={{ fontSize: 13 }}>
-                  {String(i + 1).padStart(2, '0')} — {w.year}
-                </div>
                 <h3 className="display work-title">{w.title}</h3>
                 <div style={{ fontSize: 17, color: 'var(--ink-2)' }}>{w.typeOfProject}</div>
-                <div className="work-meta">
-                  {w.disciplines.map((x) => (
-                    <span className="chip small" key={x}>
-                      {x}
-                    </span>
-                  ))}
-                </div>
                 <a className="link-arrow" href={PATHS.case(w.slug)}>
                   {h.seeCase} →
                 </a>

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Window } from '../components/Window';
 import { TOOLS } from '../content/copy';
 import { getCvData } from '../data/cvData';
-import { PERSONAL_PROJECTS } from '../data/personalProjects';
 import { downloadCvPdf } from '../lib/cvPdf';
 import { useLang } from '../lib/i18n';
 
@@ -15,7 +14,7 @@ export function Cv() {
   const download = async () => {
     setBusy(true);
     try {
-      await downloadCvPdf(getCvData(lang), t, lang);
+      await downloadCvPdf(getCvData(lang), t);
     } finally {
       setBusy(false);
     }
@@ -52,29 +51,6 @@ export function Cv() {
             ))}
           </div>
           <p style={{ fontSize: 16.5, lineHeight: 1.65, color: 'var(--ink-2)', marginTop: 28, maxWidth: 680 }}>{cv.summary}</p>
-
-          <section className="cv-personal">
-            <div className="cv-personal-head">
-              <span className="pix">{cv.personal}</span>
-              <span className="mono">{cv.personalNote}</span>
-            </div>
-            <div className="cv-personal-grid">
-              {PERSONAL_PROJECTS.map((pp) => (
-                <a key={pp.name} className="cv-pp" href={pp.url} target="_blank" rel="noreferrer">
-                  <div className="name">{pp.name} ↗</div>
-                  <div className="kind">{pp.kind[lang]}</div>
-                  <p>{pp.description[lang]}</p>
-                  <div className="filters">
-                    {pp.tags.map((tag) => (
-                      <span key={tag.es} className="chip small">
-                        {tag[lang]}
-                      </span>
-                    ))}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
 
           <div className="kicker" style={{ margin: '40px 0 12px' }}>
             {cv.experience}
