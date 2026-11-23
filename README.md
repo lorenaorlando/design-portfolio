@@ -24,7 +24,8 @@ src/
   data/             Proyectos, TL;DR, CV, precios y playground
   components/       Ventanas, barra lateral, escritorio…
   pages/            Inicio, Proyectos, Caso de estudio, Playground, Precios, Sobre mí, CV
-  lib/              Rutas, idioma, PDF del CV, sonido
+  lib/              Rutas, idioma, analytics, PDF del CV, sonido
+docs/               Manual de marca y PROMPT-IA.md (contexto para trabajar con otra IA)
 ```
 
 Un archivo en `public/assets/projects/las-escuchadoras/home.jpg` se usa en el código como `assets/projects/las-escuchadoras/home.jpg`.
