@@ -6,16 +6,6 @@ import { PLAYGROUND, PlaygroundItem } from '../data/playgroundData';
 import { useLang } from '../lib/i18n';
 import { PATHS } from '../lib/router';
 
-/** Phone frame that takes the screenshot's own proportions. */
-function PhoneMockup({ src, alt }: { src: string; alt: string }) {
-  return (
-    <div className="phone">
-      <span className="phone-notch" aria-hidden="true" />
-      <img src={src} alt={alt} />
-    </div>
-  );
-}
-
 /** A whole window shaped like a phone: bezel, title bar and the screenshot. */
 function PhoneWindow({ src, title, alt }: { src: string; title: string; alt: string }) {
   return (
@@ -177,11 +167,6 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
           </div>
         )}
         <p className="pg-lead">{item.summary[lang]}</p>
-        {item.mockup && (
-          <div className="pg-hero-phone" style={{ background: item.mockupBg }}>
-            <PhoneMockup src={item.mockup} alt={item.title} />
-          </div>
-        )}
 
         <section id="about" className="case-section" style={{ paddingTop: 36 }}>
           <div className="rich" style={{ marginTop: 14 }}>
@@ -266,7 +251,7 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
         {item.phones && (
           <section id="mobile" className="case-section">
             <div className="phones">
-              {item.phones.map((src, i) => (
+              {(lang === 'en' && item.phonesEn ? item.phonesEn : item.phones).map((src, i) => (
                 <Reveal key={src} from="bottom" delay={(i % 4) * 0.05}>
                   <img src={src} alt={`${item.title} ${i + 1}`} loading="lazy" />
                 </Reveal>

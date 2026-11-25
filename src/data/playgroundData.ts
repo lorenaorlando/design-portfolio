@@ -1,5 +1,5 @@
 import { Language } from '../types';
-import { FUNSCROLL_SECTIONS, PRAGMAGICKA_SECTIONS } from './playgroundSections';
+import { FUNSCROLL_SECTIONS } from './playgroundSections';
 import { ToolId } from './tools';
 
 type Text = Record<Language, string>;
@@ -43,9 +43,10 @@ export interface PlaygroundItem {
   gallery: string[];
   /** Tall screenshots (phone), shown side by side. */
   phones?: string[];
-  /** Screenshot shown inside a phone frame on the cover and at the top of the page. */
+  /** English phone screens, when they differ from `phones`. */
+  phonesEn?: string[];
+  /** Screenshot shown as a phone-shaped window on the Playground cover. */
   mockup?: string;
-  mockupBg?: string;
 }
 
 const pics = (folder: string, count: number) =>
@@ -80,7 +81,6 @@ export const PLAYGROUND: PlaygroundItem[] = [
         en: 'The way in is pragmagick.app, a free app for short readings where I wrote every card’s meaning by hand, one by one, so each reading carries my own voice. Right now I’m working on a new app, this time about astrology.',
       },
     ],
-    sections: PRAGMAGICKA_SECTIONS,
     did: [
       { es: 'Branding', en: 'Branding' },
       { es: 'Manual de marca', en: 'Brand guidelines' },
@@ -89,12 +89,12 @@ export const PLAYGROUND: PlaygroundItem[] = [
       { es: 'Diseño de producto', en: 'Product design' },
       { es: 'Redacción de contenido', en: 'Content writing' },
     ],
-    tools: ['vibe', 'canva', 'figma'],
+    tools: ['claude', 'canva', 'figma'],
     links: [{ label: { es: 'Visitar pragmagick.app', en: 'Visit pragmagick.app' }, url: 'https://pragmagick.app' }],
-    gallery: pics('pragmagicka', 8).slice(6).reverse(),
-    phones: pics('pragmagicka', 6),
-    mockup: 'assets/playground/pragmagicka/01.webp',
-    mockupBg: 'linear-gradient(160deg, #fff4d9, #f9d27e)',
+    gallery: [],
+    phones: pics('pragmagicka/es', 10),
+    phonesEn: pics('pragmagicka/en', 8),
+    mockup: 'assets/playground/pragmagicka/es/01.webp',
   },
   {
     slug: 'lorenalandia',
@@ -161,8 +161,8 @@ export const PLAYGROUND: PlaygroundItem[] = [
     kind: { es: 'Web manifiesto', en: 'Manifesto site' },
     color: '#DE1A58',
     summary: {
-      es: 'Un internet que no quiere retenerte: webs para jugar con el scroll en lugar del doomscroll.',
-      en: 'An internet that doesn’t want to keep you: websites that play with scrolling instead of doomscrolling.',
+      es: 'Una alternativa al doomscroll.',
+      en: 'An alternative to doomscrolling.',
     },
     about: [
       {
@@ -182,7 +182,7 @@ export const PLAYGROUND: PlaygroundItem[] = [
       { es: 'Kit de efectos open source', en: 'Open-source effects kit' },
       { es: 'Redacción de contenido', en: 'Content writing' },
     ],
-    tools: ['vibe'],
+    tools: ['claude'],
     links: [
       { label: { es: 'Visitar funscroll.life', en: 'Visit funscroll.life' }, url: 'https://funscroll.life' },
     ],
