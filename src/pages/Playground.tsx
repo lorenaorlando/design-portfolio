@@ -186,12 +186,11 @@ export function PlaygroundDetail({ slug }: { slug: string }) {
           </div>
         </section>
 
-        {item.sections?.map((s, i) => (
+        {item.sections?.map((s) => (
           <section key={s.id} id={s.id} className="case-section">
             <div className="pg-sec">
-              <div className="case-num">0{i + 1}</div>
+              <h2 className="pg-sec-title">{s.title[lang]}</h2>
               <div>
-                <h2 className="pg-sec-title">{s.title[lang]}</h2>
                 <div className="rich">
                   {s.paras.map((para) => (
                     <p key={para.es}>{para[lang]}</p>

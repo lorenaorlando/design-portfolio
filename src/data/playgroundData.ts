@@ -68,8 +68,8 @@ export const PLAYGROUND: PlaygroundItem[] = [
     kind: { es: 'Apps esotéricas', en: 'Esoteric apps' },
     color: '#F4B342',
     summary: {
-      es: 'Esoterismo pragmático: tarot que cambia la predicción por la acción. Una app, un oráculo de stickers, lecturas y un curso bajo una misma marca.',
-      en: 'Pragmatic esotericism: tarot that swaps prediction for action. An app, a sticker oracle, readings and a course under one brand.',
+      es: 'Una app para lecturas de tarot pragmático.',
+      en: 'An app for pragmatic tarot readings.',
     },
     about: [
       {
@@ -91,7 +91,7 @@ export const PLAYGROUND: PlaygroundItem[] = [
     ],
     tools: ['claude', 'canva', 'figma'],
     links: [{ label: { es: 'Visitar pragmagick.app', en: 'Visit pragmagick.app' }, url: 'https://pragmagick.app' }],
-    gallery: [],
+    gallery: ['assets/playground/pragmagicka/foto-cartas.webp'],
     phones: pics('pragmagicka/es', 10),
     phonesEn: pics('pragmagicka/en', 8),
     mockup: 'assets/playground/pragmagicka/es/01.webp',
