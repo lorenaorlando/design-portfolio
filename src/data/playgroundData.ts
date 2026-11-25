@@ -186,8 +186,7 @@ export const PLAYGROUND: PlaygroundItem[] = [
     links: [
       { label: { es: 'Visitar funscroll.life', en: 'Visit funscroll.life' }, url: 'https://funscroll.life' },
     ],
-    gallery: [],
-    // Assets go in public/assets/playground/funscroll/ (01.webp, 02.webp…)
+    gallery: pics('funscroll', 3),
   },
   {
     slug: 'lorena-web',
